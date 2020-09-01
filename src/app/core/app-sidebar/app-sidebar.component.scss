@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  width: 160px;
+
+  a {
+    border-left: solid 5px transparent;
+    width: auto;
+  }
+
+  a.active {
+    border-left-color: #000;
+  }
+}

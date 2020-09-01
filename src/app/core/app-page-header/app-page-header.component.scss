@@ -1,0 +1,14 @@
+.page-header {
+  display: flex;
+  align-items: baseline;
+
+  h2 {
+    flex: 1;
+    margin: 1rem 1rem 0.5rem 1rem;
+
+    small {
+      color: #888888;
+      font-size: 0.65em;
+    }
+  }
+}

@@ -1,0 +1,136 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+h7 {
+  margin: 0;
+  padding: 0;
+}
+
+.font-lg {
+  font-size: 1.25rem;
+}
+
+.font-xlg {
+  font-size: 1.5rem;
+}
+
+.font-2x {
+  font-size: 2rem;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.padding {
+  padding: 1rem;
+}
+
+.padding-2x {
+  padding: 2rem;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.margin-left {
+  margin-left: 1rem;
+}
+
+.notification-success {
+  color: #ffffff;
+  background-color: #28a745;
+
+  .mat-button-wrapper {
+    color: #dddddd;
+  }
+}
+
+.notification-warn {
+  color: #343a40;
+  background-color: #ffc107;
+
+  .mat-button-wrapper {
+    color: #343a40;
+  }
+}
+
+.notification-error {
+  color: #ffffff;
+  background-color: #dc3545;
+
+  .mat-button-wrapper {
+    color: #dddddd;
+  }
+}
+
+.page-container {
+  padding: 1rem 2rem;
+}
+
+// text
+.text-muted {
+  color: #666666;
+}
+
+.row {
+  display: flex;
+
+  .fill {
+    flex: 1;
+  }
+}
+
+table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  background-color: transparent;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.12),
+    0 5px 10px 1px rgba(0, 0, 0, 0.12), 0 5px 14px 2px rgba(0, 0, 0, 0.12);
+
+  tbody {
+    tr {
+      &:hover {
+        th,
+        td {
+          background-color: #efefef;
+        }
+      }
+    }
+  }
+
+  th,
+  td {
+    text-align: left;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+    padding: 0.5rem;
+
+    &:first-child {
+      padding-left: 1rem;
+    }
+
+    .mat-icon {
+      font-size: 1rem;
+    }
+  }
+}

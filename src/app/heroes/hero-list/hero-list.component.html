@@ -1,0 +1,59 @@
+<app-page-header title="Heroes">
+  <button mat-icon-button color="primary">
+    <mat-icon>add</mat-icon>
+  </button>
+</app-page-header>
+
+<div class="page-container">
+  <div class="row">
+    <div class="fill">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let hero of heroes">
+            <td>{{hero.id}}</td>
+            <td>{{hero.name}}</td>
+            <td>
+              <a [routerLink]="hero.id">open in current page</a>
+            </td>
+            <td>
+              <a [routerLink]="['/hero', hero.id]">
+                open in new page
+              </a>
+            </td>
+            <td class="no-padding">
+              <button mat-icon-button color="primary" (click)="gotoDetail(hero.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="margin-left">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+
+  <app-content-sidebar [title]="'#' + activedHero?.id + ' ' + activedHero?.name" [open]="activedHero">
+    <div class="padding">
+      <form class="example-form" *ngIf="activedHero">
+        <mat-form-field>
+          <input matInput name="name" placeholder="Name" [(ngModel)]="activedHero.name">
+        </mat-form-field>
+      </form>
+      <button (click)="save()">Save</button>
+    </div>
+  </app-content-sidebar>
+
+</div>

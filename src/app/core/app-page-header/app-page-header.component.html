@@ -1,0 +1,10 @@
+<div class="page-header">
+  <h2>
+    {{title}}
+    <small *ngIf="subtitle">{{subtitle}}</small>
+  </h2>
+  <div class="toolbar">
+    <ng-content></ng-content>
+  </div>
+</div>
+<mat-divider></mat-divider>

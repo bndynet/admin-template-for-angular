@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  text-align: center;
+  line-height: 4rem;
+  padding: 2rem 5rem;
+
+  .mat-icon {
+    display: inline-block;
+    width: 8rem;
+    height: 8rem;
+    font-size: 8rem;
+  }
+}

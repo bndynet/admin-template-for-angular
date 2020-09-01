@@ -1,0 +1,47 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <div>
+      <button mat-icon-button>
+        <mat-icon (click)="toggleMenu()">menu</mat-icon>
+      </button>
+      <h1></h1>
+      <span class="menu-spacer"></span>
+    </div>
+    <nav class="main">
+      <a mat-button [routerLink]="'/heroes'">Heroes</a>
+      <a mat-button [routerLink]="'/404'"> 404 </a>
+    </nav>
+    <nav>
+      <button mat-icon-button matBadge="32" matBadgeColor="accent" [matMenuTriggerFor]="menuMessage">
+        <mat-icon>message</mat-icon>
+      </button>
+      <mat-menu #menuMessage="matMenu">
+        <button mat-menu-item *ngFor="let message of messages">
+          <mat-icon>email</mat-icon>
+          <span [matTooltip]="message.title">{{message.title}}</span>
+        </button>
+      </mat-menu>
+
+
+      <button mat-icon-button class="avatar" [matMenuTriggerFor]="menuAvatar">
+        <img src="https://static.bndy.net/images/logo.png" />
+      </button>
+      <mat-menu class="avatar-menus" #menuAvatar="matMenu">
+        <div class="avatar-wrapper">
+          <img src="https://static.bndy.net/images/logo.png" />
+          <div class="font-lg">Bendy Zhang</div>
+          <div class="text-muted">Web Developer</div>
+        </div>
+        <mat-divider></mat-divider>
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Your Profile</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>exit_to_application</mat-icon>
+          <span>Sign Out</span>
+        </button>
+      </mat-menu>
+    </nav>
+  </mat-toolbar-row>
+</mat-toolbar>

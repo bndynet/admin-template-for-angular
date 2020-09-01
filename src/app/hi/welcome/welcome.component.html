@@ -1,0 +1,16 @@
+<app-page-header title="Hello World"
+ [subtitle]="'Guide you to use this framework.'"></app-page-header>
+<div class="page-container">
+  <app-page-loading *ngIf="pageLoading"></app-page-loading>
+  <section>
+    <h2>Interactive</h2>
+    <div>
+      <button mat-raised-button (click)="toggleRequesting()">Toggle Requesting</button>
+      <button mat-raised-button (click)="pageLoading=!pageLoading">Toggle Page Loading</button>
+      <button mat-raised-button (click)="showInfo('Information')">Show Information</button>
+      <button mat-raised-button (click)="showSuccess('Success')">Show Success</button>
+      <button mat-raised-button (click)="showWarning('Warning')">Show Warning</button>
+      <button mat-raised-button (click)="showError('Error')">Show Error</button>
+    </div>
+  </section>
+</div>

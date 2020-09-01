@@ -1,0 +1,10 @@
+<mat-drawer #root class="container" [opened]="open" mode="over" position="end">
+  <header>
+    <h2>{{title}}</h2>
+    <button mat-icon-button class="font-lg" aria-label="Close" (click)="close()">
+      &times;
+    </button>
+  </header>
+  <mat-divider></mat-divider>
+  <ng-content></ng-content>
+</mat-drawer>
