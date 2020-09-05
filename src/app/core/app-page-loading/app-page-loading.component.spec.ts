@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppLoadingComponent } from './app-loading.component';
+import { AppPageLoadingComponent } from './app-page-loading.component';
 
 describe('AppLoadingComponent', () => {
-  let component: AppLoadingComponent;
-  let fixture: ComponentFixture<AppLoadingComponent>;
+  let component: AppPageLoadingComponent;
+  let fixture: ComponentFixture<AppPageLoadingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AppLoadingComponent ]
+      declarations: [ AppPageLoadingComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppLoadingComponent);
+    fixture = TestBed.createComponent(AppPageLoadingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
