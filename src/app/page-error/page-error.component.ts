@@ -3,11 +3,11 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { httpStatusMap } from '../app-types';
 
 @Component({
-  selector: 'app-page-not-found',
-  templateUrl: './page-not-found.component.html',
-  styleUrls: ['./page-not-found.component.scss']
+  selector: 'app-page-error',
+  templateUrl: './page-error.component.html',
+  styleUrls: ['./page-error.component.scss']
 })
-export class PageNotFoundComponent implements OnInit {
+export class PageErrorComponent implements OnInit {
 
   public code: number;
   public title: string;
