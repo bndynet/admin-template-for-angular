@@ -1,3 +1,9 @@
+export interface UserEntity {
+  name: string;
+  title: string;
+  avatar: string;
+}
+
 export interface MessageEntity {
   title: string;
   createdAt?: string;

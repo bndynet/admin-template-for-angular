@@ -10,6 +10,7 @@ import { EventsService } from 'src/app/_services';
 export class AppContentSidebarComponent implements OnInit, OnChanges {
   @Input() title: string;
   @Input() open: boolean;
+  @Input() progressShown: boolean;
   @Output() closed = new EventEmitter();
   @ViewChild('root') rootElement: MatDrawer;
 
@@ -34,5 +35,13 @@ export class AppContentSidebarComponent implements OnInit, OnChanges {
     this.events.closeContentSidebar();
     this.rootElement.close();
     this.closed.emit();
+  }
+
+  showProgress(): void {
+    this.progressShown = true;
+  }
+
+  closeProgress(): void {
+    this.progressShown = false;
   }
 }

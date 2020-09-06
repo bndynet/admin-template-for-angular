@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageEntity } from 'src/app/app-types';
-import { MessageService } from 'src/app/_services';
+import { MessageEntity, UserEntity } from 'src/app/app-types';
+import { AuthService, EventsService, MessageService } from 'src/app/_services';
 
 @Component({
   selector: 'app-navbar',
@@ -10,12 +10,20 @@ import { MessageService } from 'src/app/_services';
 export class AppNavbarComponent implements OnInit {
 
   public messages: MessageEntity[];
+  public userInfo: UserEntity;
 
   constructor(
+    private auth: AuthService,
+    private events: EventsService,
     private messageService: MessageService,
   ) { }
 
   ngOnInit(): void {
+    this.auth.getUserInfo().subscribe(
+      res => {
+        this.userInfo = res;
+      }
+    );
     this.messageService.getMessage().subscribe(
       res => {
         this.messages = res;
@@ -23,7 +31,7 @@ export class AppNavbarComponent implements OnInit {
     );
   }
 
-  toggleMenu(): void {
-
+  toggleSidebar(): void {
+    this.events.toggleSidebar();
   }
 }

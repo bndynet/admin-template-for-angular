@@ -1,4 +1,4 @@
-<mat-drawer #root class="container" [opened]="open" mode="over" position="end">
+<mat-drawer #root [opened]="open" mode="over" position="end">
   <header>
     <h2>{{title}}</h2>
     <button mat-icon-button class="font-lg" aria-label="Close" (click)="close()">
@@ -6,5 +6,8 @@
     </button>
   </header>
   <mat-divider></mat-divider>
-  <ng-content></ng-content>
+  <div class="container">
+    <mat-progress-bar mode="indeterminate" color="primary" *ngIf="progressShown"></mat-progress-bar>
+    <ng-content></ng-content>
+  </div>
 </mat-drawer>

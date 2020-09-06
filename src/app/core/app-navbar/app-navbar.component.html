@@ -1,12 +1,13 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <div>
-      <button mat-icon-button>
-        <mat-icon (click)="toggleMenu()">menu</mat-icon>
-      </button>
-      <h1></h1>
-      <span class="menu-spacer"></span>
+    <div class="logo-wrapper">
+      <img class="logo" src="https://static.bndy.net/images/logo_white.png" />
     </div>
+    <mat-divider [vertical]="true"></mat-divider>
+    <div class="spacer vertical"></div>
+    <button mat-icon-button (click)="toggleSidebar()">
+      <mat-icon>menu</mat-icon>
+    </button>
     <nav class="main">
       <a mat-button [routerLink]="'/heroes'">Heroes</a>
       <a mat-button [routerLink]="'/404'"> 404 </a>
@@ -24,13 +25,13 @@
 
 
       <button mat-icon-button class="avatar" [matMenuTriggerFor]="menuAvatar">
-        <img src="https://static.bndy.net/images/logo.png" />
+        <img [src]="userInfo.avatar" [matTooltip]="userInfo.name" *ngIf="userInfo" />
       </button>
-      <mat-menu class="avatar-menus" #menuAvatar="matMenu">
+      <mat-menu class="avatar-menus" #menuAvatar="matMenu" [hidden]="!userInfo">
         <div class="avatar-wrapper">
-          <img src="https://static.bndy.net/images/logo.png" />
-          <div class="font-lg">Bendy Zhang</div>
-          <div class="text-muted">Web Developer</div>
+          <img [src]="userInfo?.avatar" />
+          <div class="font-lg">{{userInfo?.name}}</div>
+          <div class="text-muted">{{userInfo?.title}}</div>
         </div>
         <mat-divider></mat-divider>
         <button mat-menu-item>

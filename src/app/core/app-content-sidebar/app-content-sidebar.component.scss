@@ -1,20 +1,37 @@
-.container {
-  width: 600px;
+::ng-deep .mat-drawer-inner-container {
+  display: flex;
+  flex-direction: column;
+}
 
-  &.mat-drawer {
-    position: fixed;
-    top: 64px;
+.mat-progress-bar {
+  position: fixed;
+}
+
+header {
+  display: flex;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+
+  h2 {
+    flex: 1;
+    margin: 0;
+    line-height: 2em;
   }
+}
 
-  header {
-    display: flex;
-    padding: 0.5rem 0.5rem 0.5rem 1rem;
+.container {
+  flex-grow: 1;
+  width: 600px;
+  overflow: auto;
+  margin-bottom: 53px;
+}
 
-    h2 {
-      flex: 1;
-      //padding: 1rem 0.5rem;
-      margin: 0;
-      line-height: 2em;
-    }
+::ng-deep {
+  footer,
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 2rem);
+    border-top: solid 1px rgba(0, 0, 0, 0.12);
+    padding: 0.5rem 1rem;
   }
 }

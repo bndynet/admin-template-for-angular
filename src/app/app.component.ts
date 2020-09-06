@@ -38,10 +38,16 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.events
-      .getContentSidebarToggleEvent()
+      .contentSidebarToggleEvent
       .pipe(delay(100))
       .subscribe((opened: boolean) => {
         this.openedContentSidebar = opened;
+      });
+
+    this.events
+      .sidebarToggleEvent
+      .subscribe(() => {
+        this.toggleSidebar();
       });
 
     this.notification.event.subscribe((options: NotificationOptions) => {

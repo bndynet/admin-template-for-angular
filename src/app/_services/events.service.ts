@@ -8,21 +8,21 @@ export class EventsService {
 
   private contentSidebarOpenedSource = new Subject<boolean>();
   private contentSidebarOpened$ = this.contentSidebarOpenedSource.asObservable();
-  private contentSidebarToggle = new EventEmitter<boolean>();
-
+  contentSidebarToggleEvent = new EventEmitter<boolean>();
+  sidebarToggleEvent = new EventEmitter();
 
 
   constructor() { }
 
   openContentSidebar(): void {
-    this.contentSidebarToggle.emit(true);
+    this.contentSidebarToggleEvent.emit(true);
   }
 
   closeContentSidebar(): void {
-    this.contentSidebarToggle.emit(false);
+    this.contentSidebarToggleEvent.emit(false);
   }
 
-  getContentSidebarToggleEvent(): EventEmitter<boolean> {
-    return this.contentSidebarToggle;
+  toggleSidebar(): void {
+    this.sidebarToggleEvent.emit();
   }
 }

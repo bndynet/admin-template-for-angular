@@ -45,14 +45,24 @@
   </div>
 
 
-  <app-content-sidebar [title]="'#' + activedHero?.id + ' ' + activedHero?.name" [open]="activedHero">
-    <div class="padding">
-      <form class="example-form" *ngIf="activedHero">
+  <app-content-sidebar #contentSidebar
+  [title]="'#' + activedHero?.id + ' ' + activedHero?.name"
+  [progressShown]="saving"
+  [open]="activedHero">
+    <div class="padding" style="background-color: #efefef;">
+      <form *ngIf="activedHero" style="height: 2000px;">
         <mat-form-field>
           <input matInput name="name" placeholder="Name" [(ngModel)]="activedHero.name">
         </mat-form-field>
       </form>
-      <button (click)="save()">Save</button>
+    </div>
+    <div class="footer row">
+      <div class="fill text-block">
+        Here to place footer.
+      </div>
+      <div class="right">
+        <button mat-raised-button color="primary" [disabled]="saving" (click)="save()">Save</button>
+      </div>
     </div>
   </app-content-sidebar>
 
