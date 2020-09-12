@@ -18,7 +18,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let hero of heroes">
+          <tr *ngFor="let hero of heroes" [ngClass]="{active: activedHero && hero.id === activedHero.id}">
             <td>{{hero.id}}</td>
             <td>{{hero.name}}</td>
             <td>
@@ -48,7 +48,8 @@
   <app-content-sidebar #contentSidebar
   [title]="'#' + activedHero?.id + ' ' + activedHero?.name"
   [progressShown]="saving"
-  [open]="activedHero">
+  [open]="activedHero"
+  (closed)="onClosedContentSidebar()">
     <div class="padding" style="background-color: #efefef;">
       <form *ngIf="activedHero" style="height: 2000px;">
         <mat-form-field>

@@ -17,9 +17,9 @@
         <mat-icon>message</mat-icon>
       </button>
       <mat-menu #menuMessage="matMenu">
-        <button mat-menu-item *ngFor="let message of messages">
+        <button mat-menu-item *ngFor="let message of messages" [matTooltip]="message.title">
           <mat-icon>email</mat-icon>
-          <span [matTooltip]="message.title">{{message.title}}</span>
+          <span>{{message.title}}</span>
         </button>
       </mat-menu>
 

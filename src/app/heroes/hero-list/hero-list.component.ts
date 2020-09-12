@@ -47,4 +47,8 @@ export class HeroListComponent implements OnInit {
       this.notification.success('Save Successfully.');
     });
   }
+
+  onClosedContentSidebar(): void {
+    this.activedHero = null;
+  }
 }
