@@ -30,7 +30,7 @@
               </a>
             </td>
             <td class="no-padding">
-              <button mat-icon-button color="primary" (click)="gotoDetail(hero.id)">
+              <button mat-icon-button color="primary" class="btn-edit" (click)="gotoDetail(hero.id)">
                 <mat-icon>edit</mat-icon>
               </button>
             </td>
@@ -45,11 +45,9 @@
   </div>
 
 
-  <app-content-sidebar #contentSidebar
-  [title]="'#' + activedHero?.id + ' ' + activedHero?.name"
-  [progressShown]="saving"
-  [open]="activedHero"
-  (closed)="onClosedContentSidebar()">
+  <app-content-sidebar #contentSidebar elementsToOpen=".btn-edit"
+    [title]="'#' + activedHero?.id + ' ' + activedHero?.name" [progressShown]="saving" [open]="activedHero"
+    (closed)="onClosedContentSidebar()">
     <div class="padding" style="background-color: #efefef;">
       <form *ngIf="activedHero" style="height: 2000px;">
         <mat-form-field>
