@@ -1,9 +1,7 @@
-import { animation } from '@angular/animations';
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
-import { pipe } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { slideInAnimation } from './animations';
 import { NotificationService, NotificationOptions, EventsService, StatusService, Status } from './_services';
@@ -18,14 +16,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sidebar') sidebarRef: MatSidenav;
 
-  title = 'Angular Starter';
-  showFiller = false;
   sidebarHasBackdrop = false;
   sidebarMode = 'side';
   sidebarOpened = true;
-
-  openedContentSidebar = false;
-
+  contentSidebarOpened = false;
   showProgressbar = false;
 
   constructor(
@@ -41,7 +35,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       .contentSidebarToggleEvent
       .pipe(delay(100))
       .subscribe((opened: boolean) => {
-        this.openedContentSidebar = opened;
+        this.contentSidebarOpened = opened;
       });
 
     this.events
@@ -71,7 +65,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.openedContentSidebar = false;
+        this.contentSidebarOpened = false;
       }
     });
   }

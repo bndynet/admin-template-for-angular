@@ -18,7 +18,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 
-const uiModules = [
+export const uiModules = [
   FormsModule,
   MatBadgeModule,
   MatButtonModule,

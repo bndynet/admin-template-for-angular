@@ -27,7 +27,7 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: false,
     browsers: ['Edge'], // Chrome
-    singleRun: false,
+    singleRun: true,
     restartOnFileChange: true
   });
 };
