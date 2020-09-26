@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
+// @import "~@angular/material/prebuilt-themes/purple-green.css";
+@import "./styles.settings.scss";
+
 html,
 body {
   height: 100%;
@@ -150,4 +153,10 @@ table {
       font-size: 1rem;
     }
   }
+}
+
+
+/* overwrite mertial stylse */
+.mat-toolbar-row, .mat-toolbar-single-row {
+  height: $navbar-height;
 }

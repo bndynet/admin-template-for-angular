@@ -1,4 +1,4 @@
-// @import "~@angular/material/prebuilt-themes/purple-green.css";
+@import "../styles.settings.scss";
 
 :host {
   display: flex;
@@ -14,11 +14,21 @@
 
     .mat-sidenav-content {
       &.content-sidebar-opened {
-        overflow-y: hidden;
+        -ms-overflow-style: none; /* IE 10+ */
+        scrollbar-width: none; /* Firefox */
+
+        &::-webkit-scrollbar {
+          display: none; /* Chrome Safari */
+        }
       }
 
       &.mat-drawer-content {
         overflow-x: hidden;
+      }
+
+      ::ng-deep .mat-drawer {
+        position: fixed;
+        top: $navbar-height;
       }
     }
   }
