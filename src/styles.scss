@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
 // @import "~@angular/material/prebuilt-themes/purple-green.css";
-@import "./styles.settings.scss";
+@import "./variables";
+@import "./theme";
 
 html,
 body {
@@ -60,29 +61,29 @@ h7 {
 }
 
 .notification-success {
-  color: #ffffff;
-  background-color: #28a745;
+  color: #ffffff !important;
+  background-color: #28a745 !important;
 
   .mat-button-wrapper {
-    color: #dddddd;
+    color: #dddddd !important;
   }
 }
 
 .notification-warn {
-  color: #343a40;
-  background-color: #ffc107;
+  color: #343a40 !important;
+  background-color: #ffc107 !important;
 
   .mat-button-wrapper {
-    color: #343a40;
+    color: #343a40 !important;
   }
 }
 
 .notification-error {
-  color: #ffffff;
-  background-color: #dc3545;
+  color: #ffffff !important;
+  background-color: #dc3545 !important;
 
   .mat-button-wrapper {
-    color: #dddddd;
+    color: #dddddd !important;
   }
 }
 
