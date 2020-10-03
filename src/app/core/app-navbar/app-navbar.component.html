@@ -16,7 +16,8 @@
         <mat-icon>message</mat-icon>
       </button>
       <mat-menu #menuMessage="matMenu">
-        <button mat-menu-item *ngFor="let message of messages" [matTooltip]="message.title">
+        <button mat-menu-item *ngFor="let message of messages" [matTooltip]="message.title"
+          (click)="viewMessage(message)">
           <mat-icon>email</mat-icon>
           <span>{{message.title}}</span>
         </button>
@@ -37,7 +38,7 @@
           <mat-icon>settings</mat-icon>
           <span>Your Profile</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="logout()">
           <mat-icon>exit_to_application</mat-icon>
           <span>Sign Out</span>
         </button>

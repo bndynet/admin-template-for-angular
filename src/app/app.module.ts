@@ -11,11 +11,13 @@ import { CoreModule } from './core/core.module';
 import { HeroesModule } from './heroes/heroes.module';
 import { HiModule } from './hi/hi.module';
 import { PageErrorComponent  } from './page-error/page-error.component';
+import { DialogComponent } from './common/dialog/dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageErrorComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,

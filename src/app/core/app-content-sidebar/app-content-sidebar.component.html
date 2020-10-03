@@ -1,7 +1,7 @@
 <mat-drawer #root [opened]="open" mode="over" position="end">
   <header>
     <h2>{{title}}</h2>
-    <button mat-icon-button class="font-lg" aria-label="Close" (click)="close()">
+    <button mat-icon-button class="font-lg" aria-label="Close" (click)="close()" tabindex="-1">
       &times;
     </button>
   </header>

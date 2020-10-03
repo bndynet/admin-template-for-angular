@@ -17,6 +17,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 export const uiModules = [
   FormsModule,
@@ -36,6 +37,7 @@ export const uiModules = [
   MatProgressSpinnerModule,
   MatMenuModule,
   MatTooltipModule,
+  MatDialogModule,
 ];
 
 @NgModule({
@@ -48,7 +50,7 @@ export const uiModules = [
     ...uiModules,
   ],
   providers: [
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {horizontalPosition: 'right'}}
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {horizontalPosition: 'right'}},
   ]
 })
 export class AppUiModule { }

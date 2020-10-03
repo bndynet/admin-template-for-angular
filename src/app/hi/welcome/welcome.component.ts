@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, StatusService } from 'src/app/_services';
+import { AppService } from 'src/app/_services/app.service';
 
 @Component({
   selector: 'app-welcome',
@@ -8,10 +9,11 @@ import { NotificationService, StatusService } from 'src/app/_services';
 })
 export class WelcomeComponent implements OnInit {
 
-  private requesting = true;
+  private requesting = false;
   public pageLoading = false;
 
   constructor(
+    private app: AppService,
     private status: StatusService,
     private notification: NotificationService,
   ) { }
@@ -39,5 +41,21 @@ export class WelcomeComponent implements OnInit {
   }
   showError(msg: string): void {
     this.notification.error(msg);
+  }
+
+  alert(): void {
+    this.app.alert('Alert Dialog', 'This is an alert dialog.', () => {
+      this.notification.info('Done');
+    });
+  }
+  confirm(): void {
+    this.app.confirm('Confirm Dialog', 'This is a confirm dialog.', () => {
+      this.notification.info('Done');
+    });
+  }
+  delete(): void {
+    this.app.deleteConfirm(() => {
+      this.notification.info('Done');
+    });
   }
 }

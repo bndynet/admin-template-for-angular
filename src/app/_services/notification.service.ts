@@ -1,18 +1,19 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AppService } from './app.service';
 import { EventsService } from './events.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
-
   public event = new EventEmitter<NotificationOptions>();
 
   constructor(
-    private events: EventsService
-  ) {
-
-  }
+    private app: AppService,
+    private events: EventsService,
+    private dialog: MatDialog
+  ) {}
 
   success(msg: string): void {
     this.event.emit({

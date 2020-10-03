@@ -1,0 +1,40 @@
+:host {
+  ::ng-deep.mat-dialog-content {
+      margin-bottom: 0.5rem;
+  }
+}
+
+.container {
+  position: relative;
+
+  h1 {
+    text-align: center;
+  }
+
+  .btn-close {
+    position: absolute;
+    right: 0;
+    margin-top: -10px;
+    margin-right: -10px;
+  }
+
+  .item-title {
+    margin-bottom: 0.5rem;
+
+    label {
+      font-weight: bold;
+      font-size: 1.25rem;
+    }
+  }
+
+  .item-content {
+    margin-bottom: 1rem;
+  }
+
+  &.has-close-icon {
+    h1 {
+      padding-right: 2rem;
+      text-align: left;
+    }
+  }
+}

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { delay } from 'rxjs/operators';
 import { AppContentSidebarComponent } from 'src/app/core/app-content-sidebar/app-content-sidebar.component';
 import { NotificationService } from 'src/app/_services';
+import { AppService } from 'src/app/_services/app.service';
 
 @Component({
   selector: 'app-hero-list',
@@ -21,6 +22,7 @@ export class HeroListComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private app: AppService,
     private notification: NotificationService,
   ) { }
 
@@ -45,6 +47,12 @@ export class HeroListComponent implements OnInit {
       this.heroes[index] = Object.assign({}, this.activedHero);
       this.activedHero = null;
       this.notification.success('Save Successfully.');
+    });
+  }
+
+  remove(hero: any): void {
+    this.app.deleteConfirm(() => {
+      alert('ok');
     });
   }
 

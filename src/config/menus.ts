@@ -1,7 +1,7 @@
 export const menus = [
   {
     icon: 'star',
-    text: 'Getting Started',
+    text: 'Get Started',
     link: '/hi',
   },
   {
