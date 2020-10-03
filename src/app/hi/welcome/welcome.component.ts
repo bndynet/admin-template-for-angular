@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, StatusService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
+import { DialogFormComponent } from '../dialog-form/dialog-form.component';
 
 @Component({
   selector: 'app-welcome',
@@ -44,18 +45,21 @@ export class WelcomeComponent implements OnInit {
   }
 
   alert(): void {
-    this.app.alert('Alert Dialog', 'This is an alert dialog.', () => {
+    this.app.dialog.alert('Alert Dialog', 'This is an alert dialog.', () => {
       this.notification.info('Done');
     });
   }
   confirm(): void {
-    this.app.confirm('Confirm Dialog', 'This is a confirm dialog.', () => {
+    this.app.dialog.confirm('Confirm Dialog', 'This is a confirm dialog.', () => {
       this.notification.info('Done');
     });
   }
   delete(): void {
-    this.app.deleteConfirm(() => {
+    this.app.dialog.deleteConfirm(() => {
       this.notification.info('Done');
     });
+  }
+  formDialog(): void {
+    this.app.dialog.open(DialogFormComponent, {}, () => {});
   }
 }

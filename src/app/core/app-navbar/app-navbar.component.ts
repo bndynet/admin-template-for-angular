@@ -43,14 +43,13 @@ export class AppNavbarComponent implements OnInit {
   }
 
   viewMessage(message: any): void {
-    this.app.alert(`#${message.id} ` + message.title, message.content, () => {
+    this.app.dialog.alert(`#${message.id} ` + message.title, message.content, () => {
       // TODO: handle read message
       this.notificationService.info('You have read this message.');
     }, {
       contentAlign: 'start',
-      okHidden: true,
-      cancelHidden: false,
       cancelLabel: 'Close',
+      okLabel: '',
       actionsAlign: 'end',
     });
   }

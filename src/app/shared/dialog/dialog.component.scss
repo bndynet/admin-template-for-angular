@@ -11,11 +11,22 @@
     text-align: center;
   }
 
-  .btn-close {
+  .corner-icon {
     position: absolute;
-    right: 0;
-    margin-top: -10px;
-    margin-right: -10px;
+  }
+
+  .mat-icon-button {
+    &.corner-icon {
+      top: -10px;
+      right: -10px;
+    }
+  }
+
+  .mat-spinner {
+    &.corner-icon {
+      top: -5px;
+      right: -5px;
+    }
   }
 
   .item-title {

@@ -14,6 +14,9 @@ export class DialogComponent {
   @Input() actionsAlign = 'end';
   @Input() contentAlign = 'start';
   @Input() noActions = false;
+  @Input() okLabel: string;
+  @Input() cancelLabel: string;
+  @Input() loading: boolean;
   @Output() closed = new EventEmitter();
 
   constructor(
@@ -25,8 +28,8 @@ export class DialogComponent {
     this.showCloseIcon = ifUndefined(dialogData.showCloseIcon, this.showCloseIcon);
     this.actionsAlign = ifUndefined(dialogData.actionsAlign, this.actionsAlign);
     this.contentAlign = ifUndefined(dialogData.contentAlign, this.contentAlign);
-
-    console.debug(this);
+    this.okLabel = ifUndefined(dialogData.okLabel, this.okLabel);
+    this.cancelLabel = ifUndefined(dialogData.cancelLabel, this.cancelLabel);
   }
 
   onClose(): void {
@@ -44,10 +47,7 @@ export interface DialogConfig extends MatDialogConfig {
   showCloseIcon?: boolean;
 
   cancelLabel?: string;
-  cancelHidden?: boolean;
-
   okLabel?: string;
-  okHidden?: boolean;
   okColor?: string;
   closeCallback?: any;
 }

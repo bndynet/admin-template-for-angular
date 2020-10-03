@@ -51,7 +51,7 @@ export class HeroListComponent implements OnInit {
   }
 
   remove(hero: any): void {
-    this.app.deleteConfirm(() => {
+    this.app.dialog.deleteConfirm(() => {
       alert('ok');
     });
   }

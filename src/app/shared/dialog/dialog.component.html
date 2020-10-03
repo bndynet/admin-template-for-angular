@@ -1,0 +1,23 @@
+<div class="container" [ngClass]="{'has-close-icon': showCloseIcon}">
+  <h1 mat-dialog-title [align]="showCloseIcon ? 'start' : 'center'">{{title}}</h1>
+
+  <div mat-dialog-content [align]="contentAlign">
+    <div [innerHTML]="dialogData.content"></div>
+    <ng-content select="[body]"></ng-content>
+  </div>
+
+  <div mat-dialog-actions [align]="actionsAlign" *ngIf="!noActions">
+    <ng-content select="[footer]"></ng-content>
+    <button mat-button [mat-dialog-close]="false" tabindex="1000" *ngIf="cancelLabel">
+      {{cancelLabel || 'Cancel'}}
+    </button>
+    <button mat-raised-button [color]="dialogData.okColor || 'primary'" [mat-dialog-close]="true" *ngIf="okLabel" cdkFocusInitial>
+      {{okLabel || 'OK'}}
+    </button>
+  </div>
+
+  <button mat-icon-button class="corner-icon" (click)="onClose()" *ngIf="showCloseIcon && !loading">
+    <mat-icon>close</mat-icon>
+  </button>
+  <mat-spinner class="corner-icon" diameter="30" *ngIf="loading"></mat-spinner>
+</div>

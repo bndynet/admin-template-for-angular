@@ -1,0 +1,23 @@
+<app-dialog title="Form" [showCloseIcon]="true" [loading]="pending">
+  <ng-container body>
+    <form style="width: 600px;">
+      <mat-form-field class="full-width">
+        <mat-label>Name</mat-label>
+        <input name="name" matInput placeholder="Your name..." [(ngModel)]="name">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea rows="8" name="des" matInput placeholder="Your name..."></textarea>
+      </mat-form-field>
+    </form>
+    <h3 *ngIf="name">Hi {{name}}!</h3>
+  </ng-container>
+  <ng-container footer>
+    <button mat-raised-button (click)="save()" [disabled]="pending">
+      Cancel
+    </button>
+    <button mat-raised-button color="primary" (click)="save()" [disabled]="pending">
+      Save
+    </button>
+  </ng-container>
+</app-dialog>
