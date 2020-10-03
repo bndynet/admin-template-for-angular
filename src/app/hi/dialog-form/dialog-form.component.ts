@@ -21,12 +21,17 @@ export class DialogFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  close(): void {
+    this.dialog.close();
+  }
+
   save(): void {
     this.pending = true;
     this.app.status.requesting();
     setTimeout(() => {
+      this.close();
       this.pending = false;
-      this.dialog.close();
       this.app.status.requested();
       this.app.notificaiton.info(`Saving ${name} ...`);
     }, 3000);

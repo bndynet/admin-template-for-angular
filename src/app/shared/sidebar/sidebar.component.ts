@@ -3,10 +3,10 @@ import { menus } from 'src/config/menus';
 
 @Component({
   selector: 'app-sidebar',
-  templateUrl: './app-sidebar.component.html',
-  styleUrls: ['./app-sidebar.component.scss']
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.scss']
 })
-export class AppSideBarComponent implements OnInit {
+export class SideBarComponent implements OnInit {
 
   links: any[] = [];
 

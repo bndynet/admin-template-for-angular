@@ -13,7 +13,7 @@
     <h3 *ngIf="name">Hi {{name}}!</h3>
   </ng-container>
   <ng-container footer>
-    <button mat-raised-button (click)="save()" [disabled]="pending">
+    <button mat-raised-button (click)="close()" [disabled]="pending">
       Cancel
     </button>
     <button mat-raised-button color="primary" (click)="save()" [disabled]="pending">

@@ -12,6 +12,11 @@ export const menus = [
   {
     icon: 'warning',
     text: 'Error Page',
+    link: '/error',
+  },
+  {
+    icon: 'warning',
+    text: '404 Page',
     link: '/404',
   },
 ];

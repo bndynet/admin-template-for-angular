@@ -1,0 +1,5 @@
+<div class="container" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+  <h1 *ngIf="title">{{title}}</h1>
+  <div *ngIf="description" class="secondary-text">{{description}}</div>
+</div>

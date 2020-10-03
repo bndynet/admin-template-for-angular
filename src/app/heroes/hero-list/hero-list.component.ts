@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { delay } from 'rxjs/operators';
-import { AppContentSidebarComponent } from 'src/app/core/app-content-sidebar/app-content-sidebar.component';
+import { ContentSidebarComponent } from '../../shared/content-sidebar/content-sidebar.component';
 import { NotificationService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
 
@@ -16,19 +16,21 @@ export class HeroListComponent implements OnInit {
   public heroes: any[] = [];
   public activedHero: any;
   public saving = false;
+  public loading = false;
 
-  @ViewChild('contentSidebar') contentSidebarRef: AppContentSidebarComponent;
+  @ViewChild('contentSidebar') contentSidebarRef: ContentSidebarComponent;
 
   constructor(
     private http: HttpClient,
-    private router: Router,
     private app: AppService,
     private notification: NotificationService,
   ) { }
 
   ngOnInit(): void {
-    this.http.get(`/assets/heroes.json`).subscribe(
+    this.loading = true;
+    this.http.get(`/assets/heroes.json`).pipe(delay(2000)).subscribe(
       (res: any[]) => {
+        this.loading = false;
         this.heroes = res;
       }
     );

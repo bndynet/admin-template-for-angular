@@ -1,9 +1,10 @@
-:host {
+.container {
   display: block;
   text-align: center;
-  padding: 1rem 0;
+  padding: 5rem 0;
 
   .mat-spinner {
     display: inline-block;
+    margin-bottom: 1rem;
   }
 }

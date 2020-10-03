@@ -6,7 +6,7 @@ import {
   MatDialogConfig,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { merge } from 'lodash';
+import { merge } from 'lodash-es';
 import { Observable, of } from 'rxjs';
 import { DialogComponent, DialogConfig } from '../shared/dialog/dialog.component';
 import { NotificationService } from './notification.service';

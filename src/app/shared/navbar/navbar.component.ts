@@ -6,10 +6,10 @@ import { menus } from 'src/config/menus';
 
 @Component({
   selector: 'app-navbar',
-  templateUrl: './app-navbar.component.html',
-  styleUrls: ['./app-navbar.component.scss']
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
 })
-export class AppNavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit {
 
   public messages: MessageEntity[];
   public userInfo: UserEntity;

@@ -9,7 +9,7 @@ import { httpStatusMap } from '../app-types';
 })
 export class PageErrorComponent implements OnInit {
 
-  public code: number;
+  public code: number | null;
   public title: string;
   public description: string;
 
@@ -27,8 +27,9 @@ export class PageErrorComponent implements OnInit {
           this.description = statusEntity.description;
         }
       } else {
-          this.title = 'Something gone wrong',
-          this.description = '';
+        this.code = null;
+        this.title = 'Something gone wrong',
+        this.description = '';
       }
 
       if (params.get('title')) {

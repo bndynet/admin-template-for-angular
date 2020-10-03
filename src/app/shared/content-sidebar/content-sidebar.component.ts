@@ -4,10 +4,10 @@ import { EventsService } from 'src/app/_services';
 
 @Component({
   selector: 'app-content-sidebar',
-  templateUrl: './app-content-sidebar.component.html',
-  styleUrls: ['./app-content-sidebar.component.scss']
+  templateUrl: './content-sidebar.component.html',
+  styleUrls: ['./content-sidebar.component.scss']
 })
-export class AppContentSidebarComponent implements OnInit, OnChanges {
+export class ContentSidebarComponent implements OnInit, OnChanges {
   @Input() title: string;
   @Input() open: boolean;
   @Input() elementsToOpen: string;
