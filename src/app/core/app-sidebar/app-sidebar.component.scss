@@ -1,4 +1,4 @@
-@import '../../../styles/variables';
+@import '../../../styles/theme';
 
 :host {
   display: block;
@@ -10,7 +10,7 @@
   }
 
   a.active {
-    border-left-color: rgba(0, 0, 0, 0.8);
+    border-left-color: $color-primary;
     background-color: rgba(0, 0, 0, 0.12);
   }
 

@@ -1,0 +1,81 @@
+@import "~@angular/material/theming";
+@import './variables';
+
+// Define the default theme (same as the example above).
+$app-primary: mat-palette($mat-indigo);
+$app-accent: mat-palette($mat-pink, A200, A100, A400);
+$app-theme: mat-light-theme($app-primary, $app-accent);
+
+$color-primary: mat-color($app-primary, default);
+$color-accent: mat-color($app-accent, default);
+
+// Define your themes.
+// The dark themes MUST includes `dark` keyword
+$themes: (
+  popular-theme: mat-light-theme(
+    mat-palette($mat-blue-grey),
+    mat-palette($mat-amber, A200, A100, A400),
+    mat-palette($mat-deep-orange)
+  ),
+  popular-theme-dark: mat-dark-theme(
+    mat-palette($mat-blue),
+    mat-palette($mat-pink, A200, A100, A400),
+    mat-palette($mat-orange)
+  )
+);
+
+@mixin register-theme($name, $theme) {
+
+  $bg: $mat-light-theme-background;
+  $fg: $mat-light-theme-foreground;
+  $primary: mat-color(map-get($theme, primary));
+
+  $text: mat-color($fg, text);
+  $hover: mat-color($bg, hover);
+  $divider: mat-color($fg, divider);
+
+  @if str-index($string: $name, $substring: "dark") != null  {
+
+    $fg: $mat-dark-theme-foreground;
+    $bg: $mat-dark-theme-background;
+
+    $text: mat-color($fg, text);
+    $hover: map-get($bg, hover);
+    $divider: mat-color($fg, divider);
+  }
+
+  $colorset: (
+    primary: $primary,
+    foreground: map-get($fg, base),
+    background: map-get($bg, background),
+    text: $text,
+    hover: $hover,
+    divider: $divider,
+  );
+
+
+  :root {
+    @each $key, $val in $colorset {
+      --#{$name}--#{$key}: #{$val};
+    }
+  }
+
+  .#{$name} {
+    @include angular-material-theme($theme);
+    @include base-style($name, $colorset);
+    @include table-style($name, $colorset);
+  }
+}
+
+@function get($theme-name, $key) {
+  @return var(--#{$theme-name}--#{$key});
+}
+
+@mixin each-themes {
+  @each $name, $theme in $themes {
+    .#{$name} {
+      @content($name, $theme);
+    }
+  }
+}
+
