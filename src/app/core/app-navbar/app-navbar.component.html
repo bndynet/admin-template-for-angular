@@ -5,12 +5,11 @@
     </div>
     <mat-divider [vertical]="true"></mat-divider>
     <div class="spacer vertical"></div>
-    <button mat-icon-button (click)="toggleSidebar()">
+    <button mat-icon-button (click)="toggleSidebar()" *ngIf="false">
       <mat-icon>menu</mat-icon>
     </button>
     <nav class="main">
-      <a mat-button [routerLink]="'/heroes'">Heroes</a>
-      <a mat-button [routerLink]="'/404'"> 404 </a>
+      <a mat-button *ngFor="let item of navs" [routerLink]="item.link">{{item.text}}</a>
     </nav>
     <nav>
       <button mat-icon-button matBadge="32" matBadgeColor="accent" [matMenuTriggerFor]="menuMessage">

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { menus } from 'src/config/menus';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,11 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppSideBarComponent implements OnInit {
 
-  showFiller = false;
+  links: any[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
+    this.links = menus;
   }
-
 }

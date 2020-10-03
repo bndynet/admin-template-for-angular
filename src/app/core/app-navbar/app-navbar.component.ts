@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageEntity, UserEntity } from 'src/app/app-types';
 import { AuthService, EventsService, MessageService } from 'src/app/_services';
+import { menus } from 'src/config/menus';
 
 @Component({
   selector: 'app-navbar',
@@ -11,6 +12,7 @@ export class AppNavbarComponent implements OnInit {
 
   public messages: MessageEntity[];
   public userInfo: UserEntity;
+  public navs: any[];
 
   constructor(
     private auth: AuthService,
@@ -19,6 +21,8 @@ export class AppNavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.navs = menus;
+
     this.auth.getUserInfo().subscribe(
       res => {
         this.userInfo = res;

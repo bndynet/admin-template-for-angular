@@ -1,5 +1,4 @@
-@import '~@angular/material/theming';
-@import '../../../variables';
+@import '../../../styles/variables';
 
 :host {
   display: block;
@@ -11,11 +10,19 @@
   }
 
   a.active {
-    border-left-color: $primary;
-    background-color: rgba(0,0,0, 0.12);
+    border-left-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.12);
   }
 
   .mat-icon {
     margin-right: 0.5rem;
+  }
+}
+
+@include each-themes using ($name, $theme: null) {
+  :host {
+    a.active {
+      border-left-color: get($name, 'primary');
+    }
   }
 }
