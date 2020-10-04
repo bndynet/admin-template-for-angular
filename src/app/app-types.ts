@@ -1,3 +1,6 @@
+export const KEY_TRACKING_ID = 'AppTrackingID';
+export const KEY_AUTHORIZATION = 'Authorization';
+
 export interface UserEntity {
   name: string;
   title: string;

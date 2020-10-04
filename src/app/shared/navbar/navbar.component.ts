@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageEntity, UserEntity } from 'src/app/app-types';
 import { AuthService, EventsService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
+import { convertMessages, convertUser } from 'src/config';
 import { menus } from 'src/config/menus';
 
 @Component({
@@ -27,20 +28,15 @@ export class NavbarComponent implements OnInit {
 
     this.auth.getUserInfo().subscribe(
       res => {
-        this.userInfo = res;
+        this.userInfo = convertUser(res);
       }
     );
 
     this.messages = [];
     this.app.getMessages().subscribe(
       res => {
-        // TODO: remove duplicated messages.
-        res.forEach(item => {
-          item.title = `#${this.messages.length} ` + item.title;
-          this.messages.splice(0, 0, item);
-          this.newMessageCount += 1;
-        });
-        this.messages = this.messages.slice(0, 50);
+        this.messages = convertMessages(res, this.messages);
+        this.newMessageCount = this.messages.filter(message => !message.read).length;
       }
     );
   }
