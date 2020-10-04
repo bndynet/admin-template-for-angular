@@ -1,8 +1,10 @@
 @import '../../../styles/theme';
 
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: $sidebar-width;
+  height: 100%;
 
   a {
     border-left: solid 5px transparent;
@@ -17,12 +19,30 @@
   .mat-icon {
     margin-right: 0.5rem;
   }
+
+  footer {
+    padding: 0.5rem 0;
+    text-align: center;
+    width: 100%;
+    font-size: 0.75rem;
+    opacity: 0.75;
+  }
+
+  ::ng-deep {
+    .mat-nav-list {
+      flex: 1;
+    }
+  }
 }
 
 @include each-themes using ($name, $theme: null) {
   :host {
     a.active {
       border-left-color: get($name, 'primary');
+    }
+
+    footer {
+      background-color: get($name, 'background');
     }
   }
 }

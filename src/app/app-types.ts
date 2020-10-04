@@ -1,6 +1,13 @@
 export const KEY_TRACKING_ID = 'AppTrackingID';
 export const KEY_AUTHORIZATION = 'Authorization';
 
+declare global {
+  interface Window {
+    APP_BUILD: string;
+    APP_VERSION: string;
+  }
+}
+
 export interface UserEntity {
   name: string;
   title: string;

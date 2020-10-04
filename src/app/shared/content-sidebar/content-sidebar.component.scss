@@ -1,37 +1,39 @@
-::ng-deep .mat-drawer-inner-container {
-  display: flex;
-  flex-direction: column;
-}
+:host {
+  ::ng-deep {
+    header {
+      display: flex;
+      padding: 0.5rem 0.5rem 0.5rem 1rem;
 
-.mat-progress-bar {
-  position: fixed;
-}
+      h2 {
+        flex: 1;
+        margin: 0;
+        line-height: 2em;
+      }
+    }
 
-header {
-  display: flex;
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
+    .container {
+      flex-grow: 1;
+      width: 600px;
+      overflow: auto;
+      margin-bottom: 53px;
+    }
 
-  h2 {
-    flex: 1;
-    margin: 0;
-    line-height: 2em;
-  }
-}
+    footer,
+    .footer {
+      position: absolute;
+      bottom: 0;
+      width: calc(100% - 2rem);
+      border-top: solid 1px rgba(0, 0, 0, 0.12);
+      padding: 0.5rem 1rem;
+    }
 
-.container {
-  flex-grow: 1;
-  width: 600px;
-  overflow: auto;
-  margin-bottom: 53px;
-}
+    .mat-progress-bar {
+      position: fixed;
+    }
 
-::ng-deep {
-  footer,
-  .footer {
-    position: absolute;
-    bottom: 0;
-    width: calc(100% - 2rem);
-    border-top: solid 1px rgba(0, 0, 0, 0.12);
-    padding: 0.5rem 1rem;
+    .mat-drawer-inner-container {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
