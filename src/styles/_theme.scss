@@ -10,7 +10,6 @@ $color-primary: mat-color($app-primary, default);
 $color-accent: mat-color($app-accent, default);
 
 // Define your themes.
-// The dark themes MUST includes `dark` keyword
 $themes: (
   popular-theme: mat-light-theme(
     mat-palette($mat-blue-grey),
@@ -25,34 +24,22 @@ $themes: (
 );
 
 @mixin register-theme($name, $theme) {
-
-  $bg: $mat-light-theme-background;
-  $fg: $mat-light-theme-foreground;
-  $primary: mat-color(map-get($theme, primary));
-
-  $text: mat-color($fg, text);
-  $hover: mat-color($bg, hover);
-  $divider: mat-color($fg, divider);
-
-  @if str-index($string: $name, $substring: "dark") != null  {
-
-    $fg: $mat-dark-theme-foreground;
-    $bg: $mat-dark-theme-background;
-
-    $text: mat-color($fg, text);
-    $hover: map-get($bg, hover);
-    $divider: mat-color($fg, divider);
-  }
-
   $colorset: (
-    primary: $primary,
-    foreground: map-get($fg, base),
-    background: map-get($bg, background),
-    text: $text,
-    hover: $hover,
-    divider: $divider,
-  );
+    primary: map-get(map-get($theme, primary), default),
+    primary-text: map-get(map-get($theme, primary), default-contrast),
+    accent: map-get(map-get($theme, accent), default),
+    accent-text: map-get(map-get($theme, accent), default-contrast),
+    warn: map-get(map-get($theme, warn), default),
+    warn-text: map-get(map-get($theme, warn), default-contrast),
 
+    foreground: map-get(map-get($theme, foreground), base),
+    text: map-get(map-get($theme, foreground), text),
+    secondary-text: map-get(map-get($theme, foreground), secondary-text),
+    divider: map-get(map-get($theme, foreground), divider),
+
+    background: map-get(map-get($theme, background), background),
+    hover: map-get(map-get($theme, background), hover),
+  );
 
   :root {
     @each $key, $val in $colorset {
@@ -60,10 +47,12 @@ $themes: (
     }
   }
 
-  .#{$name} {
-    @include angular-material-theme($theme);
-    @include base-style($name, $colorset);
-    @include table-style($name, $colorset);
+  @if $name != '' {
+    .#{$name} {
+      @include angular-material-theme($theme);
+      @include base-style($name, $colorset);
+      @include table-style($name, $colorset);
+    }
   }
 }
 
@@ -73,7 +62,11 @@ $themes: (
 
 @mixin each-themes {
   @each $name, $theme in $themes {
-    .#{$name} {
+    @if $name {
+      .#{$name} {
+        @content($name, $theme);
+      }
+    } @else {
       @content($name, $theme);
     }
   }

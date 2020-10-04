@@ -35,7 +35,7 @@
   }
 }
 
-@include each-themes using ($name, $theme: null) {
+@include each-themes using ($name, $theme) {
   :host {
     a.active {
       border-left-color: get($name, 'primary');

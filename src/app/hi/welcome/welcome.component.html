@@ -5,7 +5,18 @@
   <section>
     <h2>Interactive</h2>
     <div>
-      <button mat-raised-button (click)="toggleRequesting()">Toggle Global Progress Bar</button>
+      <button mat-raised-button (click)="toggleRequesting()">Global Progress</button>
+      <button mat-raised-button [ngClass]="{loading: buttonLoading}" (click)="buttonLoading = !buttonLoading">Loading Button</button>
+      <button mat-raised-button color="primary" [ngClass]="{loading: buttonLoading}" [disabled]="buttonLoading" (click)="buttonLoading = !buttonLoading">Loading</button>
+      <button mat-fab color="primary" [ngClass]="{loading: buttonLoading}" [disabled]="buttonLoading" (click)="buttonLoading = !buttonLoading">
+        <mat-icon>save</mat-icon>
+      </button>
+      <button mat-mini-fab color="primary" [ngClass]="{loading: buttonLoading}" [disabled]="buttonLoading" (click)="buttonLoading = !buttonLoading">
+        <mat-icon>save</mat-icon>
+      </button>
+      <button mat-icon-button color="primary" [ngClass]="{loading: buttonLoading}" [disabled]="buttonLoading" (click)="buttonLoading = !buttonLoading">
+        <mat-icon>save</mat-icon>
+      </button>
       <br />
       <br />
       <button mat-raised-button (click)="showInfo('Information')">Show Information</button>

@@ -64,7 +64,7 @@
         Here to place footer.
       </div>
       <div class="right">
-        <button mat-raised-button color="primary" [disabled]="saving" (click)="save()">Save</button>
+        <button mat-raised-button color="primary" [ngClass]="{loading: saving}" [disabled]="saving" (click)="save()">Save</button>
       </div>
     </div>
   </app-content-sidebar>

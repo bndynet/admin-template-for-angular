@@ -1,0 +1,40 @@
+@import './variables';
+
+button {
+  &.loading {
+    .mat-button-wrapper
+     {
+      color: transparent;
+    }
+    .mat-ripple {
+      &::before {
+        content: "● ● ●";
+        display: inline-block;
+        @include swing();
+      }
+    }
+
+    &.mat-fab {
+      .mat-ripple {
+        &::before {
+          content: "◠";
+          margin-top: 9px;
+          font-size: 48px;
+          @include rotate();
+        }
+      }
+    }
+
+    &.mat-icon-button,
+    &.mat-mini-fab {
+      .mat-ripple {
+        &::before {
+          content: "◠";
+          margin-top: 2px;
+          font-size: 32px;
+          @include rotate();
+        }
+      }
+    }
+  }
+}

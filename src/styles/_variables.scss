@@ -40,3 +40,24 @@ $sidebar-width: 200px;
     }
   }
 }
+
+/* animations */
+@mixin headShake {
+  animation: .5s ease-in-out 0s infinite alternate headShake
+}
+@mixin heartBeat {
+  animation: 3s ease-in-out 0s infinite alternate heartBeat
+}
+@mixin flip {
+  backface-visibility: visible;
+  animation: 2s ease-in-out 0s infinite flip
+}
+@mixin swing {
+  animation: 1s ease-in-out 0s infinite alternate swing;
+}
+@mixin rotate {
+  transform-origin: center;
+  animation: 1s ease-in-out 0s infinite rotate;
+}
+
+

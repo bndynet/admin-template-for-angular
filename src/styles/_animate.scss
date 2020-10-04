@@ -1,0 +1,95 @@
+@keyframes swing {
+  0% {
+    margin-left: -30%
+  }
+  100% {
+    margin-left: 30%
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes headShake {
+  0% {
+    transform: translateX(0);
+  }
+
+  6.5% {
+    transform: translateX(-6px) rotateY(-9deg);
+  }
+
+  18.5% {
+    transform: translateX(5px) rotateY(7deg);
+  }
+
+  31.5% {
+    transform: translateX(-3px) rotateY(-5deg);
+  }
+
+  43.5% {
+    transform: translateX(2px) rotateY(3deg);
+  }
+
+  50% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+
+  14% {
+    transform: scale(1.3);
+  }
+
+  28% {
+    transform: scale(1);
+  }
+
+  42% {
+    transform: scale(1.3);
+  }
+
+  70% {
+    transform: scale(1);
+  }
+}
+
+@keyframes flip {
+  from {
+    transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 0) rotate3d(0, 1, 0, -360deg);
+    animation-timing-function: ease-out;
+  }
+
+  40% {
+    transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 150px)
+      rotate3d(0, 1, 0, -190deg);
+    animation-timing-function: ease-out;
+  }
+
+  50% {
+    transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 150px)
+      rotate3d(0, 1, 0, -170deg);
+    animation-timing-function: ease-in;
+  }
+
+  80% {
+    transform: perspective(400px) scale3d(0.95, 0.95, 0.95) translate3d(0, 0, 0)
+      rotate3d(0, 1, 0, 0deg);
+    animation-timing-function: ease-in;
+  }
+
+  to {
+    transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 0) rotate3d(0, 1, 0, 0deg);
+    animation-timing-function: ease-in;
+  }
+}

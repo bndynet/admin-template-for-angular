@@ -25,3 +25,21 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Theming your components
+
+```scss
+@import '../../../styles/theme';
+
+@include each-themes using ($name, $theme) {
+  :host {
+    a.active {
+      border-left-color: get($name, 'primary');
+    }
+
+    footer {
+      background-color: get($name, 'background');
+    }
+  }
+}
+```

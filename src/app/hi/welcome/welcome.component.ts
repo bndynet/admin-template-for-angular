@@ -12,6 +12,7 @@ export class WelcomeComponent implements OnInit {
 
   private requesting = false;
   public pageLoading = false;
+  public buttonLoading = false;
 
   constructor(
     private app: AppService,
