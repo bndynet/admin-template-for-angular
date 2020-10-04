@@ -51,6 +51,7 @@
     }
   }
 }
+
 .avatar-wrapper {
   width: 200px;
   margin: 1rem 0;
@@ -63,3 +64,15 @@
     border-radius: 50%;
   }
 }
+
+::ng-deep.message-list {
+  max-height: 380px !important;
+
+  button {
+    &.new {
+      font-weight: bold;
+    }
+  }
+}
+
+

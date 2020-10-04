@@ -5,8 +5,10 @@ export interface UserEntity {
 }
 
 export interface MessageEntity {
+  id: string;
   title: string;
   createdAt?: string;
+  read?: boolean;
 }
 
 export const httpStatusMap = {

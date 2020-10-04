@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageEntity, UserEntity } from 'src/app/app-types';
-import { AuthService, EventsService, MessageService, NotificationService } from 'src/app/_services';
+import { AuthService, EventsService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
 import { menus } from 'src/config/menus';
 
@@ -14,13 +14,12 @@ export class NavbarComponent implements OnInit {
   public messages: MessageEntity[];
   public userInfo: UserEntity;
   public navs: any[];
+  public newMessageCount = 0;
 
   constructor(
     private app: AppService,
     private auth: AuthService,
     private events: EventsService,
-    private messageService: MessageService,
-    private notificationService: NotificationService,
   ) { }
 
   ngOnInit(): void {
@@ -31,9 +30,17 @@ export class NavbarComponent implements OnInit {
         this.userInfo = res;
       }
     );
-    this.messageService.getMessage().subscribe(
+
+    this.messages = [];
+    this.app.getMessages().subscribe(
       res => {
-        this.messages = res;
+        // TODO: remove duplicated messages.
+        res.forEach(item => {
+          item.title = `#${this.messages.length} ` + item.title;
+          this.messages.splice(0, 0, item);
+          this.newMessageCount += 1;
+        });
+        this.messages = this.messages.slice(0, 50);
       }
     );
   }
@@ -45,7 +52,9 @@ export class NavbarComponent implements OnInit {
   viewMessage(message: any): void {
     this.app.dialog.alert(`#${message.id} ` + message.title, message.content, () => {
       // TODO: handle read message
-      this.notificationService.info('You have read this message.');
+      message.read = true;
+      this.newMessageCount -= 1;
+      this.app.notificaiton.info('You have read this message.');
     }, {
       contentAlign: 'start',
       cancelLabel: 'Close',

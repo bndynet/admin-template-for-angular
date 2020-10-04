@@ -1,13 +1,12 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError, finalize, tap } from 'rxjs/operators';
-import { MessageService } from 'src/app/_services';
+import { Observable } from 'rxjs';
+import { finalize, tap } from 'rxjs/operators';
 
 @Injectable()
 export class LoggingInterceptor implements HttpInterceptor {
 
-  constructor(private message: MessageService) {}
+  constructor() {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const startTime = Date.now();
@@ -33,7 +32,7 @@ export class LoggingInterceptor implements HttpInterceptor {
         finalize(() => {
           const elapsed = Date.now() - startTime;
           const msg = `${req.method} [${statusCode}] - ${req.urlWithParams}in ${elapsed} ms.`;
-          this.message.send(msg);
+          console.debug(msg);
         })
       );
   }

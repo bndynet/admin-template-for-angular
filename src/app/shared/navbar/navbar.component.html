@@ -12,12 +12,12 @@
       <a mat-button *ngFor="let item of navs" [routerLink]="item.link">{{item.text}}</a>
     </nav>
     <nav>
-      <button mat-icon-button matBadge="32" matBadgeColor="accent" [matMenuTriggerFor]="menuMessage">
+      <button mat-icon-button [matBadge]="newMessageCount" [matBadgeHidden]="newMessageCount <= 0" matBadgeColor="accent" [matMenuTriggerFor]="menuMessage">
         <mat-icon>message</mat-icon>
       </button>
-      <mat-menu #menuMessage="matMenu">
-        <button mat-menu-item *ngFor="let message of messages" [matTooltip]="message.title"
-          (click)="viewMessage(message)">
+      <mat-menu #menuMessage="matMenu" class="message-list">
+        <button mat-menu-item *ngFor="let message of messages" [ngClass]="{'new': !message.read}"
+          [matTooltip]="message.title" (click)="viewMessage(message)">
           <mat-icon>email</mat-icon>
           <span>{{message.title}}</span>
         </button>
