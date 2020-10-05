@@ -8,6 +8,9 @@
       <button mat-raised-button (click)="toggleRequesting()">Global Progress</button>
       <button mat-raised-button [ngClass]="{loading: buttonLoading}" (click)="buttonLoading = !buttonLoading">Loading Button</button>
       <button mat-raised-button color="primary" [ngClass]="{loading: buttonLoading}" [disabled]="buttonLoading" (click)="buttonLoading = !buttonLoading">Loading</button>
+      <button mat-fab color="primary" [ngClass]="{loading: buttonLoading}" (click)="buttonLoading = !buttonLoading">
+        <mat-icon>save</mat-icon>
+      </button>
       <button mat-fab color="primary" [ngClass]="{loading: buttonLoading}" [disabled]="buttonLoading" (click)="buttonLoading = !buttonLoading">
         <mat-icon>save</mat-icon>
       </button>

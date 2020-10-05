@@ -7,6 +7,15 @@
   }
 }
 
+@keyframes aggregation {
+  0% {
+    letter-spacing: 0;
+  }
+  100% {
+    letter-spacing: 5px;
+  }
+}
+
 @keyframes rotate {
   0% {
     transform: rotate(0deg);

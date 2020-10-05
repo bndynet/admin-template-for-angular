@@ -59,5 +59,7 @@ $sidebar-width: 200px;
   transform-origin: center;
   animation: 1s ease-in-out 0s infinite rotate;
 }
-
+@mixin  aggregation {
+  animation: 1s ease-in-out 0s infinite alternate aggregation;
+}
 
