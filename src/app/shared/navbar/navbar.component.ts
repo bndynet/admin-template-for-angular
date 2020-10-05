@@ -3,7 +3,7 @@ import { MessageEntity, UserEntity } from 'src/app/app-types';
 import { AuthService, EventsService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
 import { convertMessages, convertUser } from 'src/config';
-import { menus } from 'src/config/menus';
+import { menus } from 'src/app/admin/menus';
 
 @Component({
   selector: 'app-navbar',

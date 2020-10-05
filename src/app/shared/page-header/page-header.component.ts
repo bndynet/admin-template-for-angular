@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -6,12 +7,18 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./page-header.component.scss']
 })
 export class PageHeaderComponent implements OnInit {
+  @Input() canBack: boolean;
   @Input() title: string;
   @Input() subtitle: string;
 
-  constructor() { }
+  constructor(
+    private location: Location,
+  ) { }
 
   ngOnInit(): void {
   }
 
+  back(): void {
+    this.location.back();
+  }
 }

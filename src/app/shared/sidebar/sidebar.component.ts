@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { menus } from 'src/config/menus';
+import { menus } from 'src/app/admin/menus';
+
 import * as moment from 'moment';
 
 @Component({

@@ -1,0 +1,23 @@
+<mat-card class="container">
+  <img mat-card-image src="/assets/logo.png">
+  <mat-card-content>
+    <form>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Username">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Password" type="password">
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <div class="flex-1" align="start">
+      <a mat-button routerLink="/forgot-password">
+        Forgot password?
+      </a>
+    </div>
+    <button mat-raised-button color="primary" [ngClass]="{loading: logging}" (click)="login()"> Log in </button>
+  </mat-card-actions>
+</mat-card>

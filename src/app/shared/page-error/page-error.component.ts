@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { httpStatusMap } from '../app-types';
+import { httpStatusMap } from '../../app-types';
 
 @Component({
   selector: 'app-page-error',

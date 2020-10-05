@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { UserEntity } from '../app-types';
+import { delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +25,10 @@ export class AuthService {
     } else {
       return of(this.userInfo);
     }
+  }
+
+  logout(): Observable<{}> {
+    // TODO:
+    return of('').pipe(delay(3000));
   }
 }

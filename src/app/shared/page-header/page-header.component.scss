@@ -6,6 +6,11 @@
     flex: 1;
     margin: 1rem 1rem 0.5rem 1rem;
 
+    .btn-back {
+      position: relative;
+      top: -3px;
+    }
+
     small {
       color: #888888;
       font-size: 0.65em;

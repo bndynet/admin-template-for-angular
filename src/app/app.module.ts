@@ -1,25 +1,25 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { httpInterceptorProviders } from './_interceptors';
-import { HeroesModule } from './heroes/heroes.module';
-import { HiModule } from './hi/hi.module';
-import { PageErrorComponent  } from './page-error/page-error.component';
-import { SharedModule } from './shared/shared.module';
+import { PublicModule } from './public/public.module';
+import { AdminModule } from './admin/admin.module';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageErrorComponent,
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
     AppRoutingModule,
-    SharedModule,
-    HeroesModule,
-    HiModule,
+    PublicModule,
+    AdminModule,
   ],
   providers: [
     httpInterceptorProviders,

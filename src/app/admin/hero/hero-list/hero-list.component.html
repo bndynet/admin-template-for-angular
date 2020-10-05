@@ -1,9 +1,3 @@
-<app-page-header title="Heroes">
-  <button mat-icon-button color="primary">
-    <mat-icon>add</mat-icon>
-  </button>
-</app-page-header>
-
 <div class="page-container">
   <app-page-loading [loading]="loading"></app-page-loading>
   <div class="row" *ngIf="!loading">
@@ -26,7 +20,7 @@
               <a [routerLink]="hero.id">open in current page</a>
             </td>
             <td>
-              <a [routerLink]="['/hero', hero.id]">
+              <a [routerLink]="['', hero.id]">
                 open in new page
               </a>
             </td>

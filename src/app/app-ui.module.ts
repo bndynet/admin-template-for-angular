@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -43,7 +42,6 @@ export const uiModules = [
 @NgModule({
   declarations: [],
   imports: [
-    BrowserAnimationsModule,
     ...uiModules,
   ],
   exports: [

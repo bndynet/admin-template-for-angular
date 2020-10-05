@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { delay } from 'rxjs/operators';
-import { ContentSidebarComponent } from '../../shared/content-sidebar/content-sidebar.component';
+import { ContentSidebarComponent } from '../../../shared';
 import { NotificationService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
 

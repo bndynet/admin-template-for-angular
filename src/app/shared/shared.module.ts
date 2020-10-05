@@ -10,7 +10,8 @@ import { SideBarComponent } from './sidebar/sidebar.component';
 import { ContentSidebarComponent } from './content-sidebar/content-sidebar.component';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { PageLoadingComponent } from './page-loading/page-loading.component';
-import { AppRoutingModule } from '../app-routing.module';
+import { PageErrorComponent } from './page-error/page-error.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -22,16 +23,14 @@ import { AppRoutingModule } from '../app-routing.module';
     ContentSidebarComponent,
     PageHeaderComponent,
     PageLoadingComponent,
+    PageErrorComponent,
    ],
   imports: [
     CommonModule,
+    RouterModule,
     AppUiModule,
-    AppRoutingModule,
   ],
   exports: [
-    HttpClientModule,
-    CommonModule,
-    FormsModule,
     AppUiModule,
 
     DialogComponent,
@@ -40,6 +39,7 @@ import { AppRoutingModule } from '../app-routing.module';
     ContentSidebarComponent,
     PageHeaderComponent,
     PageLoadingComponent,
+    PageErrorComponent,
   ],
 })
 export class SharedModule { }

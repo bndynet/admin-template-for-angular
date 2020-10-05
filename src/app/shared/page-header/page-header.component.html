@@ -1,5 +1,8 @@
 <div class="page-header">
   <h2>
+    <button mat-icon-button class="btn-back" (click)="back()" *ngIf="canBack">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
     {{title}}
     <small *ngIf="subtitle">{{subtitle}}</small>
   </h2>

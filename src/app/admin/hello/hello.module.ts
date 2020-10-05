@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { HiRoutingModule } from './hi-routing.module';
 import { DialogFormComponent } from './dialog-form/dialog-form.component';
-import { SharedModule } from '../shared/shared.module';
+import { AppUiModule } from 'src/app/app-ui.module';
+import { SharedModule } from 'src/app/shared';
 
 
 
 @NgModule({
   declarations: [WelcomeComponent, DialogFormComponent],
   imports: [
+    CommonModule,
+    AppUiModule,
     SharedModule,
-    HiRoutingModule,
   ]
 })
-export class HiModule { }
+export class HelloModule { }
