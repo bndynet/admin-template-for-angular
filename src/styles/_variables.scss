@@ -4,8 +4,15 @@ $navbar-height: 63px;
 $sidebar-width: 200px;
 
 @mixin base-style($theme-name, $colorset) {
+  background-color: map-get($map: $colorset, $key: background);
+  color: map-get($map: $colorset, $key: text);
+
   a {
     color: map-get($colorset, text);
+  }
+
+  .text-muted {
+    color: map-get($map: $colorset, $key: secondary-text);
   }
 }
 

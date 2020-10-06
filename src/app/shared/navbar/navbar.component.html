@@ -34,8 +34,10 @@
       <mat-menu class="avatar-menus" #menuAvatar="matMenu" [hidden]="!userInfo">
         <div class="avatar-wrapper">
           <img [src]="userInfo?.avatar" />
-          <div class="font-lg">{{userInfo?.name}}</div>
-          <div class="text-muted">{{userInfo?.title}}</div>
+          <div class="mat-typeography">
+            <div class="font-lg">{{userInfo?.name}}</div>
+            <div class="text-muted">{{userInfo?.title}}</div>
+          </div>
         </div>
         <mat-divider></mat-divider>
         <button mat-menu-item>
