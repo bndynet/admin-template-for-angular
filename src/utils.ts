@@ -1,3 +1,6 @@
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 
 export function ifUndefined(arg: any, val: any): any {
@@ -19,4 +22,12 @@ export function randomString(length: number, characters?: string): string {
     result += characters.charAt(Math.floor(Math.random() * maxLen));
   }
   return result;
+}
+
+export function mockRequest<TResponse>(response?: TResponse): Observable<TResponse> {
+  return of((response || {}) as TResponse).pipe(delay(3000));
+}
+
+export function mockErrorResponse(http: HttpClient): Observable<any> {
+  return http.get('/assets/notfound.json');
 }

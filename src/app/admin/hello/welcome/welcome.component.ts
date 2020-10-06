@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, StatusService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
+import { mockErrorResponse } from 'src/utils';
 import { DialogFormComponent } from '../dialog-form/dialog-form.component';
 
 @Component({
@@ -15,6 +17,7 @@ export class WelcomeComponent implements OnInit {
   public buttonLoading = false;
 
   constructor(
+    private http: HttpClient,
     private app: AppService,
     private status: StatusService,
     private notification: NotificationService,
@@ -62,5 +65,9 @@ export class WelcomeComponent implements OnInit {
   }
   formDialog(): void {
     this.app.dialog.open(DialogFormComponent, {}, () => {});
+  }
+
+  requestError(): void {
+    mockErrorResponse(this.http).subscribe();
   }
 }

@@ -1,23 +1,30 @@
-<mat-card class="container">
-  <img mat-card-image src="/assets/logo.png">
-  <mat-card-content>
-    <form>
+<form [formGroup]="form" (ngSubmit)="login()" class="container">
+  <mat-card>
+    <img mat-card-image src="/assets/logo.png">
+    <mat-card-content>
       <mat-form-field class="full-width">
-        <input matInput placeholder="Username">
+        <input matInput formControlName="name" name="username" placeholder="Username">
+        <mat-error *ngIf="form.get('name').hasError('required')">
+          Required.
+        </mat-error>
       </mat-form-field>
-
+      <br />
       <mat-form-field class="full-width">
-        <input matInput placeholder="Password" type="password">
+        <input matInput formControlName="password" name="password" placeholder="Password" type="password"
+          autocomplete="off">
+        <mat-error *ngIf="form.get('password').hasError('required')">
+          Required.
+        </mat-error>
       </mat-form-field>
-    </form>
-  </mat-card-content>
+    </mat-card-content>
 
-  <mat-card-actions align="end">
-    <div class="flex-1" align="start">
-      <a mat-button routerLink="/forgot-password">
-        Forgot password?
-      </a>
-    </div>
-    <button mat-raised-button color="primary" [ngClass]="{loading: logging}" (click)="login()"> Log in </button>
-  </mat-card-actions>
-</mat-card>
+    <mat-card-actions align="end">
+      <div class="flex-1" align="start">
+        <a mat-button routerLink="/forgot-password">
+          Forgot password?
+        </a>
+      </div>
+      <button mat-raised-button color="primary" [disabled]="!form.valid" [ngClass]="{loading: logging}" type="submit"> Log in </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

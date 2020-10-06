@@ -12,10 +12,15 @@
       <a mat-button *ngFor="let item of navs" [routerLink]="item.link">{{item.text}}</a>
     </nav>
     <nav>
-      <button mat-icon-button [matBadge]="newMessageCount" [matBadgeHidden]="newMessageCount <= 0" matBadgeColor="accent" [matMenuTriggerFor]="menuMessage">
+
+      <button mat-icon-button [matBadge]="newMessageCount"
+        [matBadgeHidden]="newMessageCount <= 0" matBadgeColor="accent"
+        [matMenuTriggerFor]="menuMessage"
+        *ngIf="newMessageCount"
+        >
         <mat-icon>message</mat-icon>
       </button>
-      <mat-menu #menuMessage="matMenu" class="message-list">
+      <mat-menu #menuMessage="matMenu" class="message-list" [hidden]="!newMessageCount">
         <button mat-menu-item *ngFor="let message of messages" [ngClass]="{'new': !message.read}"
           [matTooltip]="message.title" (click)="viewMessage(message)">
           <mat-icon>email</mat-icon>
@@ -23,8 +28,7 @@
         </button>
       </mat-menu>
 
-
-      <button mat-icon-button class="avatar" [matMenuTriggerFor]="menuAvatar">
+      <button mat-icon-button class="avatar" [matMenuTriggerFor]="menuAvatar" *ngIf="userInfo">
         <img [src]="userInfo.avatar" [matTooltip]="userInfo.name" *ngIf="userInfo" />
       </button>
       <mat-menu class="avatar-menus" #menuAvatar="matMenu" [hidden]="!userInfo">

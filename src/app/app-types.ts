@@ -12,6 +12,7 @@ export interface UserEntity {
   name: string;
   title: string;
   avatar: string;
+  token: string;
 }
 
 export interface MessageEntity {

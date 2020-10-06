@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { UserEntity } from '../app-types';
-import { delay } from 'rxjs/operators';
+import { login, logout } from 'src/config';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  private readonly KEY_USER = 'USER';
 
   private userInfo: UserEntity;
 
@@ -16,7 +19,7 @@ export class AuthService {
   ) { }
 
   getAuthorizationToken(): string {
-    return 'token';
+    return this.userInfo ? this.userInfo.token : '';
   }
 
   getUserInfo(): Observable<UserEntity> {
@@ -27,8 +30,19 @@ export class AuthService {
     }
   }
 
+  login(username: string, password: string): Observable<UserEntity> {
+    // TODO: pass env param
+    return login(this.http, username, password).pipe(map((user: UserEntity) => {
+      sessionStorage.setItem(this.KEY_USER, JSON.stringify(user));
+      this.userInfo = user;
+      return this.userInfo;
+    }));
+  }
+
   logout(): Observable<{}> {
-    // TODO:
-    return of('').pipe(delay(3000));
+    this.userInfo = null;
+    sessionStorage.removeItem(this.KEY_USER);
+    // TODO: pass env param
+    return logout(this.http, null);
   }
 }
