@@ -1,17 +1,56 @@
-export const menus = [
+import { MenuEntity } from '../app-types';
+
+export const menus: MenuEntity[] = [
   {
     icon: 'star',
-    text: 'Get Started',
-    link: 'hi',
+    text: 'GET STARTED',
+    children: [
+      {
+        icon: 'star',
+        text: 'Interactive',
+        link: '/admin/hi',
+      },
+      {
+        icon: 'subject',
+        text: 'Hero List',
+        link: '/admin/heroes',
+      },
+      {
+        icon: 'warning',
+        text: 'Error Page',
+        link: '/admin/error',
+      },
+    ],
   },
   {
-    icon: 'subject',
-    text: 'Hero List',
-    link: 'heroes',
+    text: 'DOCS',
+    link: '',
+    children: [
+      {
+        icon: 'tag',
+        text: 'Environments',
+        link: '',
+      },
+    ]
   },
   {
-    icon: 'warning',
-    text: 'Error Page',
-    link: 'error',
+    text: 'RESOURCES',
+    link: '',
+    children: [
+      {
+        icon: 'tag',
+        text: 'MENU',
+      },
+    ]
+  },
+  {
+    text: 'EVENTS',
+    link: '',
+    children: [
+      {
+        icon: 'tag',
+        text: 'MENU',
+      },
+    ]
   },
 ];

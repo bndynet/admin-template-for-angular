@@ -1,10 +1,10 @@
 <mat-progress-bar mode="indeterminate" color="accent" *ngIf="showProgressbar"></mat-progress-bar>
 
-<app-navbar></app-navbar>
+<app-navbar [menus]="menus" (menuClick)="clickNavMenu($event)" (search)="search($event)"></app-navbar>
 
 <mat-sidenav-container>
   <mat-sidenav #sidebar [mode]="sidebarMode" opened>
-    <app-sidebar></app-sidebar>
+    <app-sidebar [menus]="subMenus"></app-sidebar>
   </mat-sidenav>
   <mat-sidenav-content [ngClass]="{'content-sidebar-opened': contentSidebarOpened}">
     <span class="sidebar-switcher" (click)="toggleSidebar();">

@@ -8,6 +8,13 @@ declare global {
   }
 }
 
+export interface MenuEntity {
+  icon?: string;
+  text?: string;
+  link?: string;
+  children?: MenuEntity[];
+}
+
 export interface UserEntity {
   name: string;
   title: string;

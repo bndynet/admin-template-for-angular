@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { menus } from 'src/app/admin/menus';
+import { Component, Input, OnInit } from '@angular/core';
 
 import * as moment from 'moment';
+import { MenuEntity } from 'src/app/app-types';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,7 +10,8 @@ import * as moment from 'moment';
 })
 export class SideBarComponent implements OnInit {
 
-  links: any[] = [];
+  @Input() menus: MenuEntity[];
+
   tooltip: string;
 
   private version = window.APP_VERSION;
@@ -34,6 +35,5 @@ export class SideBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.links = menus;
   }
 }

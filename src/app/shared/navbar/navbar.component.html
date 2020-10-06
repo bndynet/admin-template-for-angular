@@ -3,21 +3,25 @@
     <div class="logo-wrapper">
       <img class="logo" src="https://static.bndy.net/images/logo_white.png" />
     </div>
+
     <mat-divider [vertical]="true"></mat-divider>
+
     <div class="spacer vertical"></div>
     <button mat-icon-button (click)="toggleSidebar()" *ngIf="false">
       <mat-icon>menu</mat-icon>
     </button>
-    <nav class="main">
-      <a mat-button *ngFor="let item of navs" [routerLink]="item.link">{{item.text}}</a>
-    </nav>
-    <nav>
 
-      <button mat-icon-button [matBadge]="newMessageCount"
-        [matBadgeHidden]="newMessageCount <= 0" matBadgeColor="accent"
-        [matMenuTriggerFor]="menuMessage"
-        *ngIf="newMessageCount"
-        >
+    <nav class="main">
+      <button mat-button *ngFor="let item of menus" (click)="goto(item)">{{item.text}}</button>
+    </nav>
+
+    <div class="search-container" *ngIf="searchEnabled">
+      <input placeholder="Search" [(ngModel)]="searchKeywords" (keyup.enter)="onSearch()" />
+    </div>
+
+    <nav>
+      <button mat-icon-button [matBadge]="newMessageCount" [matBadgeHidden]="newMessageCount <= 0"
+        matBadgeColor="accent" [matMenuTriggerFor]="menuMessage" *ngIf="newMessageCount">
         <mat-icon>message</mat-icon>
       </button>
       <mat-menu #menuMessage="matMenu" class="message-list" [hidden]="!newMessageCount">
@@ -50,5 +54,6 @@
         </button>
       </mat-menu>
     </nav>
+
   </mat-toolbar-row>
 </mat-toolbar>

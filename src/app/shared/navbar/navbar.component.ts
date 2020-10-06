@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { MessageEntity, UserEntity } from 'src/app/app-types';
+import { Component, EventEmitter, Input, OnInit, Output, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { MenuEntity, MessageEntity, UserEntity } from 'src/app/app-types';
 import { AuthService, EventsService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
 import { convertMessages, convertUser } from 'src/config';
-import { menus } from 'src/app/admin/menus';
 
 @Component({
   selector: 'app-navbar',
@@ -12,19 +12,25 @@ import { menus } from 'src/app/admin/menus';
 })
 export class NavbarComponent implements OnInit {
 
+  @Input() menus: MenuEntity[];
+  @Output() menuClick = new EventEmitter<MenuEntity>();
+  @Output() search = new EventEmitter<string>();
+
   public messages: MessageEntity[];
   public userInfo: UserEntity;
-  public navs: any[];
   public newMessageCount = 0;
+  public searchKeywords: string;
+  public searchEnabled: boolean;
 
   constructor(
+    private router: Router,
     private app: AppService,
     private auth: AuthService,
     private events: EventsService,
   ) { }
 
   ngOnInit(): void {
-    this.navs = menus;
+    this.searchEnabled = this.search.observers.length > 0;
 
     this.auth.getUserInfo().subscribe(
       res => {
@@ -57,6 +63,17 @@ export class NavbarComponent implements OnInit {
       okLabel: '',
       actionsAlign: 'end',
     });
+  }
+
+  goto(menu: MenuEntity): void {
+    if (menu.link) {
+      this.router.navigate([menu.link]);
+    }
+    this.menuClick.emit(menu);
+  }
+
+  onSearch(): void {
+    this.search.emit(this.searchKeywords);
   }
 
   logout(): void {

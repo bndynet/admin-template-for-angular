@@ -4,7 +4,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { delay } from 'rxjs/operators';
 import { slideInAnimation } from '../animations';
-import { NotificationService, NotificationOptions, EventsService, StatusService, Status } from '../_services';
+import { MenuEntity } from '../app-types';
+import { NotificationService, NotificationOptions, EventsService, StatusService, Status, AppService } from '../_services';
+import { menus } from './menus';
 
 @Component({
   selector: 'app-admin',
@@ -21,14 +23,20 @@ export class AdminComponent implements OnInit, AfterViewInit {
   sidebarOpened = true;
   contentSidebarOpened = false;
   showProgressbar = false;
+  menus: MenuEntity[];
+  subMenus: MenuEntity[];
 
   constructor(
+    private app: AppService,
     private events: EventsService,
     private router: Router,
     private status: StatusService,
     private snackBar: MatSnackBar,
     private notification: NotificationService,
-  ) {}
+  ) {
+    this.menus = menus;
+    this.subMenus = menus[0].children;
+  }
 
   ngOnInit(): void {
     this.events
@@ -71,6 +79,18 @@ export class AdminComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {}
+
+  clickNavMenu(menu: MenuEntity): void {
+    this.subMenus = menu.children;
+    if (menu.children.length > 0 && menu.children[0].link) {
+      this.router.navigate([menu.children[0].link]);
+    }
+  }
+
+  search(keywords: string): void {
+    // TODO:
+    this.app.notificaiton.info(`TODO: search ${keywords}`);
+  }
 
   getAnimationData(outlet: RouterOutlet): any {
     return (

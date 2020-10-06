@@ -1,7 +1,8 @@
 <mat-nav-list>
-  <a mat-list-item routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}" *ngFor="let item of links"
+  <a mat-list-item routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}" *ngFor="let item of menus"
     [routerLink]="item.link">
-    <mat-icon>{{item.icon}}</mat-icon> {{item.text}}
+    <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
+    <span *ngIf="item.text">{{item.text}}</span>
   </a>
 </mat-nav-list>
 <footer>
