@@ -153,19 +153,19 @@ table {
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.12),
     0 5px 10px 1px rgba(0, 0, 0, 0.12), 0 5px 14px 2px rgba(0, 0, 0, 0.12);
 
-  tbody {
-    tr {
-      &:hover {
-        th,
-        td {
-          background-color: #efefef;
-        }
+  tr {
+    &:not(.active):hover {
+      th,
+      td {
+        background-color: #efefef;
       }
+    }
 
-      &.active {
-        td,
-        td a {
-          background-color: #3f51b5;
+    &.active {
+      td {
+        background-color: #666666;
+        color: white;
+        a {
           color: white;
         }
       }

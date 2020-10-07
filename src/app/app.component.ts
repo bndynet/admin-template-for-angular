@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd,  Router, RouterEvent } from '@angular/router';
+import { NavigationEnd,  NavigationError,  Router, RouterEvent } from '@angular/router';
 import { protectedUrlPrefixes } from 'src/config';
 import { AppService } from './_services';
 
@@ -15,6 +15,11 @@ export class AppComponent implements OnInit {
     private app: AppService,
   ) {
     this.router.events.subscribe((event: RouterEvent) => {
+
+      if (event instanceof NavigationError) {
+        this.app.notificaiton.error((event as NavigationError).error);
+      }
+
       if (event instanceof NavigationEnd) {
         if (!this.app.auth.getAuthorizationToken()) {
           // Check user authentication

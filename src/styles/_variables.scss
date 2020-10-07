@@ -21,11 +21,10 @@ $sidebar-width: 200px;
     tr {
       th,
       td {
-        // border-bottom-color: var(--#{$theme-name}--divider) !important;
         border-bottom-color: map-get($map: $colorset, $key: divider) !important;
       }
 
-      &:hover {
+      &:not(.active):hover {
         td {
           background-color: map-get($colorset, hover);
         }
@@ -33,7 +32,8 @@ $sidebar-width: 200px;
 
       &.active {
         td {
-          background-color: map-get($colorset, primary);
+          background-color: var(--#{$theme-name}--primary);
+          color: #ffffff;
         }
       }
     }

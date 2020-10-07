@@ -13,6 +13,10 @@
   }
 
   &[color] {
+    a {
+      color: #dedede;
+    }
+
     .mat-card {
       color: rgba(#ffffff, 0.7);
     }

@@ -15,7 +15,7 @@ $themes: (
   '': $app-theme,
   popular: mat-light-theme(
     mat-palette($mat-blue-grey),
-    mat-palette($mat-amber, A200, A100, A400),
+    mat-palette($mat-amber, 900),
     mat-palette($mat-deep-orange)
   ),
   dark: mat-dark-theme(
@@ -55,6 +55,9 @@ $themes: (
       @include base-style($name, $colorset);
       @include table-style($name, $colorset);
     }
+  } @else {
+    // @include base-style($name, $colorset);
+    @include table-style($name, $colorset);
   }
 }
 
