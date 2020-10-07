@@ -13,8 +13,7 @@ import { PageLoadingComponent } from './page-loading/page-loading.component';
 import { PageErrorComponent } from './page-error/page-error.component';
 import { RouterModule } from '@angular/router';
 import { IconCardComponent } from './icon-card/icon-card.component';
-
-
+import { ThemeImgComponent } from './theme-img/theme-img.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +25,7 @@ import { IconCardComponent } from './icon-card/icon-card.component';
     PageLoadingComponent,
     PageErrorComponent,
     IconCardComponent,
+    ThemeImgComponent,
    ],
   imports: [
     CommonModule,
@@ -43,6 +43,7 @@ import { IconCardComponent } from './icon-card/icon-card.component';
     PageLoadingComponent,
     PageErrorComponent,
     IconCardComponent,
+    ThemeImgComponent,
   ],
 })
 export class SharedModule { }

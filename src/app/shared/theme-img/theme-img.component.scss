@@ -1,0 +1,17 @@
+@import '../../../styles/theme';
+
+@include each-themes(false) using ($name, $theme) {
+  @if $name != '' {
+    :host.#{$name} {
+      .primary {
+        fill: var(--#{$name}--primary);
+      }
+      .background {
+        fill: var(--#{$name}--background);
+      }
+      .accent {
+        fill: var(--#{$name}--accent);
+      }
+    }
+  }
+}

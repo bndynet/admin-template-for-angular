@@ -65,9 +65,9 @@ $themes: (
   @return var(--#{$theme-name}--#{$key});
 }
 
-@mixin each-themes {
+@mixin each-themes($inTheme: true) {
   @each $name, $theme in $themes {
-    @if $name != '' {
+    @if $name != '' and $inTheme {
       .#{$name} {
         @content($name, $theme);
       }

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MenuEntity, MessageEntity, UserEntity } from 'src/app/app-types';
 import { AuthService, EventsService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
-import { convertMessages, convertUser } from 'src/config';
+import { convertMessages, convertUser, themes } from 'src/config';
 
 @Component({
   selector: 'app-navbar',
@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
   public newMessageCount = 0;
   public searchKeywords: string;
   public searchEnabled: boolean;
+  public themes = themes;
 
   constructor(
     private router: Router,
@@ -70,6 +71,13 @@ export class NavbarComponent implements OnInit {
       this.router.navigate([menu.link]);
     }
     this.menuClick.emit(menu);
+  }
+
+  changeTheme(themeKey: string): void {
+    Object.keys(this.themes).forEach((key: string) => {
+      document.body.classList.remove(key);
+    });
+    document.body.classList.add(themeKey);
   }
 
   onSearch(): void {

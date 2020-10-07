@@ -32,6 +32,16 @@
         </button>
       </mat-menu>
 
+      <button mat-icon-button [matMenuTriggerFor]="menuTheme">
+        <mat-icon>palette</mat-icon>
+      </button>
+      <mat-menu class="theme-list" #menuTheme="matMenu">
+        <button mat-menu-item *ngFor="let item of themes | keyvalue"
+          [matTooltip]="item.value" (click)="changeTheme(item.key)">
+          <app-theme-img class="{{item.key}}"></app-theme-img>
+        </button>
+      </mat-menu>
+
       <button mat-icon-button class="avatar" [matMenuTriggerFor]="menuAvatar" *ngIf="userInfo">
         <img [src]="userInfo.avatar" [matTooltip]="userInfo.name" *ngIf="userInfo" />
       </button>

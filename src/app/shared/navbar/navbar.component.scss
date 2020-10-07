@@ -74,6 +74,20 @@
   }
 }
 
+::ng-deep.theme-list {
+
+  .mat-menu-content {
+    display: flex;
+    padding: 0.5rem;
+
+    .mat-menu-item {
+      width: 80px;
+      height: 80px;
+      padding: 0.5rem;
+    }
+  }
+}
+
 .avatar-wrapper {
   width: 200px;
   margin: 1rem 0;
