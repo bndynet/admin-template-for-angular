@@ -1,0 +1,8 @@
+<mat-card class="mat-{{color}}">
+  <mat-icon>{{icon}}</mat-icon>
+  <mat-card-title>{{value}}</mat-card-title>
+  <mat-card-subtitle>{{label}}</mat-card-subtitle>
+  <mat-card-footer>
+    <a [routerLink]="item.value" routerLinkActive="active" *ngFor="let item of links | keyvalue">{{item.key}}</a>
+  </mat-card-footer>
+</mat-card>

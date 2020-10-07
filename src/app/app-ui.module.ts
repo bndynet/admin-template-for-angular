@@ -17,6 +17,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 export const uiModules = [
   FormsModule,
@@ -38,6 +39,7 @@ export const uiModules = [
   MatMenuModule,
   MatTooltipModule,
   MatDialogModule,
+  MatGridListModule,
 ];
 
 @NgModule({

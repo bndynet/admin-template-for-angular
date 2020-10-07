@@ -12,6 +12,7 @@ import { PageHeaderComponent } from './page-header/page-header.component';
 import { PageLoadingComponent } from './page-loading/page-loading.component';
 import { PageErrorComponent } from './page-error/page-error.component';
 import { RouterModule } from '@angular/router';
+import { IconCardComponent } from './icon-card/icon-card.component';
 
 
 
@@ -24,6 +25,7 @@ import { RouterModule } from '@angular/router';
     PageHeaderComponent,
     PageLoadingComponent,
     PageErrorComponent,
+    IconCardComponent,
    ],
   imports: [
     CommonModule,
@@ -40,6 +42,7 @@ import { RouterModule } from '@angular/router';
     PageHeaderComponent,
     PageLoadingComponent,
     PageErrorComponent,
+    IconCardComponent,
   ],
 })
 export class SharedModule { }

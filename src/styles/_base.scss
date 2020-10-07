@@ -23,6 +23,14 @@ h7 {
   padding: 0;
 }
 
+a {
+  color: inherit;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
 .font-lg {
   font-size: 1.25rem;
 }
@@ -119,6 +127,14 @@ h7 {
 
 .row {
   display: flex;
+
+  &.gutter {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    > * {
+      margin: 0 0.5rem;
+    }
+  }
 
   .fill {
     flex: 1;

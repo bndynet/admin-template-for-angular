@@ -16,6 +16,11 @@ export class WelcomeComponent implements OnInit {
   public pageLoading = false;
   public buttonLoading = false;
 
+  public links = {
+    'Link #1': 'link-url',
+    'Link #2': 'link-url',
+  };
+
   constructor(
     private http: HttpClient,
     private app: AppService,

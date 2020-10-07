@@ -1,6 +1,7 @@
 @import "~@angular/material/theming";
 @import './variables';
 
+
 // Define the default theme (same as the example above).
 $app-primary: mat-palette($mat-blue, 700);
 $app-accent: mat-palette($mat-pink, A200, A100, A400);
@@ -11,12 +12,13 @@ $color-accent: mat-color($app-accent, default);
 
 // Define your themes.
 $themes: (
-  popular-theme: mat-light-theme(
+  '': $app-theme,
+  popular: mat-light-theme(
     mat-palette($mat-blue-grey),
     mat-palette($mat-amber, A200, A100, A400),
     mat-palette($mat-deep-orange)
   ),
-  popular-theme-dark: mat-dark-theme(
+  dark: mat-dark-theme(
     mat-palette($mat-blue),
     mat-palette($mat-pink, A200, A100, A400),
     mat-palette($mat-orange)
@@ -62,13 +64,22 @@ $themes: (
 
 @mixin each-themes {
   @each $name, $theme in $themes {
-    @if $name {
+    @if $name != '' {
       .#{$name} {
         @content($name, $theme);
       }
     } @else {
       @content($name, $theme);
     }
+  }
+}
+
+/* color */
+$colorKeys: 'primary', 'accent', 'warn';
+
+@mixin each-colors {
+  @for $i from 1 through length($colorKeys) {
+    @content(nth($colorKeys, $i));
   }
 }
 

@@ -1,0 +1,88 @@
+@import "~@angular/material/theming";
+@import "../../../styles/theme";
+
+:host {
+  display: block;
+  min-width: 200px;
+  width: 100%;
+
+  &:hover {
+    .mat-icon {
+      transform: scale(1.25);
+    }
+  }
+
+  &[color] {
+    .mat-card {
+      color: rgba(#ffffff, 0.7);
+    }
+
+    .mat-card-subtitle {
+      color: rgba(#ffffff, 0.7);
+    }
+
+    &:hover {
+      .mat-card {
+        color: rgba(#ffffff, 1);
+      }
+
+      .mat-card-subtitle {
+        color: rgba(#ffffff, 1);
+      }
+    }
+  }
+
+  ::ng-deep .mat-card-title:not(:first-child), .mat-card-subtitle:not(:first-child) {
+    margin-top: 0;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+.mat-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 3.5rem;
+  opacity: 0.2;
+  width: inherit;
+  height: inherit;
+  transition: all .5s ease-in-out;
+}
+
+.mat-card-title {
+  margin-top: 0;
+}
+
+.mat-card-footer {
+  display: flex;
+  text-align: center;
+  font-size: 0.85rem;
+
+  > * {
+    flex: 1;
+    cursor: pointer;
+    padding: 5px;
+    background-color: rgba($color: #000000, $alpha: 0.1);
+
+    &:hover {
+      background-color: rgba($color: #000000, $alpha: 0.2);
+    }
+  }
+}
+
+@include each-themes using ($name, $theme) {
+  :host {
+    @include each-colors using($key) {
+      &[color=#{$key}] {
+        ::ng-deep {
+          .mat-card {
+            background-color: var(--#{$name}--#{$key});
+          }
+        }
+      }
+    }
+  }
+}

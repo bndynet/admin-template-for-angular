@@ -10,12 +10,7 @@
 @include mat-core();
 
 // Include the default theme styles.
-@debug '==============';
-@debug $app-theme;
-@debug '==============';
-
 @include angular-material-theme($app-theme);
-@include register-theme('', $app-theme);
 
 // Register all themes.
 @each $name, $theme in $themes {
