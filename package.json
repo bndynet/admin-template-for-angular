@@ -9,6 +9,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod && ts-node ./tools/after-build.ts",
+    "deploy": "ng build --prod --baseHref=/angular-starter/ && ts-node ./tools/after-build.ts",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
