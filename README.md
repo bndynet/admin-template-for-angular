@@ -1,5 +1,7 @@
 # Angular Starter
 
+![CI](https://github.com/bndynet/angular-starter/workflows/CI/badge.svg)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.3.
 
 ## Development server
