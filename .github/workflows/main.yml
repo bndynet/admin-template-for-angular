@@ -35,14 +35,11 @@ jobs:
         run: npm run build
         
       # Runs a set of commands using the runners shell
-      - name: Publish to gh-pages
-        run: |
-          echo pwd
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "zb@bndy.net"
-          git add .
-          git commit -m "Updated gh-pages by action"
-          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git remote -v
-        working-directory: ./dist/angular-starter
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          BRANCH: gh-pages
+          FOLDER: dist/angular-starter
+          CLEAN: true
+
       
