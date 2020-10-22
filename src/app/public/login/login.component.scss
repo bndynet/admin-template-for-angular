@@ -1,14 +1,19 @@
-.container {
-  width: 360px;
-  text-align: center;
-  margin: 100px auto;
-  padding: 0 2rem 3rem 2rem;
+:host {
+  display: block;
+  padding-top: 20vh;
 
-  .mat-card-actions {
-    margin-bottom: 0.5rem;
-  }
+  .container {
+    width: 360px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0 2rem 3rem 2rem;
 
-  .mat-card-image {
-    width: 50%;
+    .mat-card-actions {
+      margin-bottom: 0.5rem;
+    }
+
+    .mat-card-image {
+      width: 50%;
+    }
   }
 }

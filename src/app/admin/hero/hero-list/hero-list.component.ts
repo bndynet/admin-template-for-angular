@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { delay } from 'rxjs/operators';
 import { ContentSidebarComponent } from '../../../shared';
 import { NotificationService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
+import { getLocalUrl, mockRequest } from 'src/utils';
 
 @Component({
   selector: 'app-hero-list',
@@ -28,7 +28,7 @@ export class HeroListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.http.get(`/assets/heroes.json`).pipe(delay(2000)).subscribe(
+    this.http.get(getLocalUrl(`/assets/heroes.json`)).pipe(delay(2000)).subscribe(
       (res: any[]) => {
         this.loading = false;
         this.heroes = res;
@@ -42,7 +42,7 @@ export class HeroListComponent implements OnInit {
 
   save(): void {
     this.saving = true;
-    this.http.get(`/assets/user.json`).pipe(delay(3000)).subscribe(() => {
+    mockRequest().subscribe(() => {
       this.saving = false;
 
       const index = this.heroes.findIndex( h => h.id === this.activedHero.id);

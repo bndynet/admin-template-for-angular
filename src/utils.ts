@@ -29,5 +29,9 @@ export function mockRequest<TResponse>(response?: TResponse): Observable<TRespon
 }
 
 export function mockErrorResponse(http: HttpClient): Observable<any> {
-  return http.get('/assets/notfound.json');
+  return http.get(getLocalUrl('/assets/notfound.json'));
+}
+
+export function getLocalUrl(path: string): string {
+  return `${document.baseURI}/${path}`;
 }

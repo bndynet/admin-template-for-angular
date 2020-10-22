@@ -2,19 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserEntity } from 'src/app/app-types';
-import { mockRequest } from 'src/utils';
+import { getLocalUrl, mockRequest } from 'src/utils';
 
 export function login(
   http: HttpClient,
-  username: string,
-  password: string
+  username?: string,
+  password?: string
 ): Observable<UserEntity> {
-  return http.get(`/assets/user.json`).pipe(
+  return http.get(getLocalUrl(`/assets/user.json`)).pipe(
     map((u: UserEntity) => {
-      const user = {
+      const user = (username ? {
         ...u,
         ...{ name: username, token: password },
-      } as UserEntity;
+      } : u) as UserEntity;
       return user;
     })
   );

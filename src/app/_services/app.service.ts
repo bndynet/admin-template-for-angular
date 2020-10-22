@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval, Observable, of } from 'rxjs';
 import { delay, mergeMap } from 'rxjs/operators';
-import { getUUID, mockRequest } from 'src/utils';
+import { getLocalUrl, getUUID, mockRequest } from 'src/utils';
 import { MessageEntity } from '../app-types';
 import { AuthService } from './auth.service';
 import { DialogService } from './dialog.service';
@@ -30,7 +30,8 @@ export class AppService {
     }
 
   getMessages(): Observable<MessageEntity[]> {
-    return interval(10000).pipe(mergeMap(() => this.http.get<MessageEntity[]>(`/assets/messages.json`)));
+    return interval(10000).pipe(mergeMap(() => this.http.get<MessageEntity[]>(
+      getLocalUrl(`assets/messages.json`))));
   }
 
   login(username: string, password: string): Observable<any> {

@@ -1,9 +1,14 @@
-.container {
-  width: 460px;
-  text-align: center;
-  margin: 100px auto;
+:host {
+  display: block;
+  padding-top: 20vh;
 
-  .mat-card-image {
-    width: 50%;
+  .container {
+    width: 460px;
+    text-align: center;
+    margin: 0 auto;
+
+    .mat-card-image {
+      width: 50%;
+    }
   }
 }

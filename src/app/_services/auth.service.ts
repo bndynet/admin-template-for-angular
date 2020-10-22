@@ -24,7 +24,7 @@ export class AuthService {
 
   getUserInfo(): Observable<UserEntity> {
     if (!this.userInfo) {
-      return this.http.get<UserEntity>(`/assets/user.json`);
+      return login(this.http);
     } else {
       return of(this.userInfo);
     }
