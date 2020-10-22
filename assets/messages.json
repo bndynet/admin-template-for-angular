@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "title": "Cloudflare Introduces API Shield",
+    "content": "<b style='font-size: 2rem'>Cloudflare</b> has recently introduced <b>API</b> Shield, a free security tool that protects API traffic against attacks designed to perform unauthorized actions or exfiltrate data. Strong client certificate-based identity is already generally available while schema validation is currently a closed beta. With the deployment and enforcement of mTLS authentication, Cloudflare API Shield secures the APIs using client-certificate-based encryption. The provider of Content Distribution Network (CDN) and DDoS mitigation services claims that 50% of the 18 million requests per second that traverse its network are directed towards APIs, with the majority blocked as malicious. The new service allows requests from known and certified entities instead of only blocking the ones from specific IPs, countries or requests with problematic signatures. Discussing the benefits of positive security models, Patrick Donahue, director of product management at Cloudflare, and Daniele Molteni, product manager at Cloudflare, explain",
+    "createdAt": "2012-02-12T12:32:43"
+  },
+  {
+    "id": "2",
+    "title": "Your application title need to be  changed.",
+    "content": "<b style='font-size: 2rem'>Cloudflare</b> has recently introduced <b>API</b> Shield, a free security tool that protects API traffic against attacks designed to perform unauthorized actions or exfiltrate data. Strong client certificate-based identity is already generally available while schema validation is currently a closed beta. With the deployment and enforcement of mTLS authentication, Cloudflare API Shield secures the APIs using client-certificate-based encryption. The provider of Content Distribution Network (CDN) and DDoS mitigation services claims that 50% of the 18 million requests per second that traverse its network are directed towards APIs, with the majority blocked as malicious. The new service allows requests from known and certified entities instead of only blocking the ones from specific IPs, countries or requests with problematic signatures. Discussing the benefits of positive security models, Patrick Donahue, director of product management at Cloudflare, and Daniele Molteni, product manager at Cloudflare, explain",
+    "createdAt": "2012-02-12T12:32:43"
+  },
+  {
+    "id": "3",
+    "title": "Your application title need to be  changed.",
+    "content": "<b style='font-size: 2rem'>Cloudflare</b> has recently introduced <b>API</b> Shield, a free security tool that protects API traffic against attacks designed to perform unauthorized actions or exfiltrate data. Strong client certificate-based identity is already generally available while schema validation is currently a closed beta. With the deployment and enforcement of mTLS authentication, Cloudflare API Shield secures the APIs using client-certificate-based encryption. The provider of Content Distribution Network (CDN) and DDoS mitigation services claims that 50% of the 18 million requests per second that traverse its network are directed towards APIs, with the majority blocked as malicious. The new service allows requests from known and certified entities instead of only blocking the ones from specific IPs, countries or requests with problematic signatures. Discussing the benefits of positive security models, Patrick Donahue, director of product management at Cloudflare, and Daniele Molteni, product manager at Cloudflare, explain",
+    "createdAt": "2012-02-12T12:32:43"
+  },
+  {
+    "id": "4",
+    "title": "Your application title need to be  changed.",
+    "content": "<b style='font-size: 2rem'>Cloudflare</b> has recently introduced <b>API</b> Shield, a free security tool that protects API traffic against attacks designed to perform unauthorized actions or exfiltrate data. Strong client certificate-based identity is already generally available while schema validation is currently a closed beta. With the deployment and enforcement of mTLS authentication, Cloudflare API Shield secures the APIs using client-certificate-based encryption. The provider of Content Distribution Network (CDN) and DDoS mitigation services claims that 50% of the 18 million requests per second that traverse its network are directed towards APIs, with the majority blocked as malicious. The new service allows requests from known and certified entities instead of only blocking the ones from specific IPs, countries or requests with problematic signatures. Discussing the benefits of positive security models, Patrick Donahue, director of product management at Cloudflare, and Daniele Molteni, product manager at Cloudflare, explain",
+    "createdAt": "2012-02-12T12:32:43"
+  },
+  {
+    "id": "5",
+    "title": "Your application title need to be  changed.",
+    "content": "<b style='font-size: 2rem'>Cloudflare</b> has recently introduced <b>API</b> Shield, a free security tool that protects API traffic against attacks designed to perform unauthorized actions or exfiltrate data. Strong client certificate-based identity is already generally available while schema validation is currently a closed beta. With the deployment and enforcement of mTLS authentication, Cloudflare API Shield secures the APIs using client-certificate-based encryption. The provider of Content Distribution Network (CDN) and DDoS mitigation services claims that 50% of the 18 million requests per second that traverse its network are directed towards APIs, with the majority blocked as malicious. The new service allows requests from known and certified entities instead of only blocking the ones from specific IPs, countries or requests with problematic signatures. Discussing the benefits of positive security models, Patrick Donahue, director of product management at Cloudflare, and Daniele Molteni, product manager at Cloudflare, explain",
+    "createdAt": "2012-02-12T12:32:43"
+  },
+  {
+    "id": "6",
+    "title": "Your application title need to be  changed.",
+    "content": "<b style='font-size: 2rem'>Cloudflare</b> has recently introduced <b>API</b> Shield, a free security tool that protects API traffic against attacks designed to perform unauthorized actions or exfiltrate data. Strong client certificate-based identity is already generally available while schema validation is currently a closed beta. With the deployment and enforcement of mTLS authentication, Cloudflare API Shield secures the APIs using client-certificate-based encryption. The provider of Content Distribution Network (CDN) and DDoS mitigation services claims that 50% of the 18 million requests per second that traverse its network are directed towards APIs, with the majority blocked as malicious. The new service allows requests from known and certified entities instead of only blocking the ones from specific IPs, countries or requests with problematic signatures. Discussing the benefits of positive security models, Patrick Donahue, director of product management at Cloudflare, and Daniele Molteni, product manager at Cloudflare, explain",
+    "createdAt": "2012-02-12T12:32:43"
+  }
+]
