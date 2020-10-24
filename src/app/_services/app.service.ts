@@ -1,10 +1,9 @@
-import { ComponentType } from '@angular/cdk/portal';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { interval, Observable, of } from 'rxjs';
-import { delay, mergeMap } from 'rxjs/operators';
-import { getLocalUrl, getUUID, mockRequest } from 'src/utils';
+import { interval, Observable } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { getLocalUrl, getUUID } from 'src/utils';
 import { MessageEntity } from '../app-types';
 import { AuthService } from './auth.service';
 import { DialogService } from './dialog.service';
@@ -15,7 +14,6 @@ import { StatusService } from './status.service';
   providedIn: 'root',
 })
 export class AppService {
-
   public readonly clientTrackingID: string;
 
   constructor(
@@ -24,14 +22,17 @@ export class AppService {
     public auth: AuthService,
     public dialog: DialogService,
     public status: StatusService,
-    public notificaiton: NotificationService,
-    ) {
-      this.clientTrackingID = getUUID();
-    }
+    public notificaiton: NotificationService
+  ) {
+    this.clientTrackingID = getUUID();
+  }
 
   getMessages(): Observable<MessageEntity[]> {
-    return interval(10000).pipe(mergeMap(() => this.http.get<MessageEntity[]>(
-      getLocalUrl(`assets/messages.json`))));
+    return interval(10000).pipe(
+      mergeMap(() =>
+        this.http.get<MessageEntity[]>(getLocalUrl(`assets/messages.json`))
+      )
+    );
   }
 
   login(username: string, password: string): Observable<any> {
@@ -39,7 +40,10 @@ export class AppService {
   }
 
   logout(): void {
-    const dialog = this.dialog.stop('Log out', 'You are logging out all applications. <br /> This will take 5 seconds. Please wait...');
+    const dialog = this.dialog.stop(
+      'Log out',
+      'You are logging out all applications. <br /> This will take 5 seconds. Please wait...'
+    );
     this.auth.logout().subscribe(() => {
       dialog.close();
       this.router.navigate(['/logout']);

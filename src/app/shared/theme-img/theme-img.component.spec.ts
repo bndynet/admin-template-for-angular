@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ThemeImgComponent } from './theme-img.component';
 
 describe('ThemeImgComponent', () => {
@@ -8,9 +7,8 @@ describe('ThemeImgComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ThemeImgComponent ]
-    })
-    .compileComponents();
+      declarations: [ThemeImgComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

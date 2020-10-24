@@ -1,18 +1,15 @@
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AdminModule } from './admin/admin.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { httpInterceptorProviders } from './_interceptors';
 import { PublicModule } from './public/public.module';
-import { AdminModule } from './admin/admin.module';
-import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { httpInterceptorProviders } from './_interceptors';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
@@ -21,9 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
     PublicModule,
     AdminModule,
   ],
-  providers: [
-    httpInterceptorProviders,
-  ],
-  bootstrap: [AppComponent]
+  providers: [httpInterceptorProviders],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

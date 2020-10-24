@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, RouterEvent } from '@angular/router';
 
 @Component({
@@ -6,12 +6,9 @@ import { Router, RouterEvent } from '@angular/router';
   templateUrl: './hero.component.html',
 })
 export class HeroComponent {
-
   public canBack: boolean;
 
-  constructor(
-    private router: Router,
-  ) {
+  constructor(private router: Router) {
     this.router.events.subscribe((e: RouterEvent) => {
       if (e.url) {
         this.canBack = e.url.includes('heroes/');

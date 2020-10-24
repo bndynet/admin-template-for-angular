@@ -8,7 +8,10 @@ import {
 } from '@angular/material/dialog';
 import { merge } from 'lodash-es';
 import { Observable, of } from 'rxjs';
-import { DialogComponent, DialogConfig } from '../shared/dialog/dialog.component';
+import {
+  DialogComponent,
+  DialogConfig,
+} from '../shared/dialog/dialog.component';
 import { NotificationService } from './notification.service';
 import { StatusService } from './status.service';
 
@@ -19,16 +22,14 @@ export class DialogService {
   constructor(
     private dialog: MatDialog,
     public status: StatusService,
-    public notificaiton: NotificationService,
-    ) {
-
-    }
+    public notificaiton: NotificationService
+  ) {}
 
   open<TDialog, TDialogConfig>(
     dialogComponent: ComponentType<TDialog>,
     config: TDialogConfig,
     closeCallback: any,
-    matConfig?: MatDialogConfig,
+    matConfig?: MatDialogConfig
   ): MatDialogRef<TDialog> {
     const finalConfig = merge({ disableClose: true, data: config }, matConfig);
     const dialogRef = this.dialog.open<TDialog, TDialogConfig>(
@@ -45,7 +46,10 @@ export class DialogService {
     return dialogRef;
   }
 
-  stop(title: string, content: string): MatDialogRef<DialogComponent, DialogConfig> {
+  stop(
+    title: string,
+    content: string
+  ): MatDialogRef<DialogComponent, DialogConfig> {
     return this.alert(title, content, null, {
       noActions: true,
     });
@@ -56,23 +60,29 @@ export class DialogService {
     content?: string,
     callback?: any,
     config?: DialogConfig,
-    matConfig?: MatDialogConfig,
+    matConfig?: MatDialogConfig
   ): MatDialogRef<DialogComponent> {
     return this.open<DialogComponent, DialogConfig>(
       DialogComponent,
-      merge({
-        title,
-        content,
-        contentAlign: 'center',
-        actionsAlign: 'center',
-        okLabel: 'OK',
-      }, config),
+      merge(
+        {
+          title,
+          content,
+          contentAlign: 'center',
+          actionsAlign: 'center',
+          okLabel: 'OK',
+        },
+        config
+      ),
       callback,
-      merge({
-        minWidth: '400px',
-        disableClose: true,
-        role: 'alertdialog' as DialogRole,
-      }, matConfig),
+      merge(
+        {
+          minWidth: '400px',
+          disableClose: true,
+          role: 'alertdialog' as DialogRole,
+        },
+        matConfig
+      )
     );
   }
 
@@ -80,19 +90,22 @@ export class DialogService {
     title: string,
     content: string,
     callback: any,
-    config?: DialogConfig,
+    config?: DialogConfig
   ): MatDialogRef<DialogComponent> {
     return this.open<DialogComponent, DialogConfig>(
       DialogComponent,
-      merge({
-        title,
-        content,
-        contentAlign: 'center',
-        actionsAlign: 'end',
-        okLabel: 'OK',
-        cancelLabel: 'Cancel',
-      }, config),
-      result => {
+      merge(
+        {
+          title,
+          content,
+          contentAlign: 'center',
+          actionsAlign: 'end',
+          okLabel: 'OK',
+          cancelLabel: 'Cancel',
+        },
+        config
+      ),
+      (result) => {
         if (result && callback) {
           callback();
         }
@@ -101,7 +114,7 @@ export class DialogService {
         minWidth: '400px',
         disableClose: true,
         role: 'alertdialog' as DialogRole,
-      }),
+      })
     );
   }
 
@@ -117,7 +130,10 @@ export class DialogService {
   }
 
   logout(): Observable<any> {
-    const dialog = this.stop('Log out', 'You are logging out all applications. <br /> This will take 5 seconds. Please wait...');
+    const dialog = this.stop(
+      'Log out',
+      'You are logging out all applications. <br /> This will take 5 seconds. Please wait...'
+    );
     setTimeout(() => {
       dialog.close();
       window.location.href = '/';
