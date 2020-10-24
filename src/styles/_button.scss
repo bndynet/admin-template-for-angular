@@ -24,10 +24,10 @@ button {
     &.mat-mini-fab,
     &.mat-icon-button {
       .mat-ripple {
-        border: solid 3px;
-        border-right-color: transparent;
-        border-bottom-color: transparent;
-        border-left-color: transparent;
+        border: solid 1px;
+        border-right-color: rgba($color: #000000, $alpha: 0.1);
+        border-bottom-color: rgba($color: #000000, $alpha: 0.1);
+        border-left-color: rgba($color: #000000, $alpha: 0.1);
         @include rotate();
         &::before {
           content: "";

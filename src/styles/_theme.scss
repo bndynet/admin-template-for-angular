@@ -53,10 +53,12 @@ $themes: (
     .#{$name} {
       @include angular-material-theme($theme);
       @include base-style($name, $colorset);
+      @include scrollbar-style($name, $colorset);
       @include table-style($name, $colorset);
     }
   } @else {
     // @include base-style($name, $colorset);
+    @include scrollbar-style($name, $colorset);
     @include table-style($name, $colorset);
   }
 }

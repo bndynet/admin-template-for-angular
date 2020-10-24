@@ -4,7 +4,11 @@
 
   h2 {
     flex: 1;
-    margin: 1rem 1rem 0.5rem 1rem;
+    margin: 1rem 1rem 0.5rem 1.5rem;
+
+    &.has-back {
+      margin-left: 0.5rem;
+    }
 
     .btn-back {
       position: relative;

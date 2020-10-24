@@ -111,6 +111,10 @@ section {
   padding: 1rem 2rem;
 }
 
+.border-radius {
+  border-radius: 4px;
+}
+
 // text
 .text-muted {
   color: #666666;
@@ -153,37 +157,51 @@ table {
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.12),
     0 5px 10px 1px rgba(0, 0, 0, 0.12), 0 5px 14px 2px rgba(0, 0, 0, 0.12);
 
-  tr {
-    &:not(.active):hover {
-      th,
-      td {
-        background-color: #efefef;
-      }
-    }
+  thead {
+    th {
+      text-align: left;
+      border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+      padding: 0.5rem;
 
-    &.active {
-      td {
-        background-color: #666666;
-        color: white;
-        a {
-          color: white;
-        }
+      &:first-child {
+        padding-left: 1rem;
       }
     }
   }
 
-  th,
-  td {
-    text-align: left;
-    border-bottom: solid 1px rgba(0, 0, 0, 0.12);
-    padding: 0.5rem;
+  tbody {
+    tr {
+      &:not(.active):hover {
+        th,
+        td {
+          background-color: #efefef;
+        }
+      }
 
-    &:first-child {
-      padding-left: 1rem;
+      &.active {
+        td {
+          background-color: #666666;
+          color: white;
+          a {
+            color: white;
+          }
+        }
+      }
     }
 
-    .mat-icon {
-      font-size: 1rem;
+    th,
+    td {
+      text-align: left;
+      border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+      padding: 0.5rem;
+
+      &:first-child {
+        padding-left: 1rem;
+      }
+
+      .mat-icon {
+        font-size: 1rem;
+      }
     }
   }
 }

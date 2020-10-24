@@ -2,7 +2,7 @@
   <app-page-loading [loading]="loading"></app-page-loading>
   <div class="row" *ngIf="!loading">
     <div class="fill">
-      <table>
+      <table class="border-radius">
         <thead>
           <tr>
             <th>ID</th>
@@ -46,7 +46,7 @@
   <app-content-sidebar #contentSidebar elementsToOpen=".btn-edit"
     [title]="'#' + activedHero?.id + ' ' + activedHero?.name" [progressShown]="saving" [open]="activedHero"
     (closed)="onClosedContentSidebar()">
-    <div class="padding" style="background-color: #efefef;">
+    <div class="padding">
       <form *ngIf="activedHero" style="height: 2000px;">
         <mat-form-field>
           <input matInput name="name" placeholder="Name" [(ngModel)]="activedHero.name">
