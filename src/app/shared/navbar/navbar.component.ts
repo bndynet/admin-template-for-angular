@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuEntity, MessageEntity, UserEntity } from 'src/app/app-types';
 import { AuthService, EventsService } from 'src/app/_services';
@@ -8,10 +8,9 @@ import { convertMessages, convertUser, themes } from 'src/config';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-
   @Input() menus: MenuEntity[];
   @Output() menuClick = new EventEmitter<MenuEntity>();
   @Output() search = new EventEmitter<string>();
@@ -27,25 +26,23 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private app: AppService,
     private auth: AuthService,
-    private events: EventsService,
-  ) { }
+    private events: EventsService
+  ) {}
 
   ngOnInit(): void {
     this.searchEnabled = this.search.observers.length > 0;
 
-    this.auth.getUserInfo().subscribe(
-      res => {
-        this.userInfo = convertUser(res);
-      }
-    );
+    this.auth.getUserInfo().subscribe((res) => {
+      this.userInfo = convertUser(res);
+    });
 
     this.messages = [];
-    this.app.getMessages().subscribe(
-      res => {
-        this.messages = convertMessages(res, this.messages);
-        this.newMessageCount = this.messages.filter(message => !message.read).length;
-      }
-    );
+    this.app.getMessages().subscribe((res) => {
+      this.messages = convertMessages(res, this.messages);
+      this.newMessageCount = this.messages.filter(
+        (message) => !message.read
+      ).length;
+    });
   }
 
   toggleSidebar(): void {
@@ -53,17 +50,22 @@ export class NavbarComponent implements OnInit {
   }
 
   viewMessage(message: any): void {
-    this.app.dialog.alert(`#${message.id} ` + message.title, message.content, () => {
-      // TODO: handle read message
-      message.read = true;
-      this.newMessageCount -= 1;
-      this.app.notificaiton.info('You have read this message.');
-    }, {
-      contentAlign: 'start',
-      cancelLabel: 'Close',
-      okLabel: '',
-      actionsAlign: 'end',
-    });
+    this.app.dialog.alert(
+      `#${message.id} ` + message.title,
+      message.content,
+      () => {
+        // TODO: handle read message
+        message.read = true;
+        this.newMessageCount -= 1;
+        this.app.notificaiton.info('You have read this message.');
+      },
+      {
+        contentAlign: 'start',
+        cancelLabel: 'Close',
+        okLabel: '',
+        actionsAlign: 'end',
+      }
+    );
   }
 
   goto(menu: MenuEntity): void {

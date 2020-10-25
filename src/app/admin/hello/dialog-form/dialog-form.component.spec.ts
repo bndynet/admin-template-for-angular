@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DialogFormComponent } from './dialog-form.component';
 
 describe('DialogFormComponent', () => {
@@ -8,9 +7,8 @@ describe('DialogFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogFormComponent ]
-    })
-    .compileComponents();
+      declarations: [DialogFormComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

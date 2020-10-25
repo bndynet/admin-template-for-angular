@@ -1,18 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { delay } from 'rxjs/operators';
-import { ContentSidebarComponent } from '../../../shared';
 import { NotificationService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
 import { getLocalUrl, mockRequest } from 'src/utils';
+import { ContentSidebarComponent } from '../../../shared';
 
 @Component({
   selector: 'app-hero-list',
   templateUrl: './hero-list.component.html',
-  styleUrls: ['./hero-list.component.scss']
+  styleUrls: ['./hero-list.component.scss'],
 })
 export class HeroListComponent implements OnInit {
-
   public heroes: any[] = [];
   public activedHero: any;
   public saving = false;
@@ -23,21 +22,25 @@ export class HeroListComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private app: AppService,
-    private notification: NotificationService,
-  ) { }
+    private notification: NotificationService
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
-    this.http.get(getLocalUrl(`/assets/heroes.json`)).pipe(delay(2000)).subscribe(
-      (res: any[]) => {
+    this.http
+      .get(getLocalUrl(`/assets/heroes.json`))
+      .pipe(delay(2000))
+      .subscribe((res: any[]) => {
         this.loading = false;
         this.heroes = res;
-      }
-    );
+      });
   }
 
   gotoDetail(id: number): void {
-    this.activedHero = Object.assign({}, this.heroes.find(h => h.id === id));
+    this.activedHero = Object.assign(
+      {},
+      this.heroes.find((h) => h.id === id)
+    );
   }
 
   save(): void {
@@ -45,7 +48,7 @@ export class HeroListComponent implements OnInit {
     mockRequest().subscribe(() => {
       this.saving = false;
 
-      const index = this.heroes.findIndex( h => h.id === this.activedHero.id);
+      const index = this.heroes.findIndex((h) => h.id === this.activedHero.id);
       this.heroes[index] = Object.assign({}, this.activedHero);
       this.activedHero = null;
       this.notification.success('Save Successfully.');

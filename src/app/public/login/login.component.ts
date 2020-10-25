@@ -1,29 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/_services';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   public logging: boolean;
-  public form: FormGroup =  new FormGroup({
+  public form: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
   });
 
-  constructor(
-    private router: Router,
-    private app: AppService,
-  ) {
-  }
+  constructor(private router: Router, private app: AppService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   login(): void {
     if (this.logging || !this.form.valid) {
@@ -31,9 +25,11 @@ export class LoginComponent implements OnInit {
     }
 
     this.logging = true;
-    this.app.login(this.form.get('name').value, this.form.get('password').value).subscribe(() => {
-      this.logging = false;
-      this.router.navigate(['/admin']);
-    });
+    this.app
+      .login(this.form.get('name').value, this.form.get('password').value)
+      .subscribe(() => {
+        this.logging = false;
+        this.router.navigate(['/admin']);
+      });
   }
 }

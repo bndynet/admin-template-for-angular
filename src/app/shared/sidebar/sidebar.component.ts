@@ -1,15 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-
 import * as moment from 'moment';
 import { MenuEntity } from 'src/app/app-types';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss'],
 })
 export class SideBarComponent implements OnInit {
-
   @Input() menus: MenuEntity[];
 
   tooltip: string;
@@ -21,7 +19,9 @@ export class SideBarComponent implements OnInit {
   constructor() {
     if (window.APP_VERSION && window.APP_BUILD) {
       let v = `VERSION ${this.version}`;
-      let b = `BUILD   ${moment(new Date(this.build)).format('YYYY-MM-DD HH:mm:ss')}`;
+      let b = `BUILD   ${moment(new Date(this.build)).format(
+        'YYYY-MM-DD HH:mm:ss'
+      )}`;
       const maxLen = v.length > b.length ? v.length : b.length;
       if (v.length < maxLen) {
         v = v.replace(' ', ''.padEnd(maxLen - v.length + 1, ' '));
@@ -30,10 +30,9 @@ export class SideBarComponent implements OnInit {
         b = b.replace(' ', ''.padEnd(maxLen - b.length + 1, ' '));
       }
 
-      this.tooltip  = `${v}\n${b}`;
+      this.tooltip = `${v}\n${b}`;
     }
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

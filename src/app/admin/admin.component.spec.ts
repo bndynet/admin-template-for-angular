@@ -1,8 +1,12 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestModule } from 'src/test.module';
+import {
+  EventsService,
+  NotificationService,
+  StatusService,
+} from '../_services';
 import { AdminComponent } from './admin.component';
-import { EventsService, NotificationService, StatusService } from '../_services';
 
 describe('AppComponent', () => {
   let component: AdminComponent;
@@ -14,18 +18,10 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        TestModule,
-      ],
-      declarations: [
-        AdminComponent,
-      ],
-      providers: [
-        EventsService,
-        StatusService,
-        NotificationService,
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      imports: [TestModule],
+      declarations: [AdminComponent],
+      providers: [EventsService, StatusService, NotificationService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     statusService = TestBed.inject(StatusService);
@@ -67,7 +63,7 @@ describe('AppComponent', () => {
     expect(component.sidebarOpened).toBeFalse();
   });
 
-  it('should raise a toggle event for content sidebar', done => {
+  it('should raise a toggle event for content sidebar', (done) => {
     eventsService.openContentSidebar();
     setTimeout(() => {
       expect(component.contentSidebarOpened).toBeTrue();
@@ -79,7 +75,6 @@ describe('AppComponent', () => {
         done();
       }, 200);
     }, 200);
-
   });
 
   it('should toggle main progress bar', () => {

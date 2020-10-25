@@ -1,26 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { StatusService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
 
 @Component({
   selector: 'app-dialog-form',
   templateUrl: './dialog-form.component.html',
-  styleUrls: ['./dialog-form.component.scss']
+  styleUrls: ['./dialog-form.component.scss'],
 })
 export class DialogFormComponent implements OnInit {
-
   name: string;
   pending: boolean;
 
   constructor(
     private app: AppService,
-    private dialog: MatDialogRef<DialogFormComponent>,
-  ) { }
+    private dialog: MatDialogRef<DialogFormComponent>
+  ) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 
   close(): void {
     this.dialog.close();

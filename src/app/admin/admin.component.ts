@@ -1,11 +1,18 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { delay } from 'rxjs/operators';
 import { slideInAnimation } from '../animations';
 import { MenuEntity } from '../app-types';
-import { NotificationService, NotificationOptions, EventsService, StatusService, Status, AppService } from '../_services';
+import {
+  AppService,
+  EventsService,
+  NotificationOptions,
+  NotificationService,
+  Status,
+  StatusService,
+} from '../_services';
 import { menus } from './menus';
 
 @Component({
@@ -15,7 +22,6 @@ import { menus } from './menus';
   animations: [slideInAnimation],
 })
 export class AdminComponent implements OnInit, AfterViewInit {
-
   @ViewChild('sidebar') sidebarRef: MatSidenav;
 
   sidebarHasBackdrop = false;
@@ -32,25 +38,22 @@ export class AdminComponent implements OnInit, AfterViewInit {
     private router: Router,
     private status: StatusService,
     private snackBar: MatSnackBar,
-    private notification: NotificationService,
+    private notification: NotificationService
   ) {
     this.menus = menus;
     this.subMenus = menus[0].children;
   }
 
   ngOnInit(): void {
-    this.events
-      .contentSidebarToggleEvent
+    this.events.contentSidebarToggleEvent
       .pipe(delay(100))
       .subscribe((opened: boolean) => {
         this.contentSidebarOpened = opened;
       });
 
-    this.events
-      .sidebarToggleEvent
-      .subscribe(() => {
-        this.toggleSidebar();
-      });
+    this.events.sidebarToggleEvent.subscribe(() => {
+      this.toggleSidebar();
+    });
 
     this.notification.event.subscribe((options: NotificationOptions) => {
       this.snackBar.open(options.message, 'Close', {

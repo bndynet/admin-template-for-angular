@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { IconCardComponent } from './icon-card.component';
 
 describe('IconCardComponent', () => {
@@ -8,9 +7,8 @@ describe('IconCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IconCardComponent ]
-    })
-    .compileComponents();
+      declarations: [IconCardComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
