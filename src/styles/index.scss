@@ -16,3 +16,23 @@
 @each $name, $theme in $themes {
   @include register-theme($name, $theme);
 }
+
+// Register all animates
+.headShake {
+  @include headShake();
+}
+.heartBeat {
+  @include heartBeat();
+}
+.flip {
+  @include flip();
+}
+.swing {
+  @include swing();
+}
+.rotate {
+  @include rotate();
+}
+.aggretation {
+  @include aggregation();
+}
