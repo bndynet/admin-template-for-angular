@@ -5,6 +5,6 @@
     <span *ngIf="item.text">{{item.text}}</span>
   </a>
 </mat-nav-list>
-<footer [matTooltip]="tooltip" [innerHTML]="copyright">
-  <span matTooltipClass="prewrap"></span>
+<footer [matTooltip]="tooltip" matTooltipClass="prewrap">
+  <span [innerHTML]="copyright"></span>
 </footer>

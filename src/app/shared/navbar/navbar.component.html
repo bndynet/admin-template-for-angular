@@ -24,7 +24,7 @@
         matBadgeColor="accent" [matMenuTriggerFor]="menuMessage" *ngIf="newMessageCount">
         <mat-icon>message</mat-icon>
       </button>
-      <mat-menu #menuMessage="matMenu" class="message-list" [hidden]="!newMessageCount">
+      <mat-menu #menuMessage="matMenu" class="message-list scrollbar" [hidden]="!newMessageCount">
         <button mat-menu-item *ngFor="let message of messages" [ngClass]="{'new': !message.read}"
           [matTooltip]="message.title" (click)="viewMessage(message)">
           <mat-icon>email</mat-icon>
