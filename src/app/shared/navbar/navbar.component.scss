@@ -65,11 +65,11 @@
     width: 180px;
     max-width: 240px;
     outline: none;
+    transition: width .4s ease-in-out;
 
     &:focus {
       width: 80%;
       background-color: #ffffff;
-      transition: width .4s ease-in-out;
     }
   }
 }
