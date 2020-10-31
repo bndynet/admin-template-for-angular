@@ -85,9 +85,6 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   clickNavMenu(menu: MenuEntity): void {
     this.subMenus = menu.children;
-    if (menu.children.length > 0 && menu.children[0].link) {
-      this.router.navigate([menu.children[0].link]);
-    }
   }
 
   search(keywords: string): void {

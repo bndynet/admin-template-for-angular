@@ -27,11 +27,52 @@ export const menus: MenuEntity[] = [
     link: '',
     children: [
       {
-        icon: 'tag',
+        icon: 'bookmark_border',
         text: 'Environments',
         link: '',
+        children: [
+          {
+            icon: 'bookmark_border',
+            text: 'Development',
+            link: '',
+          },
+          {
+            icon: 'bookmark_border',
+            text: 'Production',
+            link: '',
+          },
+        ],
       },
-    ]
+      {
+        icon: 'bookmark_border',
+        text: 'Tools',
+        link: '',
+        children: [
+          {
+            icon: 'bookmark_border',
+            text: 'Tool 1',
+            link: '',
+            children: [
+              {
+                icon: 'bookmark_border',
+                text: 'Tool 1-1',
+                link: '',
+              },
+              {
+                icon: 'bookmark_border',
+                text: 'Tool 1-2',
+                link: '',
+              },
+            ],
+          },
+          {
+            icon: 'bookmark_border',
+            text: 'Tool 2',
+            link: '',
+          },
+        ],
+      },
+    ],
   },
   {
     text: 'RESOURCES',
@@ -41,7 +82,7 @@ export const menus: MenuEntity[] = [
         icon: 'tag',
         text: 'MENU',
       },
-    ]
+    ],
   },
   {
     text: 'EVENTS',
@@ -51,6 +92,6 @@ export const menus: MenuEntity[] = [
         icon: 'tag',
         text: 'MENU',
       },
-    ]
+    ],
   },
 ];

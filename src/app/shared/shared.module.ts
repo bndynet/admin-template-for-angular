@@ -5,6 +5,7 @@ import { AppUiModule } from '../app-ui.module';
 import { ContentSidebarComponent } from './content-sidebar/content-sidebar.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { IconCardComponent } from './icon-card/icon-card.component';
+import { MenuComponent } from './menu/menu.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PageErrorComponent } from './page-error/page-error.component';
 import { PageHeaderComponent } from './page-header/page-header.component';
@@ -23,6 +24,7 @@ import { ThemeImgComponent } from './theme-img/theme-img.component';
     PageErrorComponent,
     IconCardComponent,
     ThemeImgComponent,
+    MenuComponent,
   ],
   imports: [CommonModule, RouterModule, AppUiModule],
   exports: [

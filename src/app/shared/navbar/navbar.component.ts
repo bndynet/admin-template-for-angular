@@ -69,10 +69,8 @@ export class NavbarComponent implements OnInit {
   }
 
   goto(menu: MenuEntity): void {
-    if (menu.link) {
-      this.router.navigate([menu.link]);
-    }
     this.menuClick.emit(menu);
+    this.gotoMenu(menu);
   }
 
   changeTheme(themeKey: string): void {
@@ -88,5 +86,14 @@ export class NavbarComponent implements OnInit {
 
   logout(): void {
     this.app.logout();
+  }
+
+  private gotoMenu(menu: MenuEntity): void {
+    if (menu.link) {
+      this.app.navMenuChanged.emit(menu);
+      this.router.navigate([menu.link]);
+    } else if (menu.children && menu.children.length > 0) {
+      this.gotoMenu(menu.children[0]);
+    }
   }
 }

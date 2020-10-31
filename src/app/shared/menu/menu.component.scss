@@ -1,0 +1,59 @@
+@import "../../../styles/theme";
+
+::ng-deep .menu {
+  display: block;
+
+  .menu-text {
+    flex: 1;
+    padding-left: 4px;
+  }
+
+  @for $level from 1 to 10 {
+    ::ng-deep.mat-list-item.level-#{$level} {
+      height: 42px;
+      .mat-list-item-content {
+        padding-left: #{16 * $level + 16}px !important;
+      }
+    }
+  }
+
+  .mat-list-item {
+    .mat-list-item-content {
+      border-left: solid 5px transparent;
+      width: auto;
+    }
+    &.active {
+      .mat-list-item-content {
+        border-left-color: $color-primary;
+        background-color: rgba(0, 0, 0, 0.12);
+      }
+    }
+  }
+
+  .submenu {
+    .mat-nav-list {
+      padding-top: 0;
+      max-height: 500px;
+      transition: all 0.2s;
+      overflow: hidden;
+    }
+
+    &.collapsed {
+      .mat-nav-list {
+        max-height: 0;
+      }
+    }
+  }
+}
+
+@include each-themes using ($name, $theme) {
+  :host {
+    ::ng-deep .menu {
+      .mat-list-item.active {
+        .mat-list-item-content {
+          border-left-color: get($name, "primary");
+        }
+      }
+    }
+  }
+}

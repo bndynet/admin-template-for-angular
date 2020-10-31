@@ -1,0 +1,10 @@
+<mat-nav-list class="menu">
+  <ng-container *ngFor="let item of data">
+    <a mat-list-item class="level-{{level}}" [class.active]="item === activeMenu" [class.submenu-collapsed]="item._collapsed" (click)="onClickMenu(item, $event)">
+      <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
+      <span class="menu-text" *ngIf="item.text">{{item.text}}</span>
+      <span class="icon icon-arrow" *ngIf="item.children && item.children.length > 0" [class]="{'icon-arrow-down': !item._collapsed, 'icon-arrow-up': item._collapsed}"></span>
+    </a>
+    <app-menu class="submenu" [class]="{'collapsed': item._collapsed}" *ngIf="item.children && item.children.length > 0" [data]="item.children" [level]="level + 1"></app-menu>
+  </ng-container>
+</mat-nav-list>

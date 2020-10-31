@@ -13,6 +13,7 @@ export interface MenuEntity {
   text?: string;
   link?: string;
   children?: MenuEntity[];
+  _collapsed?: boolean;
 }
 
 export interface UserEntity {
@@ -44,10 +45,12 @@ export const httpStatusMap = {
   },
   408: {
     title: 'Request Timeout',
-    description: 'The request took longer than the server was prepared to wait.',
+    description:
+      'The request took longer than the server was prepared to wait.',
   },
   500: {
     title: 'Internal Server Errort',
-    description: 'The request was not completed. The server met an unexpected condition.',
+    description:
+      'The request was not completed. The server met an unexpected condition.',
   },
 };

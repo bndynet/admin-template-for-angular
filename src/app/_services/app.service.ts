@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval, Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { getLocalUrl, getUUID } from 'src/utils';
-import { MessageEntity } from '../app-types';
+import { MenuEntity, MessageEntity } from '../app-types';
 import { AuthService } from './auth.service';
 import { DialogService } from './dialog.service';
 import { NotificationService } from './notification.service';
@@ -15,6 +15,8 @@ import { StatusService } from './status.service';
 })
 export class AppService {
   public readonly clientTrackingID: string;
+
+  public navMenuChanged = new EventEmitter<MenuEntity>();
 
   constructor(
     private router: Router,
