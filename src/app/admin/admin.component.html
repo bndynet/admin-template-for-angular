@@ -2,7 +2,7 @@
 
 <app-navbar [menus]="menus" (menuClick)="clickNavMenu($event)" (search)="search($event)"></app-navbar>
 
-<mat-sidenav-container>
+<mat-sidenav-container autosize>
   <mat-sidenav #sidebar [mode]="sidebarMode" opened>
     <div class="py-4 absolute" align="center" *ngIf="menuLoading">
       <mat-spinner strokeWidth="3" diameter="80"></mat-spinner>

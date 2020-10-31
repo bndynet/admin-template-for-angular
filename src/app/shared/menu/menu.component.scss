@@ -13,11 +13,22 @@
       height: 42px;
       .mat-list-item-content {
         padding-left: #{16 * $level + 16}px !important;
+
+        .menu-text {
+          padding-right: #{16 * $level}px !important;
+        }
       }
     }
   }
 
+  .mat-icon {
+    display: flex;
+    align-items: center;
+  }
+
   .mat-list-item {
+    height: 42px !important;
+
     .mat-list-item-content {
       border-left: solid 5px transparent;
       width: auto;

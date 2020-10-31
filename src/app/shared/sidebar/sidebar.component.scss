@@ -3,7 +3,7 @@
 :host {
   display: flex;
   flex-direction: column;
-  width: $sidebar-width;
+  min-width: $sidebar-width + 1;
   height: 100%;
 
   .nav {

@@ -28,48 +28,46 @@ export const menus: MenuEntity[] = [
     roles: ['role_doc'],
     children: [
       {
-        icon: 'bookmark_border',
-        text: 'Environments',
-        link: '',
+        text: 'Introduction',
+      },
+      {
+        text: 'Getting Started',
         children: [
           {
-            icon: 'bookmark_border',
-            text: 'Development',
-            link: '',
+            text: 'Try it',
           },
           {
-            icon: 'bookmark_border',
-            text: 'Production',
-            link: '',
+            text: 'Setup',
           },
         ],
       },
       {
-        icon: 'bookmark_border',
-        text: 'Tools',
-        link: '',
+        text: 'Main Concepts',
         children: [
           {
-            icon: 'bookmark_border',
-            text: 'Tool 1',
-            link: '',
+            text: 'Components',
             children: [
               {
-                icon: 'bookmark_border',
-                text: 'Tool 1-1',
-                link: '',
-              },
-              {
-                icon: 'bookmark_border',
-                text: 'Tool 1-2',
-                link: '',
+                text: 'Form Compoents',
+                children: [
+                  {
+                    text: 'Reactive Forms',
+                  },
+                  {
+                    text: 'Validate form input',
+                  },
+                ],
               },
             ],
           },
           {
-            icon: 'bookmark_border',
-            text: 'Tool 2',
-            link: '',
+            text: 'Templates',
+          },
+          {
+            text: 'Directives',
+          },
+          {
+            text: 'Dependency Injection',
           },
         ],
       },
