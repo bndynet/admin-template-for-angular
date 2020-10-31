@@ -60,6 +60,25 @@ section {
   padding: 0;
 }
 
+.absolute {
+  position: absolute;
+  width: 100%;
+}
+
+@for $var from 1 to 8 {
+  .pa-#{$var} {
+    padding: #{$var * 0.25}rem;
+  }
+  .px-#{$var} {
+    padding-left: #{$var * 0.25}rem;
+    padding-right: #{$var * 0.25}rem;
+  }
+  .py-#{$var} {
+    padding-top: #{$var * 0.25}rem;
+    padding-top: #{$var * 0.25}rem;
+  }
+}
+
 .padding {
   padding: 1rem;
 }

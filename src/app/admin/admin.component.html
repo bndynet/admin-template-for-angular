@@ -4,6 +4,9 @@
 
 <mat-sidenav-container>
   <mat-sidenav #sidebar [mode]="sidebarMode" opened>
+    <div class="py-4 absolute" align="center" *ngIf="menuLoading">
+      <mat-spinner strokeWidth="3" diameter="80"></mat-spinner>
+    </div>
     <app-sidebar [menus]="subMenus"></app-sidebar>
   </mat-sidenav>
   <mat-sidenav-content [ngClass]="{'content-sidebar-opened': contentSidebarOpened}">

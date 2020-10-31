@@ -1,5 +1,6 @@
 {
   "name": "Bendy Zhang",
   "title": "Software Engineer & Web Developer",
-  "avatar": "assets/logo.png"
+  "avatar": "assets/logo.png",
+  "roles": ["role_admin", "role_doc"]
 }

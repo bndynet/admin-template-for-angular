@@ -25,6 +25,7 @@ export const menus: MenuEntity[] = [
   {
     text: 'DOCS',
     link: '',
+    roles: ['role_doc'],
     children: [
       {
         icon: 'bookmark_border',
@@ -77,6 +78,7 @@ export const menus: MenuEntity[] = [
   {
     text: 'RESOURCES',
     link: '',
+    roles: ['role_admin'],
     children: [
       {
         icon: 'tag',

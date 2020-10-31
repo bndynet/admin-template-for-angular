@@ -31,6 +31,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   showProgressbar = false;
   menus: MenuEntity[];
   subMenus: MenuEntity[];
+  menuLoading = false;
 
   constructor(
     private app: AppService,
@@ -39,12 +40,23 @@ export class AdminComponent implements OnInit, AfterViewInit {
     private status: StatusService,
     private snackBar: MatSnackBar,
     private notification: NotificationService
-  ) {
-    this.menus = menus;
-    this.subMenus = menus[0].children;
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.menuLoading = true;
+    this.app.auth.getMenu(menus).subscribe(
+      (userMenu: MenuEntity[]) => {
+        this.menus = userMenu;
+        if (this.menus && this.menus.length > 0) {
+          this.subMenus = this.menus[0].children;
+        }
+      },
+      () => {},
+      () => {
+        this.menuLoading = false;
+      }
+    );
+
     this.events.contentSidebarToggleEvent
       .pipe(delay(100))
       .subscribe((opened: boolean) => {

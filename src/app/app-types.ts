@@ -12,6 +12,7 @@ export interface MenuEntity {
   icon?: string;
   text?: string;
   link?: string;
+  roles?: string[];
   children?: MenuEntity[];
   _collapsed?: boolean;
 }
@@ -21,6 +22,7 @@ export interface UserEntity {
   title: string;
   avatar: string;
   token: string;
+  roles?: string[];
 }
 
 export interface MessageEntity {

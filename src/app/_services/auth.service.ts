@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { login, logout } from 'src/config';
-import { UserEntity } from '../app-types';
+import { MenuEntity, UserEntity } from '../app-types';
 
 @Injectable({
   providedIn: 'root',
@@ -21,10 +21,57 @@ export class AuthService {
 
   getUserInfo(): Observable<UserEntity> {
     if (!this.userInfo) {
+      const session = sessionStorage.getItem(this.KEY_USER);
+      if (session) {
+        this.userInfo = JSON.parse(session);
+        return of(this.userInfo);
+      }
       return login(this.http);
     } else {
       return of(this.userInfo);
     }
+  }
+
+  getMenu(menu: MenuEntity[]): Observable<MenuEntity[]> {
+    const filterSubmenu = (
+      menuItem: MenuEntity,
+      userRoles: string[]
+    ): MenuEntity[] => {
+      const result: MenuEntity[] = [];
+      if (menuItem.children) {
+        menuItem.children.forEach((submenu) => {
+          if (
+            !submenu.roles ||
+            !userRoles ||
+            submenu.roles.filter((role) => userRoles.includes(role)).length > 0
+          ) {
+            filterSubmenu(submenu, userRoles);
+            result.push(submenu);
+          }
+        });
+      }
+      menuItem.children = result;
+      return result;
+    };
+
+    return this.getUserInfo().pipe(
+      map((user: UserEntity) => {
+        return menu.filter((m) => {
+          const hasRole =
+            !m.roles ||
+            (m.roles &&
+              user.roles &&
+              m.roles.filter((role) => this.userInfo.roles.includes(role))
+                .length > 0);
+
+          if (hasRole) {
+            filterSubmenu(m, this.userInfo.roles);
+            return true;
+          }
+          return hasRole;
+        });
+      })
+    );
   }
 
   login(username: string, password: string): Observable<UserEntity> {
