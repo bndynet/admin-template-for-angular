@@ -1,8 +1,8 @@
-<div class="page-header">
-  <h2 [ngClass]="{'has-back': canBack}">
-    <button mat-icon-button class="btn-back" (click)="back()" *ngIf="canBack">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
+<div class="page-header" [ngClass]="{'has-back': canBack}">
+  <button mat-icon-button class="btn-back" (click)="back()" *ngIf="canBack">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <h2>
     {{title}}
     <small *ngIf="subtitle">{{subtitle}}</small>
   </h2>
