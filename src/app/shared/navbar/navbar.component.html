@@ -49,8 +49,9 @@
         <div class="avatar-wrapper">
           <img [src]="userInfo?.avatar" />
           <div class="mat-typeography">
-            <div class="font-lg">{{userInfo?.name}}</div>
+            <div class="font-lg py-2">{{userInfo?.name}}</div>
             <div class="text-muted">{{userInfo?.title}}</div>
+            <div class="text-muted">{{userRoles.join(', ')}}</div>
           </div>
         </div>
         <mat-divider></mat-divider>

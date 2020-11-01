@@ -37,18 +37,15 @@ export class AppService {
     );
   }
 
-  login(username: string, password: string): Observable<any> {
-    return this.auth.login(username, password);
-  }
-
   logout(): void {
     const dialog = this.dialog.stop(
       'Log out',
-      'You are logging out all applications. <br /> This will take 5 seconds. Please wait...'
+      'You are logging out all applications. <br /> This will take 3 seconds. Please wait...'
     );
-    this.auth.logout().subscribe(() => {
+    setTimeout(() => {
+      this.auth.logout();
       dialog.close();
       this.router.navigate(['/logout']);
-    });
+    }, 3000);
   }
 }

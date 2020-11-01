@@ -19,9 +19,8 @@ export interface MenuEntity {
 
 export interface UserEntity {
   name: string;
-  title: string;
-  avatar: string;
-  token: string;
+  title?: string;
+  avatar?: string;
   roles?: string[];
 }
 

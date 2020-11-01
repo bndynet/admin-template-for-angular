@@ -9,3 +9,7 @@ export const themes = {
   popular: 'Popular Theme',
 };
 
+export const roles = {
+  role_admin: 'Administrator',
+  role_doc: 'Document Owner',
+};

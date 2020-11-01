@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
       }
 
       if (event instanceof NavigationEnd) {
-        if (!this.app.auth.getAuthorizationToken()) {
+        if (!this.app.auth.getAccessToken()) {
           // Check user authentication
           if (
             protectedUrlPrefixes.find((prefix) => event.url.startsWith(prefix))

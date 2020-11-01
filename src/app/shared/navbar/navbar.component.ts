@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MenuEntity, MessageEntity, UserEntity } from 'src/app/app-types';
 import { AuthService, EventsService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
-import { convertMessages, convertUser, themes } from 'src/config';
+import { convertMessages, roles, themes } from 'src/config';
 
 @Component({
   selector: 'app-navbar',
@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
 
   public messages: MessageEntity[];
   public userInfo: UserEntity;
+  public userRoles: string[];
   public newMessageCount = 0;
   public searchKeywords: string;
   public searchEnabled: boolean;
@@ -32,8 +33,9 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.searchEnabled = this.search.observers.length > 0;
 
-    this.auth.getUserInfo().subscribe((res) => {
-      this.userInfo = convertUser(res);
+    this.auth.getUser().subscribe((res) => {
+      this.userInfo = res;
+      this.userRoles = res.roles.map((r) => roles[r] || r);
     });
 
     this.messages = [];
@@ -82,6 +84,10 @@ export class NavbarComponent implements OnInit {
 
   onSearch(): void {
     this.search.emit(this.searchKeywords);
+  }
+
+  getUserRoles() {
+    return;
   }
 
   logout(): void {

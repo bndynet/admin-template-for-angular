@@ -26,5 +26,11 @@
       </div>
       <button mat-raised-button color="primary" [disabled]="!form.valid" [ngClass]="{loading: logging}" type="submit"> Log in </button>
     </mat-card-actions>
+
+    <div>
+      <a mat-button [routerLink]="'/auth/callback'">
+        Log In with GitHub
+      </a>
+    </div>
   </mat-card>
 </form>

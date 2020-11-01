@@ -75,7 +75,7 @@ section {
   }
   .py-#{$var} {
     padding-top: #{$var * 0.25}rem;
-    padding-top: #{$var * 0.25}rem;
+    padding-bottom: #{$var * 0.25}rem;
   }
 }
 
