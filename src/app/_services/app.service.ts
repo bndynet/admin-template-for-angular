@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { stringUtils } from '@bndynet/utils';
 import { interval, Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { getLocalUrl, getUUID } from 'src/utils';
+import { getLocalUrl } from 'src/utils';
 import { MenuEntity, MessageEntity } from '../app-types';
 import { AuthService } from './auth.service';
 import { DialogService } from './dialog.service';
@@ -26,7 +27,7 @@ export class AppService {
     public status: StatusService,
     public notificaiton: NotificationService
   ) {
-    this.clientTrackingID = getUUID();
+    this.clientTrackingID = stringUtils.getUUID();
   }
 
   getMessages(): Observable<MessageEntity[]> {
