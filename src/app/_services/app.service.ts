@@ -27,7 +27,7 @@ export class AppService {
     public status: StatusService,
     public notificaiton: NotificationService
   ) {
-    this.clientTrackingID = stringUtils.getUUID();
+    this.clientTrackingID = stringUtils.getRandomId();
   }
 
   getMessages(): Observable<MessageEntity[]> {
