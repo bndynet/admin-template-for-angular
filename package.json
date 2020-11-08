@@ -1,5 +1,5 @@
 {
-  "name": "angular-starter",
+  "name": "admin-template-for-angular",
   "version": "0.0.0",
   "author": {
     "name": "Bendy Zhang"
@@ -9,7 +9,7 @@
     "ng": "ng",
     "start": "ng serve --port=8080",
     "build": "ng build --prod && ts-node ./tools/after-build.ts",
-    "deploy": "ng build --prod --baseHref=/angular-starter/ && ts-node ./tools/after-build.ts",
+    "deploy": "ng build --prod --baseHref=/admin-template-for-angular/ && ts-node ./tools/after-build.ts",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

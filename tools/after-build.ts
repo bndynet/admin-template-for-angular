@@ -4,7 +4,7 @@ const cli = require('@bndynet/cli');
 const pkg = JSON.parse(fs.readFileSync('package.json') as any);
 
 cli.startSection('inject copyright');
-sh.cd('dist/angular-starter');
+sh.cd('dist/admin-template-for-angular');
 sh.ls('*.*').forEach((file: string) => {
   const isJS = file.endsWith('.js');
   const isCSS = file.endsWith('.css');
@@ -18,7 +18,9 @@ sh.ls('*.*').forEach((file: string) => {
  */
 `;
     if (isJS) {
-      copyright += `var APP_BUILD = '${new Date()}';var APP_VERSION = '${pkg.version}';`;
+      copyright += `var APP_BUILD = '${new Date()}';var APP_VERSION = '${
+        pkg.version
+      }';`;
     }
 
     data = `${copyright}${data}`;
@@ -30,7 +32,6 @@ sh.ls('*.*').forEach((file: string) => {
     });
     cli.success(file);
   }
-
 });
 cli.endSection();
 

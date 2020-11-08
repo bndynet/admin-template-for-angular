@@ -1,6 +1,8 @@
-# Angular Starter
+# Admin Template for Angular
 
-![CI](https://github.com/bndynet/angular-starter/workflows/CI/badge.svg)
+![CI](https://github.com/bndynet/admin-template-for-angular/workflows/CI/badge.svg)
+
+A angular starter project with material design.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.3.
 
