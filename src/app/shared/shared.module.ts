@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AppUiModule } from '../app-ui.module';
+import { LoadingDirective } from '../_directives/loading.directive';
 import { ContentSidebarComponent } from './content-sidebar/content-sidebar.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { IconCardComponent } from './icon-card/icon-card.component';
@@ -15,6 +16,7 @@ import { ThemeImgComponent } from './theme-img/theme-img.component';
 
 @NgModule({
   declarations: [
+    LoadingDirective,
     DialogComponent,
     NavbarComponent,
     SideBarComponent,
@@ -29,6 +31,8 @@ import { ThemeImgComponent } from './theme-img/theme-img.component';
   imports: [CommonModule, RouterModule, AppUiModule],
   exports: [
     AppUiModule,
+
+    LoadingDirective,
 
     DialogComponent,
     NavbarComponent,

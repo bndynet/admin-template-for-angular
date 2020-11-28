@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { delay } from 'rxjs/operators';
 import { NotificationService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
@@ -16,6 +17,7 @@ export class HeroListComponent implements OnInit {
   public activedHero: any;
   public saving = false;
   public loading = false;
+  public initlizating = false;
 
   @ViewChild('contentSidebar') contentSidebarRef: ContentSidebarComponent;
 
@@ -26,13 +28,25 @@ export class HeroListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loading = true;
+    this.getHeroes(null);
+  }
+
+  getHeroes(event: PageEvent): void {
+    if (event) {
+      this.loading = true;
+    } else {
+      this.initlizating = true;
+    }
     this.http
-      .get(getLocalUrl(`/assets/heroes.json`))
+      .get(getLocalUrl(`/assets/heroes.json?p=${event ? event.pageIndex : 0}`))
       .pipe(delay(2000))
       .subscribe((res: any[]) => {
-        this.loading = false;
         this.heroes = res;
+        if (event) {
+          this.loading = false;
+        } else {
+          this.initlizating = false;
+        }
       });
   }
 

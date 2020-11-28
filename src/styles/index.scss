@@ -5,6 +5,7 @@
 @import './theme';
 @import './button';
 @import './variables';
+@import './directives';
 
 // Required for custom themes.
 @include mat-core();

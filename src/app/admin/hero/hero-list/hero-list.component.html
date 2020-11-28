@@ -1,7 +1,7 @@
 <div class="page-container">
-  <app-page-loading [loading]="loading"></app-page-loading>
-  <div class="row" *ngIf="!loading">
-    <div class="fill">
+  <app-page-loading [loading]="initlizating"></app-page-loading>
+  <div class="row" *ngIf="!initlizating">
+    <div class="fill" [uiLoading]="loading" loadingText="Fetching data...">
       <table class="border-radius">
         <thead>
           <tr>
@@ -34,6 +34,18 @@
             </td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5">
+              <mat-paginator [length]="100"
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 25, 100]"
+                (page)="getHeroes($event)"
+                >
+              </mat-paginator>
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
 
