@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { stringUtils } from '@bndynet/utils';
 import { interval, Observable } from 'rxjs';
@@ -15,6 +16,7 @@ import { StatusService } from './status.service';
   providedIn: 'root',
 })
 export class AppService {
+  private rootTitle: string;
   public readonly clientTrackingID: string;
 
   public navMenuChanged = new EventEmitter<MenuEntity>();
@@ -22,12 +24,27 @@ export class AppService {
   constructor(
     private router: Router,
     private http: HttpClient,
+    private titleService: Title,
     public auth: AuthService,
     public dialog: DialogService,
     public status: StatusService,
     public notificaiton: NotificationService
   ) {
     this.clientTrackingID = stringUtils.getRandomId();
+    this.rootTitle = this.titleService.getTitle();
+  }
+
+  setTitle(title: string, overwriteOrigin?: boolean): void {
+    if (overwriteOrigin) {
+      this.rootTitle = title;
+    } else {
+      title = this.rootTitle ? `${title} - ${this.rootTitle}` : title;
+    }
+    this.titleService.setTitle(title);
+  }
+
+  resetTitle(): void {
+    this.titleService.setTitle(this.rootTitle);
   }
 
   getMessages(): Observable<MessageEntity[]> {

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserEntity } from 'src/app/app-types';
@@ -11,7 +11,7 @@ import { getLocalUrl } from 'src/utils';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public logging: boolean;
   public form: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -24,7 +24,13 @@ export class LoginComponent implements OnInit {
     private http: HttpClient
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.app.setTitle('Log in');
+  }
+
+  ngOnDestroy(): void {
+    this.app.resetTitle();
+  }
 
   login(): void {
     if (this.logging || !this.form.valid) {
