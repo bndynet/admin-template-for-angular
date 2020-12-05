@@ -146,6 +146,7 @@
       true,
       "element",
       "app",
+      "ui",
       "kebab-case"
     ]
   }

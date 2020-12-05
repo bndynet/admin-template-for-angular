@@ -1,0 +1,36 @@
+.root {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #666666;
+  background-color: #ffffff;
+  text-align: center;
+
+  .name {
+    font-size: 20px;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  &.small {
+    width: 1.5em;
+    height: 1.5em;
+    .name {
+      font-size: 1em;
+    }
+  }
+
+  &.large {
+    width: 6em;
+    height: 6em;
+    .name {
+      font-size: 3em;
+    }
+  }
+}

@@ -1,0 +1,4 @@
+<span class="root {{size}}">
+  <img [src]="url" [matTooltip]="name" *ngIf="url" />
+  <span class="name" *ngIf="!url && name">{{name[0].toUpperCase()}}</span>
+</span>
