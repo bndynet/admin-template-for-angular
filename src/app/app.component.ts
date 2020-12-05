@@ -21,13 +21,14 @@ export class AppComponent implements OnInit {
       }
 
       if (event instanceof NavigationEnd) {
-        if (!this.app.auth.getAccessToken()) {
-          // Check user authentication
-          if (
-            protectedUrlPrefixes.find((prefix) => event.url.startsWith(prefix))
-          ) {
-            this.router.navigate(['/logout']);
-          }
+        if (
+          protectedUrlPrefixes.find((prefix) => event.url.startsWith(prefix))
+        ) {
+          this.app.auth.isAuthenticated().subscribe((val) => {
+            if (!val) {
+              this.router.navigate(['/logout']);
+            }
+          });
         }
       }
     });

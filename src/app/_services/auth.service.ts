@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MenuEntity, UserEntity } from '../app-types';
-import { OAuth } from './oauth.service';
+import { environment } from 'src/environments/environment';
+import { AuthHandler, AuthType, MenuEntity, UserInfo } from '../app-types';
+import { AuthKeycloakHandler } from './auth-keycloak-handler';
+import { AuthOAuthHandler, TokenInfo } from './auth-oauth-handler';
 
 @Injectable({
   providedIn: 'root',
@@ -12,48 +14,46 @@ export class AuthService {
   private readonly KEY_USER = 'APP_USER';
   private readonly KEY_TOKEN = 'APP_TOKEN';
 
-  private oauth: OAuth;
-  private userInfo: UserEntity;
-  private accessToken: string;
+  // private oauth: OAuth;
+  private userInfo: UserInfo;
+  private tokenInfo: TokenInfo;
 
-  constructor(private http: HttpClient) {}
+  public authHandler: AuthHandler;
 
-  enableOAuth(oauthInstance: OAuth): void {
-    this.oauth = oauthInstance;
+  constructor(
+    private http: HttpClient,
+    private authKeycloak: AuthKeycloakHandler,
+    private oauth: AuthOAuthHandler
+  ) {
+    switch (environment.authType) {
+      case AuthType.Keycloak:
+        this.authHandler = this.authKeycloak;
+        break;
+
+      case AuthType.CustomOAuth:
+        this.authHandler = this.oauth;
+        break;
+    }
   }
 
-  getAccessToken(): string {
-    if (this.accessToken) {
-      return this.accessToken;
-    }
+  setAuthType(authType: AuthType) {
+    switch (authType) {
+      case AuthType.Keycloak:
+        this.authHandler = this.authKeycloak;
+        break;
 
-    if (sessionStorage.getItem(this.KEY_TOKEN)) {
-      this.accessToken = sessionStorage.getItem(this.KEY_TOKEN);
-      return this.accessToken;
+      case AuthType.CustomOAuth:
+        this.authHandler = this.oauth;
+        break;
     }
-
-    return null;
   }
 
-  setToken(accessToken: string): void {
-    sessionStorage.setItem(this.KEY_TOKEN, accessToken);
+  isAuthenticated(): Observable<boolean> {
+    return from(this.authHandler.isAuthenticated());
   }
 
-  getUser(): Observable<UserEntity> {
-    if (this.userInfo) {
-      return of(this.userInfo);
-    }
-
-    if (sessionStorage.getItem(this.KEY_USER)) {
-      this.userInfo = JSON.parse(sessionStorage.getItem(this.KEY_USER));
-      return of(this.userInfo);
-    }
-
-    return of();
-  }
-
-  setUser(user: UserEntity): void {
-    sessionStorage.setItem(this.KEY_USER, JSON.stringify(user));
+  getUser(): Observable<UserInfo> {
+    return from(this.authHandler.getUserInfo());
   }
 
   getMenu(menu: MenuEntity[]): Observable<MenuEntity[]> {
@@ -98,13 +98,13 @@ export class AuthService {
   }
 
   logout(): void {
-    this.accessToken = null;
+    this.tokenInfo = null;
     this.userInfo = null;
     sessionStorage.removeItem(this.KEY_TOKEN);
     sessionStorage.removeItem(this.KEY_USER);
 
-    if (this.oauth) {
-      this.oauth.logout();
+    if (this.authHandler) {
+      this.authHandler.logout();
     }
     // TODO: pass env param
     // return logout(this.http, null);
