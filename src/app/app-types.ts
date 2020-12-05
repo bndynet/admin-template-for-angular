@@ -1,3 +1,5 @@
+import { TokenInfo } from './_services/auth-oauth-handler';
+
 export const KEY_TRACKING_ID = 'AppTrackingID';
 export const KEY_AUTHORIZATION = 'Authorization';
 
@@ -6,6 +8,18 @@ declare global {
     APP_BUILD: string;
     APP_VERSION: string;
   }
+}
+
+export interface AuthHandler {
+  getUserInfo: () => Promise<UserInfo>;
+  getTokenInfo: () => Promise<TokenInfo>;
+  isAuthenticated: () => Promise<boolean>;
+  logout: () => Promise<void> | void;
+}
+
+export enum AuthType {
+  Keycloak,
+  CustomOAuth,
 }
 
 export interface MenuEntity {
@@ -17,7 +31,7 @@ export interface MenuEntity {
   _collapsed?: boolean;
 }
 
-export interface UserEntity {
+export interface UserInfo {
   name: string;
   title?: string;
   avatar?: string;

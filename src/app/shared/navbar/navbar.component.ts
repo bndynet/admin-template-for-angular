@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuEntity, MessageEntity, UserEntity } from 'src/app/app-types';
+import { MenuEntity, MessageEntity, UserInfo } from 'src/app/app-types';
 import { AuthService, EventsService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
 import { convertMessages, roles, themes } from 'src/config';
@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit {
   @Output() search = new EventEmitter<string>();
 
   public messages: MessageEntity[];
-  public userInfo: UserEntity;
+  public userInfo: UserInfo;
   public userRoles: string[];
   public newMessageCount = 0;
   public searchKeywords: string;

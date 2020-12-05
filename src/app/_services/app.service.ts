@@ -61,9 +61,9 @@ export class AppService {
       'You are logging out all applications. <br /> This will take 3 seconds. Please wait...'
     );
     setTimeout(() => {
-      this.auth.logout();
       dialog.close();
       this.router.navigate(['/logout']);
+      this.auth.logout();
     }, 3000);
   }
 }

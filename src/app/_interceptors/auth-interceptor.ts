@@ -20,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const authToken = this.app.auth.getAccessToken();
+    const authToken = 'awefwf'; // FIXME: this.app.auth.authHandler.getAccessToken();
     const headers = {};
     if (authToken) {
       headers[KEY_AUTHORIZATION] = `Bearer ${authToken}`;
