@@ -21,6 +21,7 @@ export class DialogComponent {
   @Input() okLabel: string;
   @Input() cancelLabel: string;
   @Input() loading: boolean;
+  @Input() remainSeconds: number;
   @Output() closed = new EventEmitter();
 
   constructor(
@@ -37,10 +38,23 @@ export class DialogComponent {
     this.contentAlign = ifUndefined(dialogData.contentAlign, this.contentAlign);
     this.okLabel = ifUndefined(dialogData.okLabel, this.okLabel);
     this.cancelLabel = ifUndefined(dialogData.cancelLabel, this.cancelLabel);
+
     this.showLoadingIcon = ifUndefined(
       dialogData.showLoadingIcon,
       this.showLoadingIcon
     );
+    this.remainSeconds = ifUndefined(
+      dialogData.remainSeconds,
+      this.remainSeconds
+    );
+    if (this.remainSeconds > 0) {
+      const interval = setInterval(() => {
+        this.remainSeconds--;
+        if (this.remainSeconds < 0) {
+          clearInterval(interval);
+        }
+      }, 1000);
+    }
   }
 
   onClose(): void {
@@ -56,7 +70,9 @@ export interface DialogConfig extends MatDialogConfig {
   contentAlign?: LineAlignSetting;
   noActions?: boolean;
   showCloseIcon?: boolean;
+
   showLoadingIcon?: boolean;
+  remainSeconds?: number;
 
   cancelLabel?: string;
   okLabel?: string;

@@ -56,9 +56,10 @@ export class AppService {
   }
 
   logout(): void {
-    const dialog = this.dialog.stop(
+    const dialog = this.dialog.remain(
+      3,
       'Log out',
-      'You are logging out all applications. <br /> This will take 3 seconds. Please wait...'
+      'You are logging out all applications. <br /> This will take some seconds. Please wait...'
     );
     setTimeout(() => {
       dialog.close();

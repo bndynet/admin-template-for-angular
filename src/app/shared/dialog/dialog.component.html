@@ -1,6 +1,7 @@
 <div class="container" [ngClass]="{'has-close-icon': showCloseIcon}">
   <div class="loading-wrapper" *ngIf="showLoadingIcon">
     <mat-spinner strokeWidth="5"></mat-spinner>
+    <div class="seconds" *ngIf="true || remainSeconds > 0">{{remainSeconds}}</div>
   </div>
 
   <h1 mat-dialog-title [align]="showCloseIcon ? 'start' : 'center'">{{title}}</h1>
