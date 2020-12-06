@@ -28,6 +28,7 @@ export interface UserEntity {
   title?: string;
   avatar?: string;
   roles?: string[];
+  accessToken?: string;
 }
 
 export interface MessageEntity {

@@ -18,6 +18,8 @@
       </mat-form-field>
     </mat-card-content>
 
+    <div class="alert-message" *ngIf="alertMessage">{{alertMessage}}</div>
+
     <mat-card-actions align="end">
       <div class="flex-1" align="start">
         <a mat-button>
