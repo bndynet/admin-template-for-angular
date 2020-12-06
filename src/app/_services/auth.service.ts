@@ -1,49 +1,42 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthHandler, AuthType, MenuEntity, UserInfo } from '../app-types';
 import { AuthKeycloakHandler } from './auth-keycloak-handler';
-import { AuthOAuthHandler, TokenInfo } from './auth-oauth-handler';
+import { AuthLocalHandler } from './auth-local-handler';
+import { AuthOAuthHandler } from './auth-oauth-handler';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly KEY_USER = 'APP_USER';
-  private readonly KEY_TOKEN = 'APP_TOKEN';
-
-  // private oauth: OAuth;
-  private userInfo: UserInfo;
-  private tokenInfo: TokenInfo;
-
   public authHandler: AuthHandler;
 
   constructor(
-    private http: HttpClient,
     private authKeycloak: AuthKeycloakHandler,
-    private oauth: AuthOAuthHandler
+    private authLocal: AuthLocalHandler,
+    private authOAuth: AuthOAuthHandler
   ) {
-    switch (environment.authType) {
-      case AuthType.Keycloak:
-        this.authHandler = this.authKeycloak;
-        break;
-
-      case AuthType.CustomOAuth:
-        this.authHandler = this.oauth;
-        break;
-    }
+    this.setAuthType();
   }
 
-  setAuthType(authType: AuthType) {
+  setAuthType(authType?: AuthType) {
+    if (!authType) {
+      authType = environment.authType;
+    }
+
     switch (authType) {
+      case AuthType.Local:
+        this.authHandler = this.authLocal;
+        break;
+
       case AuthType.Keycloak:
         this.authHandler = this.authKeycloak;
         break;
 
       case AuthType.CustomOAuth:
-        this.authHandler = this.oauth;
+        this.authHandler = this.authOAuth;
         break;
     }
   }
@@ -98,15 +91,8 @@ export class AuthService {
   }
 
   logout(): void {
-    this.tokenInfo = null;
-    this.userInfo = null;
-    sessionStorage.removeItem(this.KEY_TOKEN);
-    sessionStorage.removeItem(this.KEY_USER);
-
     if (this.authHandler) {
       this.authHandler.logout();
     }
-    // TODO: pass env param
-    // return logout(this.http, null);
   }
 }
