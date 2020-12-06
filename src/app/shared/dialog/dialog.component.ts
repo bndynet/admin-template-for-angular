@@ -1,16 +1,20 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialogConfig,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { ifUndefined } from 'src/utils';
 
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss']
+  styleUrls: ['./dialog.component.scss'],
 })
 export class DialogComponent {
-
   @Input() title: string;
   @Input() showCloseIcon = false;
+  @Input() showLoadingIcon = false;
   @Input() actionsAlign = 'end';
   @Input() contentAlign = 'start';
   @Input() noActions = false;
@@ -21,15 +25,22 @@ export class DialogComponent {
 
   constructor(
     private dialogRef: MatDialogRef<DialogConfig>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: DialogConfig,
+    @Inject(MAT_DIALOG_DATA) public dialogData: DialogConfig
   ) {
     this.title = dialogData.title;
     this.noActions = ifUndefined(dialogData.noActions, this.noActions);
-    this.showCloseIcon = ifUndefined(dialogData.showCloseIcon, this.showCloseIcon);
+    this.showCloseIcon = ifUndefined(
+      dialogData.showCloseIcon,
+      this.showCloseIcon
+    );
     this.actionsAlign = ifUndefined(dialogData.actionsAlign, this.actionsAlign);
     this.contentAlign = ifUndefined(dialogData.contentAlign, this.contentAlign);
     this.okLabel = ifUndefined(dialogData.okLabel, this.okLabel);
     this.cancelLabel = ifUndefined(dialogData.cancelLabel, this.cancelLabel);
+    this.showLoadingIcon = ifUndefined(
+      dialogData.showLoadingIcon,
+      this.showLoadingIcon
+    );
   }
 
   onClose(): void {
@@ -45,6 +56,7 @@ export interface DialogConfig extends MatDialogConfig {
   contentAlign?: LineAlignSetting;
   noActions?: boolean;
   showCloseIcon?: boolean;
+  showLoadingIcon?: boolean;
 
   cancelLabel?: string;
   okLabel?: string;

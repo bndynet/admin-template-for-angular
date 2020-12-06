@@ -15,6 +15,15 @@
     position: absolute;
   }
 
+  .loading-wrapper {
+    text-align: center;
+    margin: 1rem;
+
+    .mat-progress-spinner {
+      display: inline-block;
+    }
+  }
+
   .mat-icon-button {
     &.corner-icon {
       top: -10px;
