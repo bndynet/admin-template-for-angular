@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { UserEntity } from 'src/app/app-types';
 import { AppService } from 'src/app/_services';
-import { getLocalUrl } from 'src/utils';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     name: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
   });
+  public alertMessage: string;
 
   constructor(
     private router: Router,
@@ -41,20 +43,24 @@ export class LoginComponent implements OnInit, OnDestroy {
     const password = this.form.get('password').value;
 
     this.logging = true;
+    this.alertMessage = '';
 
-    this.http
-      .get(getLocalUrl(`/assets/user.json`))
-      .subscribe((u: UserEntity) => {
-        const user = (username
-          ? {
-              ...u,
-              ...{ name: username, token: password },
-            }
-          : u) as UserEntity;
-        this.app.auth.setToken(password);
-        this.app.auth.setUser(user);
-        this.logging = false;
-        this.router.navigate(['/admin']);
-      });
+    environment
+      .login(this.http, username, password)
+      .pipe(
+        finalize(() => {
+          this.logging = false;
+        })
+      )
+      .subscribe(
+        (u: UserEntity) => {
+          this.app.auth.setToken(u.accessToken);
+          this.app.auth.setUser(u);
+          this.router.navigate(['/admin']);
+        },
+        (error) => {
+          this.alertMessage = error.message;
+        }
+      );
   }
 }

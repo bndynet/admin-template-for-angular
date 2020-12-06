@@ -7,7 +7,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { AppService } from 'src/app/_services';
 import { KEY_AUTHORIZATION, KEY_TRACKING_ID } from '../app-types';
@@ -46,7 +46,7 @@ export class AuthInterceptor implements HttpInterceptor {
               break;
           }
         }
-        return of(err);
+        return throwError(err);
       })
     );
   }
