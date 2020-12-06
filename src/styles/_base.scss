@@ -273,3 +273,7 @@ table {
 .mat-toolbar-row, .mat-toolbar-single-row {
   height: $navbar-height;
 }
+
+.mat-dialog-container {
+  margin-top: -100px;
+}

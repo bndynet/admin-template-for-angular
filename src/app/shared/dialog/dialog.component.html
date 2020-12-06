@@ -1,4 +1,8 @@
 <div class="container" [ngClass]="{'has-close-icon': showCloseIcon}">
+  <div class="loading-wrapper" *ngIf="showLoadingIcon">
+    <mat-spinner strokeWidth="5"></mat-spinner>
+  </div>
+
   <h1 mat-dialog-title [align]="showCloseIcon ? 'start' : 'center'">{{title}}</h1>
 
   <div mat-dialog-content [align]="contentAlign">
@@ -11,7 +15,8 @@
     <button mat-button [mat-dialog-close]="false" tabindex="1000" *ngIf="cancelLabel">
       {{cancelLabel || 'Cancel'}}
     </button>
-    <button mat-raised-button [color]="dialogData.okColor || 'primary'" [mat-dialog-close]="true" *ngIf="okLabel" cdkFocusInitial>
+    <button mat-raised-button [color]="dialogData.okColor || 'primary'" [mat-dialog-close]="true" *ngIf="okLabel"
+      cdkFocusInitial>
       {{okLabel || 'OK'}}
     </button>
   </div>

@@ -52,6 +52,7 @@ export class DialogService {
   ): MatDialogRef<DialogComponent, DialogConfig> {
     return this.alert(title, content, null, {
       noActions: true,
+      showLoadingIcon: true,
     });
   }
 
