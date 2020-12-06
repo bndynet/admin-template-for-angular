@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule, Provider } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { environment } from 'src/environments/environment';
 import { AdminModule } from './admin/admin.module';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthType } from './app-types';
 import { AppComponent } from './app.component';
 import { PublicModule } from './public/public.module';
 import { httpInterceptorProviders } from './_interceptors';
@@ -31,6 +32,17 @@ function initializeKeycloak(keycloak: KeycloakService) {
     });
 }
 
+const providers: Provider[] = [httpInterceptorProviders];
+if (environment.authType === AuthType.Keycloak) {
+  console.debug(environment);
+  providers.splice(0, 0, {
+    provide: APP_INITIALIZER,
+    useFactory: initializeKeycloak,
+    multi: true,
+    deps: [KeycloakService],
+  });
+}
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -42,15 +54,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     PublicModule,
     AdminModule,
   ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeKeycloak,
-      multi: true,
-      deps: [KeycloakService],
-    },
-    httpInterceptorProviders,
-  ],
+  providers,
   bootstrap: [AppComponent],
 })
 export class AppModule {}

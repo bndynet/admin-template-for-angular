@@ -17,13 +17,16 @@ export interface ThemeEntity {
 }
 
 export interface AuthHandler {
+  getAuthType: () => AuthType;
   getUserInfo: () => Promise<UserInfo>;
   getTokenInfo: () => Promise<TokenInfo>;
   isAuthenticated: () => Promise<boolean>;
+  login: (username: string, password: string) => Promise<UserInfo>;
   logout: () => Promise<void> | void;
 }
 
 export enum AuthType {
+  Local,
   Keycloak,
   CustomOAuth,
 }

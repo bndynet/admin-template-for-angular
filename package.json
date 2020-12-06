@@ -7,7 +7,7 @@
   "lisense": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port=8000",
+    "start": "ng serve --port=8080",
     "build": "ng build --prod && ts-node ./tools/after-build.ts",
     "deploy": "ng build --prod --baseHref=/admin-template-for-angular/ && ts-node ./tools/after-build.ts",
     "test": "ng test",

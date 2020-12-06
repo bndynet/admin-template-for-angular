@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { AuthHandler, UserInfo } from '../app-types';
+import { AuthHandler, AuthType, UserInfo } from '../app-types';
 
 export interface OAuthConfig {
   clientId: string;
@@ -61,6 +61,10 @@ export class AuthOAuthHandler implements AuthHandler {
       },
       ...environment.oauth,
     };
+  }
+
+  getAuthType(): AuthType {
+    return AuthType.CustomOAuth;
   }
 
   isAuthenticated(): Promise<boolean> {
@@ -161,6 +165,10 @@ export class AuthOAuthHandler implements AuthHandler {
       const json: any = response.json();
       return { ...json, avatar: json.avatar_url };
     });
+  }
+
+  login(username: string, password: string): Promise<UserInfo> {
+    return Promise.reject('TODO');
   }
 
   logout(): void {

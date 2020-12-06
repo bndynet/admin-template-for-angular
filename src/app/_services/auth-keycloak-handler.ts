@@ -5,7 +5,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
-import { AuthHandler, UserInfo } from '../app-types';
+import { AuthHandler, AuthType, UserInfo } from '../app-types';
 import { TokenInfo } from './auth-oauth-handler';
 
 @Injectable({
@@ -19,6 +19,10 @@ export class AuthKeycloakHandler
     protected readonly keycloak: KeycloakService
   ) {
     super(router, keycloak);
+  }
+
+  getAuthType(): AuthType {
+    return AuthType.Keycloak;
   }
 
   public isAuthenticated(): Promise<boolean> {
@@ -40,6 +44,10 @@ export class AuthKeycloakHandler
     }));
   }
 
+  public login(username: string, password: string): Promise<UserInfo> {
+    return Promise.reject('TODO');
+  }
+
   public logout(): Promise<void> {
     return this.keycloak.logout();
   }
@@ -48,8 +56,6 @@ export class AuthKeycloakHandler
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ) {
-    alert('---->');
-    console.debug('------>');
     // Force the user to log in if currently unauthenticated.
     if (!this.authenticated) {
       await this.keycloak.login({
