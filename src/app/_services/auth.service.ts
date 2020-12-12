@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AuthHandler, AuthType, MenuEntity, UserInfo } from '../app-types';
 import { AuthKeycloakHandler } from './auth-keycloak-handler';
 import { AuthLocalHandler } from './auth-local-handler';
-import { AuthOAuthHandler } from './auth-oauth-handler';
+import { AuthOAuthHandler, TokenInfo } from './auth-oauth-handler';
 
 @Injectable({
   providedIn: 'root',
@@ -43,6 +43,14 @@ export class AuthService {
 
   isAuthenticated(): Observable<boolean> {
     return from(this.authHandler.isAuthenticated());
+  }
+
+  getTokenInfo(): Promise<TokenInfo> {
+    if (this.authHandler) {
+      return this.authHandler.getTokenInfo();
+    } else {
+      return Promise.resolve(null);
+    }
   }
 
   getUser(): Observable<UserInfo> {
