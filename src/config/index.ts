@@ -18,6 +18,7 @@ export const themes: ThemeEntity[] = [
   },
 ];
 
+// TODO: use localization instead
 export const roles = {
   role_admin: 'Administrator',
   role_doc: 'Document Owner',

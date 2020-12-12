@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthType, UserInfo } from 'src/app/app-types';
+import { AuthType, roles, UserInfo } from 'src/app/app-types';
 import { AppService } from 'src/app/_services';
 import {
   AuthOAuthHandler,
@@ -28,7 +28,7 @@ export class AuthComponent implements OnInit {
           const user: UserInfo = {
             name: u.name,
             avatar: u.avatar,
-            roles: ['role_doc'],
+            roles: [roles.docs],
           };
           (this.app.auth.authHandler as AuthOAuthHandler).setUser(user);
           this.router.navigate(['/admin']);

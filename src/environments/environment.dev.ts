@@ -1,4 +1,4 @@
-import { environment as localEnv } from './environment.local';
-// import { environment as keycloakEnv } from './environment.keycloak';
+// import { environment as env } from './environment.local';
+import { environment as env } from './environment.keycloak';
 
-export const environment = localEnv;
+export const environment = env;
