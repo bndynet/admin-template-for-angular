@@ -25,6 +25,12 @@ export enum AuthType {
   CustomOAuth,
 }
 
+// TODO: define your roles
+export const roles = {
+  docs: 'role_docs',
+  admin: 'role_admin',
+};
+
 export interface MenuEntity {
   icon?: string;
   text?: string;

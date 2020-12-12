@@ -1,4 +1,4 @@
-import { MenuEntity } from '../app-types';
+import { MenuEntity, roles } from '../app-types';
 
 export const menus: MenuEntity[] = [
   {
@@ -25,7 +25,7 @@ export const menus: MenuEntity[] = [
   {
     text: 'DOCS',
     link: '',
-    roles: ['role_doc'],
+    roles: [roles.docs],
     children: [
       {
         text: 'Introduction',
@@ -74,9 +74,9 @@ export const menus: MenuEntity[] = [
     ],
   },
   {
-    text: 'RESOURCES',
+    text: 'ADMIN',
     link: '',
-    roles: ['role_admin'],
+    roles: [roles.admin],
     children: [
       {
         icon: 'tag',
