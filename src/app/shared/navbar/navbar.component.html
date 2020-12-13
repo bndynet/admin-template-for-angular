@@ -36,8 +36,8 @@
         <mat-icon>palette</mat-icon>
       </button>
       <mat-menu class="theme-list" #menuTheme="matMenu">
-        <button mat-menu-item *ngFor="let item of themes | keyvalue"
-          [matTooltip]="item.value" (click)="changeTheme(item.key)">
+        <button mat-menu-item *ngFor="let item of themes"
+          [matTooltip]="item.name" (click)="changeTheme(item.key)">
           <app-theme-img class="{{item.key}}"></app-theme-img>
         </button>
       </mat-menu>

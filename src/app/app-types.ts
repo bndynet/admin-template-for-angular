@@ -8,6 +8,12 @@ declare global {
   }
 }
 
+export interface ThemeEntity {
+  key: string;
+  name: string;
+  isDark?: boolean;
+}
+
 export interface MenuEntity {
   icon?: string;
   text?: string;

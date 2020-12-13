@@ -3,11 +3,11 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { stringUtils } from '@bndynet/utils';
-import { interval, Observable } from 'rxjs';
+import { interval, Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { themes } from 'src/config';
 import { getLocalUrl } from 'src/utils';
-import { MenuEntity, MessageEntity } from '../app-types';
+import { MenuEntity, MessageEntity, ThemeEntity } from '../app-types';
 import { AuthService } from './auth.service';
 import { DialogService } from './dialog.service';
 import { NotificationService } from './notification.service';
@@ -40,12 +40,16 @@ export class AppService {
     }
   }
 
-  setTheme(theme: string) {
-    Object.keys(themes).forEach((key: string) => {
-      document.body.classList.remove(key);
+  setTheme(themeKey: string): Observable<ThemeEntity> {
+    themes.forEach((theme: ThemeEntity) => {
+      document.body.classList.remove(theme.key);
     });
-    document.body.classList.add(theme);
-    localStorage.setItem(this.keyTheme, theme);
+    const theme = themes.find((t) => t.key === themeKey);
+    if (theme) {
+      document.body.classList.add(theme.key);
+      localStorage.setItem(this.keyTheme, theme.key);
+    }
+    return of(theme);
   }
 
   setTitle(title: string, overwriteOrigin?: boolean): void {
