@@ -76,10 +76,7 @@ export class NavbarComponent implements OnInit {
   }
 
   changeTheme(themeKey: string): void {
-    Object.keys(this.themes).forEach((key: string) => {
-      document.body.classList.remove(key);
-    });
-    document.body.classList.add(themeKey);
+    this.app.setTheme(themeKey);
   }
 
   onSearch(): void {

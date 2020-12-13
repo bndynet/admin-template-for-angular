@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { stringUtils } from '@bndynet/utils';
 import { interval, Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+import { themes } from 'src/config';
 import { getLocalUrl } from 'src/utils';
 import { MenuEntity, MessageEntity } from '../app-types';
 import { AuthService } from './auth.service';
@@ -17,8 +18,8 @@ import { StatusService } from './status.service';
 })
 export class AppService {
   private rootTitle: string;
+  private keyTheme = 'app_theme';
   public readonly clientTrackingID: string;
-
   public navMenuChanged = new EventEmitter<MenuEntity>();
 
   constructor(
@@ -32,6 +33,19 @@ export class AppService {
   ) {
     this.clientTrackingID = stringUtils.getRandomId();
     this.rootTitle = this.titleService.getTitle();
+
+    const theme = localStorage.getItem(this.keyTheme);
+    if (theme) {
+      this.setTheme(theme);
+    }
+  }
+
+  setTheme(theme: string) {
+    Object.keys(themes).forEach((key: string) => {
+      document.body.classList.remove(key);
+    });
+    document.body.classList.add(theme);
+    localStorage.setItem(this.keyTheme, theme);
   }
 
   setTitle(title: string, overwriteOrigin?: boolean): void {
