@@ -2,6 +2,12 @@
   display: block;
   padding-top: 20vh;
 
+  app-lang-menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
   .container {
     width: 360px;
     text-align: center;
