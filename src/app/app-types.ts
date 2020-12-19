@@ -37,6 +37,22 @@ export const roles = {
   admin: 'role_admin',
 };
 
+// you can find all country flags in http://hjnilsson.github.io/country-flags/
+export const Langs = [
+  {
+    label: '简体中文',
+    value: 'zh-CN',
+    icon:
+      'https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/cn.svg',
+  },
+  {
+    label: 'English (United States)',
+    value: 'en-US',
+    icon:
+      'https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/us.svg',
+  },
+];
+
 export interface MenuEntity {
   icon?: string;
   text?: string;

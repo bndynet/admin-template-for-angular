@@ -1,19 +1,20 @@
 <form [formGroup]="form" (ngSubmit)="login()" class="container">
   <mat-card>
+    <app-lang-menu></app-lang-menu>
     <img mat-card-image src="assets/logo.png">
     <mat-card-content>
       <mat-form-field class="full-width">
-        <input matInput formControlName="name" name="username" placeholder="Username">
+        <input matInput formControlName="name" name="username" placeholder="{{'username'|translate}}">
         <mat-error *ngIf="form.get('name').hasError('required')">
-          Required.
+          {{'required'|translate}}
         </mat-error>
       </mat-form-field>
       <br />
       <mat-form-field class="full-width">
-        <input matInput formControlName="password" name="password" placeholder="Password" type="password"
+        <input matInput formControlName="password" name="password" placeholder="{{'password'|translate}}" type="password"
           autocomplete="off">
         <mat-error *ngIf="form.get('password').hasError('required')">
-          Required.
+          {{'required'|translate}}
         </mat-error>
       </mat-form-field>
     </mat-card-content>
@@ -23,15 +24,17 @@
     <mat-card-actions align="end">
       <div class="flex-1" align="start">
         <a mat-button>
-          Forgot password?
+          {{'forgotPassword' | translate}}
         </a>
       </div>
-      <button mat-raised-button color="primary" [disabled]="!form.valid" [ngClass]="{loading: logging}" type="submit"> Log in </button>
+      <button mat-raised-button color="primary" [disabled]="!form.valid" [ngClass]="{loading: logging}" type="submit">
+        {{ 'signIn' | translate }}
+      </button>
     </mat-card-actions>
 
     <div>
       <a mat-button [routerLink]="'/auth/callback'">
-        Log In with GitHub
+        {{'loginWithGitHub' | translate}}
       </a>
     </div>
   </mat-card>
