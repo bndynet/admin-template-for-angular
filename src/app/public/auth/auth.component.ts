@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserEntity } from 'src/app/app-types';
+import { AuthType, roles, UserInfo } from 'src/app/app-types';
 import { AppService } from 'src/app/_services';
-import { OAuth, TokenInfo } from 'src/app/_services/oauth.service';
-import { environment } from 'src/environments/environment';
+import {
+  AuthOAuthHandler,
+  TokenInfo,
+} from 'src/app/_services/auth-oauth-handler';
 
 @Component({
   selector: 'app-auth',
@@ -16,21 +18,19 @@ export class AuthComponent implements OnInit {
   constructor(private router: Router, private app: AppService) {}
 
   ngOnInit(): void {
-    const oauth = new OAuth(environment.oauth);
+    this.app.auth.setAuthType(AuthType.CustomOAuth);
 
-    this.app.auth.enableOAuth(oauth);
-
-    oauth
+    (this.app.auth.authHandler as AuthOAuthHandler)
       .checkAuth()
       .then((token: TokenInfo) => {
-        this.app.auth.setToken(token.accessToken);
-        oauth.getUserInfo().then((u) => {
-          const user: UserEntity = {
+        // this.app.auth.setToken(token.accessToken);
+        this.app.auth.authHandler.getUserInfo().then((u) => {
+          const user: UserInfo = {
             name: u.name,
-            avatar: u.avatar_url,
-            roles: ['role_doc'],
+            avatar: u.avatar,
+            roles: [roles.docs],
           };
-          this.app.auth.setUser(user);
+          (this.app.auth.authHandler as AuthOAuthHandler).setUser(user);
           this.router.navigate(['/admin']);
         });
       })

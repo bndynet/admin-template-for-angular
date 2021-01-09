@@ -1,7 +1,12 @@
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { AuthHandler, AuthType, UserInfo } from '../app-types';
+
 export interface OAuthConfig {
   clientId: string;
-  clientSecret: string;
   authorizationUrl: string;
+  realm?: string;
+  clientSecret?: string;
   redirectUrl?: string;
   logoutUrl: string;
   accessTokenUrl?: string;
@@ -28,13 +33,19 @@ const KEY_TOKEN = 'OAUTH_TOKEN';
 const KEY_HTTP_HEADER_CONTENTTYPE = 'Content-Type';
 const KEY_HTTP_HEADER_AUTHORIZATION = 'Authorization';
 
-export class OAuth {
-  private token: TokenInfo;
-  private loginUrl: string;
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthOAuthHandler implements AuthHandler {
+  private tokenInfo: TokenInfo;
+  private userInfo: UserInfo;
+  private config: OAuthConfig;
 
-  constructor(private config: OAuthConfig) {
+  constructor() {
     if (sessionStorage.getItem(KEY_TOKEN)) {
-      this.token = JSON.parse(sessionStorage.getItem(KEY_TOKEN)) as TokenInfo;
+      this.tokenInfo = JSON.parse(
+        sessionStorage.getItem(KEY_TOKEN)
+      ) as TokenInfo;
     }
 
     this.config = {
@@ -48,12 +59,16 @@ export class OAuth {
         keyNameForAccessToken: 'access_token',
         keyNameForTokenType: 'token_type',
       },
-      ...this.config,
+      ...environment.oauth,
     };
   }
 
-  isAuthorized(): boolean {
-    return !!this.token;
+  getAuthType(): AuthType {
+    return AuthType.CustomOAuth;
+  }
+
+  isAuthenticated(): Promise<boolean> {
+    return Promise.resolve(!!this.tokenInfo);
   }
 
   checkAuth(): Promise<TokenInfo> {
@@ -66,7 +81,7 @@ export class OAuth {
       return this.getToken();
     }
 
-    if (!this.isAuthorized()) {
+    if (!this.isAuthenticated()) {
       window.location.href = this.getLoginUrl();
       return Promise.reject(null);
     }
@@ -74,21 +89,25 @@ export class OAuth {
     return Promise.reject(null);
   }
 
+  setUser(user: UserInfo): void {
+    this.userInfo = user;
+  }
+
   getToken(): Promise<TokenInfo> {
-    if (this.token) {
-      return Promise.resolve(this.token);
+    if (this.tokenInfo) {
+      return Promise.resolve(this.tokenInfo);
     }
 
     const search = this.getCurrentUrlSearch();
 
     const accessToken = search[this.config.keyNameForAccessToken];
     if (accessToken) {
-      this.token = {
+      this.tokenInfo = {
         accessToken,
         tokenType: 'bearer',
       };
-      this.setToken(this.token);
-      return Promise.resolve(this.token);
+      this.setToken(this.tokenInfo);
+      return Promise.resolve(this.tokenInfo);
     }
 
     const code = search[this.config.keyNameForCode];
@@ -126,30 +145,44 @@ export class OAuth {
     });
   }
 
-  getUserInfo(): Promise<any> {
+  getUserInfo(): Promise<UserInfo> {
+    if (this.userInfo) {
+      return Promise.resolve(this.userInfo);
+    }
+
     const headers: { [key: string]: string } = {};
 
     headers[KEY_HTTP_HEADER_CONTENTTYPE] = 'application/json';
     headers[
       KEY_HTTP_HEADER_AUTHORIZATION
-    ] = `${this.token.tokenType} ${this.token.accessToken}`;
+    ] = `${this.tokenInfo.tokenType} ${this.tokenInfo.accessToken}`;
 
     return fetch(this.config.userProfileUrl, {
       method: 'GET',
       headers,
     }).then((response) => {
-      return response.json();
+      // TODO: here to convert user info
+      const json: any = response.json();
+      return { ...json, avatar: json.avatar_url };
     });
+  }
+
+  login(username: string, password: string): Promise<UserInfo> {
+    return Promise.reject('TODO');
   }
 
   logout(): void {
     sessionStorage.removeItem(KEY_TOKEN);
-    this.token = null;
+    this.tokenInfo = null;
     window.location.href = this.config.logoutUrl;
   }
 
-  private setToken(token: TokenInfo): void {
-    sessionStorage.setItem(KEY_TOKEN, JSON.stringify(token));
+  getTokenInfo(): Promise<TokenInfo> {
+    return Promise.resolve(JSON.parse(sessionStorage.getItem(KEY_TOKEN)));
+  }
+
+  setToken(token: TokenInfo): void {
+    this.tokenInfo = token;
   }
 
   private isAuthorizating(): boolean {

@@ -1,3 +1,7 @@
+:host {
+  display: inline-block;
+}
+
 .root {
   display: inline-flex;
   justify-content: center;
@@ -6,7 +10,7 @@
   height: 32px;
   border-radius: 50%;
   color: #666666;
-  background-color: #ffffff;
+  background-color: #efefef;
   text-align: center;
 
   .name {

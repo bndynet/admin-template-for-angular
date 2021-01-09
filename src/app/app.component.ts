@@ -6,7 +6,7 @@ import {
   RouterEvent,
 } from '@angular/router';
 import { protectedUrlPrefixes } from 'src/config';
-import { AppService } from './_services';
+import { AppService, I18nService } from './_services';
 
 @Component({
   selector: 'app-root',
@@ -14,20 +14,27 @@ import { AppService } from './_services';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private router: Router, private app: AppService) {
+  constructor(
+    private router: Router,
+    private app: AppService,
+    private i18n: I18nService
+  ) {
+    this.i18n.init();
+
     this.router.events.subscribe((event: RouterEvent) => {
       if (event instanceof NavigationError) {
         this.app.notificaiton.error((event as NavigationError).error);
       }
 
       if (event instanceof NavigationEnd) {
-        if (!this.app.auth.getAccessToken()) {
-          // Check user authentication
-          if (
-            protectedUrlPrefixes.find((prefix) => event.url.startsWith(prefix))
-          ) {
-            this.router.navigate(['/logout']);
-          }
+        if (
+          protectedUrlPrefixes.find((prefix) => event.url.startsWith(prefix))
+        ) {
+          this.app.auth.isAuthenticated().subscribe((val) => {
+            if (!val) {
+              this.router.navigate(['/logout']);
+            }
+          });
         }
       }
     });

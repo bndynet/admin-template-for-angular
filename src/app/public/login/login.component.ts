@@ -2,9 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserEntity } from 'src/app/app-types';
+import { UserInfo } from 'src/app/app-types';
 import { AppService } from 'src/app/_services';
-import { getLocalUrl } from 'src/utils';
 
 @Component({
   selector: 'app-login',
@@ -17,12 +16,21 @@ export class LoginComponent implements OnInit, OnDestroy {
     name: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
   });
+  public alertMessage: string;
 
   constructor(
     private router: Router,
     private app: AppService,
     private http: HttpClient
-  ) {}
+  ) {
+    if (this.app.auth) {
+      this.app.auth.isAuthenticated().subscribe((val) => {
+        if (val) {
+          this.router.navigate(['/admin']);
+        }
+      });
+    }
+  }
 
   ngOnInit(): void {
     this.app.setTitle('Log in');
@@ -39,22 +47,22 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     const username = this.form.get('name').value;
     const password = this.form.get('password').value;
+    const authHandler = this.app.auth.authHandler;
 
     this.logging = true;
-
-    this.http
-      .get(getLocalUrl(`/assets/user.json`))
-      .subscribe((u: UserEntity) => {
-        const user = (username
-          ? {
-              ...u,
-              ...{ name: username, token: password },
-            }
-          : u) as UserEntity;
-        this.app.auth.setToken(password);
-        this.app.auth.setUser(user);
-        this.logging = false;
+    this.alertMessage = '';
+    authHandler
+      .login(username, password)
+      .then((u: UserInfo) => {
+        // authHandler.setToken({ accessToken: u.accessToken });
+        // authHandler.setUser(u);
         this.router.navigate(['/admin']);
+      })
+      .catch((error) => {
+        this.alertMessage = error.message;
+      })
+      .finally(() => {
+        this.logging = false;
       });
   }
 }

@@ -46,12 +46,25 @@ export class DialogService {
     return dialogRef;
   }
 
+  remain(
+    seconds: number,
+    title: string,
+    content: string
+  ): MatDialogRef<DialogComponent, DialogConfig> {
+    return this.alert(title, content, null, {
+      noActions: true,
+      showLoadingIcon: true,
+      remainSeconds: seconds,
+    });
+  }
+
   stop(
     title: string,
     content: string
   ): MatDialogRef<DialogComponent, DialogConfig> {
     return this.alert(title, content, null, {
       noActions: true,
+      showLoadingIcon: true,
     });
   }
 

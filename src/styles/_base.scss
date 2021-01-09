@@ -264,8 +264,21 @@ table {
   }
 }
 
+.alert-message {
+  color: #dc3545;
+  word-break: break-all;
+}
 
 /* overwrite mertial stylse */
 .mat-toolbar-row, .mat-toolbar-single-row {
   height: $navbar-height;
+}
+
+.mat-dialog-container {
+  margin-top: -100px;
+}
+
+/* styles with attributes */
+[align=start] {
+  text-align: start;
 }

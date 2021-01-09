@@ -4,9 +4,6 @@
       <img class="logo" src="assets/angular.png" />
     </div>
 
-    <mat-divider [vertical]="true"></mat-divider>
-
-    <div class="spacer vertical"></div>
     <button mat-icon-button (click)="toggleSidebar()" *ngIf="false">
       <mat-icon>menu</mat-icon>
     </button>
@@ -51,7 +48,7 @@
           <div class="mat-typeography">
             <div class="font-lg py-2">{{userInfo?.name}}</div>
             <div class="text-muted">{{userInfo?.title}}</div>
-            <div class="text-muted">{{userRoles.join(', ')}}</div>
+            <div class="text-muted" *ngIf="userRoles">{{userRoles.join(', ')}}</div>
           </div>
         </div>
         <mat-divider></mat-divider>

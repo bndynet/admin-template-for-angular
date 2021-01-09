@@ -1,3 +1,5 @@
+import { TokenInfo } from './_services/auth-oauth-handler';
+
 export const KEY_TRACKING_ID = 'AppTrackingID';
 export const KEY_AUTHORIZATION = 'Authorization';
 
@@ -14,6 +16,43 @@ export interface ThemeEntity {
   isDark?: boolean;
 }
 
+export interface AuthHandler {
+  getAuthType: () => AuthType;
+  getUserInfo: () => Promise<UserInfo>;
+  getTokenInfo: () => Promise<TokenInfo>;
+  isAuthenticated: () => Promise<boolean>;
+  login: (username: string, password: string) => Promise<UserInfo>;
+  logout: () => Promise<void> | void;
+}
+
+export enum AuthType {
+  Local,
+  Keycloak,
+  CustomOAuth,
+}
+
+// TODO: define your roles
+export const roles = {
+  docs: 'role_docs',
+  admin: 'role_admin',
+};
+
+// you can find all country flags in http://hjnilsson.github.io/country-flags/
+export const Langs = [
+  {
+    label: '简体中文',
+    value: 'zh-CN',
+    icon:
+      'https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/cn.svg',
+  },
+  {
+    label: 'English (United States)',
+    value: 'en-US',
+    icon:
+      'https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/us.svg',
+  },
+];
+
 export interface MenuEntity {
   icon?: string;
   text?: string;
@@ -23,11 +62,12 @@ export interface MenuEntity {
   _collapsed?: boolean;
 }
 
-export interface UserEntity {
+export interface UserInfo {
   name: string;
   title?: string;
   avatar?: string;
   roles?: string[];
+  accessToken?: string;
 }
 
 export interface MessageEntity {
