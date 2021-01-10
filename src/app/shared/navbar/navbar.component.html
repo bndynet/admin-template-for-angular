@@ -13,7 +13,7 @@
     </nav>
 
     <div class="search-container" *ngIf="searchEnabled">
-      <input placeholder="Search" [(ngModel)]="searchKeywords" (keyup.enter)="onSearch()" />
+      <input placeholder="{{'search'|translate}}" [(ngModel)]="searchKeywords" (keyup.enter)="onSearch()" />
     </div>
 
     <nav>
@@ -21,6 +21,7 @@
         matBadgeColor="accent" [matMenuTriggerFor]="menuMessage" *ngIf="newMessageCount">
         <mat-icon>message</mat-icon>
       </button>
+      <app-lang-menu></app-lang-menu>
       <mat-menu #menuMessage="matMenu" class="message-list scrollbar" [hidden]="!newMessageCount">
         <button mat-menu-item *ngFor="let message of messages" [ngClass]="{'new': !message.read}"
           [matTooltip]="message.title" (click)="viewMessage(message)">

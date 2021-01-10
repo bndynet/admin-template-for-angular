@@ -1,5 +1,6 @@
 <button mat-button [matMenuTriggerFor]="menu">
-  <img [src]="currentLang.icon">
+  <img [src]="currentLang.icon" *ngIf="!viewTemplate">
+  <ng-container *ngTemplateOutlet="viewTemplate; context: { $implicit: currentLang}"></ng-container>
 </button>
 <mat-menu #menu>
   <button mat-menu-item *ngFor="let lang of langs" (click)="changeLang(lang)">{{lang.label}}</button>

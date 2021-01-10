@@ -33,7 +33,7 @@ import { ThemeImgComponent } from './theme-img/theme-img.component';
     AvatarComponent,
     LangMenuComponent,
   ],
-  imports: [CommonModule, RouterModule, AppUiModule],
+  imports: [CommonModule, RouterModule, AppUiModule, TranslateModule],
   exports: [
     AppUiModule,
     TranslateModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { Langs } from 'src/app/app-types';
 import { I18nService } from 'src/app/_services';
 
@@ -8,6 +8,8 @@ import { I18nService } from 'src/app/_services';
   styleUrls: ['./lang-menu.component.scss'],
 })
 export class LangMenuComponent implements OnInit {
+  @Input() viewTemplate: TemplateRef<any>;
+
   currentLang: { label: string; value: string; icon: string };
   langs = Langs;
 
