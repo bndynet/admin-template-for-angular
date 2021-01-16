@@ -21,7 +21,6 @@
         matBadgeColor="accent" [matMenuTriggerFor]="menuMessage" *ngIf="newMessageCount">
         <mat-icon>message</mat-icon>
       </button>
-      <app-lang-menu></app-lang-menu>
       <mat-menu #menuMessage="matMenu" class="message-list scrollbar" [hidden]="!newMessageCount">
         <button mat-menu-item *ngFor="let message of messages" [ngClass]="{'new': !message.read}"
           [matTooltip]="message.title" (click)="viewMessage(message)">
@@ -33,12 +32,14 @@
       <button mat-icon-button [matMenuTriggerFor]="menuTheme">
         <mat-icon>palette</mat-icon>
       </button>
-      <mat-menu class="theme-list" #menuTheme="matMenu">
+      <mat-menu class="theme-list" #menuTheme="matMenu" xPosition="before">
         <button mat-menu-item *ngFor="let item of themes"
           [matTooltip]="item.name" (click)="changeTheme(item.key)">
           <app-theme-img class="{{item.key}}"></app-theme-img>
         </button>
       </mat-menu>
+
+      <app-lang-menu></app-lang-menu>
 
       <button mat-icon-button class="btn-avatar" [matMenuTriggerFor]="menuAvatar" *ngIf="userInfo">
         <ui-avatar [url]="userInfo.avatar" [name]="userInfo.name"></ui-avatar>
