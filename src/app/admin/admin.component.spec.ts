@@ -8,7 +8,7 @@ import {
 } from '../_services';
 import { AdminComponent } from './admin.component';
 
-describe('AppComponent', () => {
+describe('AdminComponent', () => {
   let component: AdminComponent;
   let fixture: ComponentFixture<AdminComponent>;
 
