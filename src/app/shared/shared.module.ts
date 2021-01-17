@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppUiModule } from '../app-ui.module';
+import { ClickOutsideDirective } from '../_directives/click-outside.directive';
 import { LoadingDirective } from '../_directives/loading.directive';
 import { AvatarComponent } from './avatar/avatar.component';
 import { ContentSidebarComponent } from './content-sidebar/content-sidebar.component';
@@ -19,6 +20,7 @@ import { ThemeImgComponent } from './theme-img/theme-img.component';
 
 @NgModule({
   declarations: [
+    ClickOutsideDirective,
     LoadingDirective,
     DialogComponent,
     NavbarComponent,
@@ -38,6 +40,7 @@ import { ThemeImgComponent } from './theme-img/theme-img.component';
     AppUiModule,
     TranslateModule,
 
+    ClickOutsideDirective,
     LoadingDirective,
 
     DialogComponent,
