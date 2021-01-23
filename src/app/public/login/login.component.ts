@@ -1,15 +1,15 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserInfo } from 'src/app/app-types';
-import { AppService, HighlightService } from 'src/app/_services';
+import { AppService } from 'src/app/_services';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public logging: boolean;
   public form: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -17,11 +17,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   });
   public alertMessage: string;
 
-  constructor(
-    private router: Router,
-    private app: AppService,
-    private hightlight: HighlightService
-  ) {
+  constructor(private router: Router, private app: AppService) {
     if (this.app.auth) {
       this.app.auth.isAuthenticated().subscribe((val) => {
         if (val) {
@@ -37,21 +33,6 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.app.resetTitle();
-    this.hightlight.destory();
-  }
-
-  ngAfterViewInit(): void {
-    this.hightlight.light({
-      elementId: 'loginCard',
-      title: 'Tips:',
-      description: `<ul>
-        <li>Type anything to log in.</li>
-        <li>Click language to change.</li>
-      </ul>
-      `,
-      bordered: true,
-      position: 'right',
-    });
   }
 
   login(): void {

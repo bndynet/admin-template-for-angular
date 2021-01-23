@@ -18,7 +18,12 @@ export class HighlightService {
     });
   }
 
+  public reinit(): void {
+    this.destory();
+  }
+
   public light(option: IHighlightOption): Driver {
+    this.clearTemporarySettings();
     const driver = this.getDriver({
       showButtons: false,
     });
@@ -33,12 +38,15 @@ export class HighlightService {
   }
 
   public steps(options: IHighlightOption[]): Driver {
+    this.clearTemporarySettings();
+    if (options.length === 1) {
+      return this.light(options[0]);
+    }
+
     const driver = this.getDriver();
     const finalOptions: Driver.Step[] = options.map(this.convertToDriverOption);
     driver.defineSteps(finalOptions);
-    setTimeout(() => {
-      driver.start();
-    }, 500);
+    driver.start();
     return driver;
   }
 

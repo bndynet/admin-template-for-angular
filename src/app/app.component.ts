@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {
   NavigationEnd,
   NavigationError,
+  NavigationStart,
   Router,
   RouterEvent,
 } from '@angular/router';
 import { protectedUrlPrefixes } from 'src/config';
+import { onRouteChanged, onRouteChanging } from './_interceptors';
 import { AppService, I18nService } from './_services';
 
 @Component({
@@ -26,7 +28,12 @@ export class AppComponent implements OnInit {
         this.app.notificaiton.error((event as NavigationError).error);
       }
 
+      if (event instanceof NavigationStart) {
+        onRouteChanging(event, this.app);
+      }
+
       if (event instanceof NavigationEnd) {
+        onRouteChanged(event, this.app);
         if (
           protectedUrlPrefixes.find((prefix) => event.url.startsWith(prefix))
         ) {

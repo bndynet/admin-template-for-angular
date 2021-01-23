@@ -1,18 +1,7 @@
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuEntity, MessageEntity, UserInfo } from 'src/app/app-types';
-import {
-  AuthService,
-  EventsService,
-  HighlightService,
-} from 'src/app/_services';
+import { AuthService, EventsService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
 import { convertMessages, roles, themes } from 'src/config';
 
@@ -21,7 +10,7 @@ import { convertMessages, roles, themes } from 'src/config';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit, AfterViewInit {
+export class NavbarComponent implements OnInit {
   @Input() menus: MenuEntity[];
   @Output() menuClick = new EventEmitter<MenuEntity>();
   @Output() search = new EventEmitter<string>();
@@ -38,8 +27,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     private router: Router,
     private app: AppService,
     private auth: AuthService,
-    private events: EventsService,
-    private highlight: HighlightService
+    private events: EventsService
   ) {}
 
   ngOnInit(): void {
@@ -47,7 +35,11 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
     this.auth.getUser().subscribe((res) => {
       this.userInfo = res;
-      this.userRoles = res.roles.map((r) => roles[r] || r);
+      if (this.userInfo) {
+        this.userRoles = res.roles.map((r) => roles[r] || r);
+      } else {
+        this.app.logout();
+      }
     });
 
     this.messages = [];
@@ -57,21 +49,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         (message) => !message.read
       ).length;
     });
-  }
-
-  ngAfterViewInit(): void {
-    this.highlight.steps([
-      {
-        elementId: 'mainNav',
-        description: 'Here is the main navigation bar.',
-        background: this.app.getActiveThemeColor('primary'),
-      },
-      {
-        elementId: 'searchInput',
-        description: 'Here to implement global search function.',
-        background: this.app.getActiveThemeColor('primary'),
-      },
-    ]);
   }
 
   toggleSidebar(): void {

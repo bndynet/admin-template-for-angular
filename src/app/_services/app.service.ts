@@ -10,6 +10,7 @@ import { getLocalUrl } from 'src/utils';
 import { MenuEntity, MessageEntity, ThemeEntity } from '../app-types';
 import { AuthService } from './auth.service';
 import { DialogService } from './dialog.service';
+import { HighlightService } from './highlight.service';
 import { NotificationService } from './notification.service';
 import { StatusService } from './status.service';
 
@@ -29,6 +30,7 @@ export class AppService {
     public auth: AuthService,
     public dialog: DialogService,
     public status: StatusService,
+    public highlight: HighlightService,
     public notificaiton: NotificationService
   ) {
     this.clientTrackingID = stringUtils.getRandomId();

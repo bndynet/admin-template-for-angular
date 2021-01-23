@@ -1,6 +1,6 @@
 import { MessageEntity, UserInfo } from 'src/app/app-types';
 
-// TODO: You need to implement all below methods for supporting your busiess.
+// TODO: You need to implement all below methods for supporting your business.
 
 export function convertUser(userFromBackend: any): UserInfo {
   return userFromBackend;
