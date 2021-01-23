@@ -1,6 +1,8 @@
 :host {
-  display: block;
-  padding-top: 20vh;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  background-image: url(https://static.bndy.net/images/bg.jpg);
 
   app-lang-menu {
     position: absolute;
