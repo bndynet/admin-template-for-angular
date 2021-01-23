@@ -1,16 +1,15 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserInfo } from 'src/app/app-types';
-import { AppService } from 'src/app/_services';
+import { AppService, HighlightService } from 'src/app/_services';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   public logging: boolean;
   public form: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -21,7 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private app: AppService,
-    private http: HttpClient
+    private hightlight: HighlightService
   ) {
     if (this.app.auth) {
       this.app.auth.isAuthenticated().subscribe((val) => {
@@ -38,6 +37,21 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.app.resetTitle();
+    this.hightlight.destory();
+  }
+
+  ngAfterViewInit(): void {
+    this.hightlight.light({
+      elementId: 'loginCard',
+      title: 'Tips:',
+      description: `<ul>
+        <li>Type anything to log in.</li>
+        <li>Click language to change.</li>
+      </ul>
+      `,
+      bordered: true,
+      position: 'right',
+    });
   }
 
   login(): void {

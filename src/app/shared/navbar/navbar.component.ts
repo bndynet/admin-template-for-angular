@@ -1,7 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuEntity, MessageEntity, UserInfo } from 'src/app/app-types';
-import { AuthService, EventsService } from 'src/app/_services';
+import {
+  AuthService,
+  EventsService,
+  HighlightService,
+} from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
 import { convertMessages, roles, themes } from 'src/config';
 
@@ -10,7 +21,7 @@ import { convertMessages, roles, themes } from 'src/config';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, AfterViewInit {
   @Input() menus: MenuEntity[];
   @Output() menuClick = new EventEmitter<MenuEntity>();
   @Output() search = new EventEmitter<string>();
@@ -27,7 +38,8 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private app: AppService,
     private auth: AuthService,
-    private events: EventsService
+    private events: EventsService,
+    private highlight: HighlightService
   ) {}
 
   ngOnInit(): void {
@@ -45,6 +57,21 @@ export class NavbarComponent implements OnInit {
         (message) => !message.read
       ).length;
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.highlight.steps([
+      {
+        elementId: 'mainNav',
+        description: 'Here is the main navigation bar.',
+        background: this.app.getActiveThemeColor('primary'),
+      },
+      {
+        elementId: 'searchInput',
+        description: 'Here to implement global search function.',
+        background: this.app.getActiveThemeColor('primary'),
+      },
+    ]);
   }
 
   toggleSidebar(): void {

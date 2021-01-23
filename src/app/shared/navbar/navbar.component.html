@@ -8,12 +8,12 @@
       <mat-icon>menu</mat-icon>
     </button>
 
-    <nav class="main">
+    <nav id="mainNav" class="main">
       <button mat-button *ngFor="let item of menus" (click)="goto(item)">{{item.text}}</button>
     </nav>
 
     <div class="search-container" *ngIf="searchEnabled">
-      <input placeholder="{{'search'|translate}}" [(ngModel)]="searchKeywords" (keyup.enter)="onSearch()" />
+      <input id="searchInput" placeholder="{{'search'|translate}}" [(ngModel)]="searchKeywords" (keyup.enter)="onSearch()" />
     </div>
 
     <nav>

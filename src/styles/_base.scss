@@ -269,13 +269,29 @@ table {
   word-break: break-all;
 }
 
-/* overwrite mertial stylse */
+/* material */
 .mat-toolbar-row, .mat-toolbar-single-row {
   height: $navbar-height;
 }
 
 .mat-dialog-container {
   margin-top: -100px;
+}
+
+/* driver.js */
+#driver-popover-item {
+  &.no-title {
+    .driver-popover-title {
+      display: none;
+    }
+  }
+}
+
+.highlight-service-bordered {
+  #driver-highlighted-element-stage {
+    background-color: transparent !important;
+    border: solid 2px #ffffff;
+  }
 }
 
 /* styles with attributes */

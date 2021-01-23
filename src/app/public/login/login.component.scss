@@ -16,12 +16,18 @@
     margin: 0 auto;
     padding: 0 2rem 3rem 2rem;
 
+    .mat-card-content {
+      padding: 1rem 0;
+      margin-bottom: 0;
+    }
+
     .mat-card-actions {
       margin-bottom: 0.5rem;
     }
 
     .mat-card-image {
       width: 50%;
+      margin-bottom: 0;
     }
   }
 }

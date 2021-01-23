@@ -41,15 +41,37 @@ export class AppService {
   }
 
   setTheme(themeKey: string): Observable<ThemeEntity> {
+    const darkClassName = 'is-dark';
+
+    document.body.classList.remove(darkClassName);
     themes.forEach((theme: ThemeEntity) => {
       document.body.classList.remove(theme.key);
     });
+
     const theme = themes.find((t) => t.key === themeKey);
     if (theme) {
       document.body.classList.add(theme.key);
       localStorage.setItem(this.keyTheme, theme.key);
+      if (theme.isDark) {
+        document.body.classList.add(darkClassName);
+      }
     }
     return of(theme);
+  }
+
+  getThemeColor(themeKey: string, colorKey: string): string {
+    return getComputedStyle(document.querySelector(':root')).getPropertyValue(
+      `--${themeKey}--${colorKey}`
+    );
+  }
+
+  getActiveThemeColor(colorKey: string): string {
+    return document.body.classList.value
+      .split(' ')
+      .map((className) => {
+        return this.getThemeColor(className, colorKey);
+      })
+      .find((color) => !!color);
   }
 
   setTitle(title: string, overwriteOrigin?: boolean): void {
