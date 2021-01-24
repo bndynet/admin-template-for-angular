@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Injector } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { stringUtils } from '@bndynet/utils';
@@ -24,13 +24,13 @@ export class AppService {
   public navMenuChanged = new EventEmitter<MenuEntity>();
 
   constructor(
+    private injector: Injector,
     private router: Router,
     private http: HttpClient,
     private titleService: Title,
     public auth: AuthService,
     public dialog: DialogService,
     public status: StatusService,
-    public highlight: HighlightService,
     public notificaiton: NotificationService
   ) {
     this.clientTrackingID = stringUtils.getRandomId();
@@ -40,6 +40,10 @@ export class AppService {
     if (theme) {
       this.setTheme(theme);
     }
+  }
+
+  getHighlightService(): HighlightService {
+    return this.injector.get<HighlightService>(HighlightService);
   }
 
   setTheme(themeKey: string): Observable<ThemeEntity> {

@@ -6,7 +6,7 @@ export function onRouteChanging(
   routeEvent: NavigationStart,
   appService: AppService
 ) {
-  appService.highlight.reinit();
+  appService.getHighlightService().reinit();
 }
 
 export function onRouteChanged(
@@ -21,7 +21,7 @@ export function onRouteChanged(
   const matchedGuide = guides.find((guide) => guide.path === currentUrl);
   if (matchedGuide) {
     setTimeout(() => {
-      appService.highlight.steps(matchedGuide.steps);
+      appService.getHighlightService().steps(matchedGuide.steps);
     }, 500);
   }
 }
