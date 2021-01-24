@@ -20,8 +20,12 @@ export function onRouteChanged(
   const guides = getGuides(appService);
   const matchedGuide = guides.find((guide) => guide.path === currentUrl);
   if (matchedGuide) {
-    setTimeout(() => {
-      appService.getHighlightService().steps(matchedGuide.steps);
-    }, 500);
+    const key = `guide_for_${matchedGuide.path}`;
+    if (localStorage.getItem(key) !== matchedGuide.version.toString()) {
+      setTimeout(() => {
+        appService.getHighlightService().steps(matchedGuide.steps);
+      }, 500);
+      localStorage.setItem(key, matchedGuide.version.toString());
+    }
   }
 }

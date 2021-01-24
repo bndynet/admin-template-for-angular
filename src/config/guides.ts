@@ -2,13 +2,15 @@ import { AppService, IHighlightOption } from 'src/app/_services';
 
 export interface IGuideItem {
   path: string;
+  version: number;
   steps: IHighlightOption[];
 }
 
-// TODO: define your steps for page
+// TODO: define your steps for page, if anychange, you should increase the version for show them.
 export const getGuides = (appService: AppService): IGuideItem[] => [
   {
     path: '/login',
+    version: 0,
     steps: [
       {
         elementId: 'loginCard',
@@ -25,6 +27,7 @@ export const getGuides = (appService: AppService): IGuideItem[] => [
   },
   {
     path: '/admin/hi',
+    version: 0,
     steps: [
       {
         elementId: 'mainNav',
