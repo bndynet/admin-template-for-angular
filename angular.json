@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "keycloak-js"
+            ],
             "outputPath": "dist/admin-template-for-angular",
             "index": "src/index.html",
             "main": "src/main.ts",
