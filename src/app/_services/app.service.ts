@@ -72,12 +72,14 @@ export class AppService {
   }
 
   getActiveThemeColor(colorKey: string): string {
-    return document.body.classList.value
-      .split(' ')
-      .map((className) => {
-        return this.getThemeColor(className, colorKey);
-      })
-      .find((color) => !!color);
+    return (
+      document.body.classList.value
+        .split(' ')
+        .map((className) => {
+          return this.getThemeColor(className, colorKey);
+        })
+        .find((color) => !!color) || this.getThemeColor('', colorKey)
+    );
   }
 
   setTitle(title: string, overwriteOrigin?: boolean): void {
