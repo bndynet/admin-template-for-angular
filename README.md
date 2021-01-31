@@ -4,6 +4,8 @@
 
 An angular starter project with material design. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.3.
 
+<img src="https://static.bndy.net/images/projects/admin-template-for-angular.gif">
+
 ## Todo list
 
 ### Environments
