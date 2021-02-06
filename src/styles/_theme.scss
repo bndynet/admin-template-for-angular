@@ -70,7 +70,7 @@ $themes: (
 @mixin each-themes($inTheme: true) {
   @each $name, $theme in $themes {
     @if $name != '' and $inTheme {
-      .#{$name} {
+      ::ng-deep.#{$name} {
         @content($name, $theme);
       }
     } @else {
