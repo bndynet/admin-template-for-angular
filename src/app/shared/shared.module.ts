@@ -1,11 +1,14 @@
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppUiModule } from '../app-ui.module';
 import { ClickOutsideDirective } from '../_directives/click-outside.directive';
 import { LoadingDirective } from '../_directives/loading.directive';
 import { AvatarComponent } from './avatar/avatar.component';
+import { CodeBlockComponent } from './code-block/code-block.component';
 import { ContentSidebarComponent } from './content-sidebar/content-sidebar.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { IconCardComponent } from './icon-card/icon-card.component';
@@ -34,8 +37,16 @@ import { ThemeImgComponent } from './theme-img/theme-img.component';
     MenuComponent,
     AvatarComponent,
     LangMenuComponent,
+    CodeBlockComponent,
   ],
-  imports: [CommonModule, RouterModule, AppUiModule, TranslateModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    AppUiModule,
+    TranslateModule,
+    ClipboardModule,
+    CodemirrorModule,
+  ],
   exports: [
     AppUiModule,
     TranslateModule,
@@ -54,6 +65,7 @@ import { ThemeImgComponent } from './theme-img/theme-img.component';
     ThemeImgComponent,
     AvatarComponent,
     LangMenuComponent,
+    CodeBlockComponent,
   ],
 })
 export class SharedModule {}

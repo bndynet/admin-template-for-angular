@@ -8,10 +8,9 @@ import { DialogFormComponent } from '../dialog-form/dialog-form.component';
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.scss']
+  styleUrls: ['./welcome.component.scss'],
 })
 export class WelcomeComponent implements OnInit {
-
   private requesting = false;
   public pageLoading = false;
   public buttonLoading = false;
@@ -21,15 +20,43 @@ export class WelcomeComponent implements OnInit {
     'Link #2': 'link-url',
   };
 
+  public code = `@Component({
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.scss'],
+  animations: [slideInAnimation],
+})
+export class AdminComponent implements OnInit, AfterViewInit {
+  @ViewChild('sidebar') sidebarRef: MatSidenav;
+
+  sidebarHasBackdrop = false;
+  sidebarMode = 'side';
+  sidebarOpened = true;
+  contentSidebarOpened = false;
+  showProgressbar = false;
+  menus: MenuEntity[];
+  subMenus: MenuEntity[];
+  menuLoading = false;
+
+  constructor(
+    private app: AppService,
+    private events: EventsService,
+    private router: Router,
+    private status: StatusService,
+    private snackBar: MatSnackBar,
+    private notification: NotificationService
+  ) {}
+}
+  `;
+
   constructor(
     private http: HttpClient,
     private app: AppService,
     private status: StatusService,
-    private notification: NotificationService,
-  ) { }
+    private notification: NotificationService
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   toggleRequesting(): void {
     this.requesting = !this.requesting;
@@ -59,9 +86,13 @@ export class WelcomeComponent implements OnInit {
     });
   }
   confirm(): void {
-    this.app.dialog.confirm('Confirm Dialog', 'This is a confirm dialog.', () => {
-      this.notification.info('Done');
-    });
+    this.app.dialog.confirm(
+      'Confirm Dialog',
+      'This is a confirm dialog.',
+      () => {
+        this.notification.info('Done');
+      }
+    );
   }
   delete(): void {
     this.app.dialog.deleteConfirm(() => {
