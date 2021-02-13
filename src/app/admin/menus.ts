@@ -1,24 +1,14 @@
 import { MenuEntity, roles } from '../app-types';
+import { menus as devMenus } from './dev/menus';
 
 export const menus: MenuEntity[] = [
+  ...devMenus,
   {
-    icon: 'star',
-    text: 'GET STARTED',
+    text: 'HELLO',
     children: [
       {
-        icon: 'star',
-        text: 'Interactive',
-        link: '/admin/hi',
-      },
-      {
-        icon: 'subject',
-        text: 'Hero List',
-        link: '/admin/heroes',
-      },
-      {
-        icon: 'warning',
-        text: 'Error Page',
-        link: '/admin/error',
+        text: 'World',
+        link: '/admin/hello',
       },
     ],
   },

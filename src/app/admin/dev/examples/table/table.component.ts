@@ -5,14 +5,14 @@ import { delay } from 'rxjs/operators';
 import { NotificationService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
 import { getLocalUrl, mockRequest } from 'src/utils';
-import { ContentSidebarComponent } from '../../../shared';
+import { ContentSidebarComponent } from '../../../../shared';
 
 @Component({
-  selector: 'app-hero-list',
-  templateUrl: './hero-list.component.html',
-  styleUrls: ['./hero-list.component.scss'],
+  selector: 'app-examples-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss'],
 })
-export class HeroListComponent implements OnInit {
+export class TableComponent implements OnInit {
   public heroes: any[] = [];
   public activedHero: any;
   public saving = false;

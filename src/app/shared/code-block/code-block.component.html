@@ -1,11 +1,11 @@
 <div class="cb" [ngClass]="{'no-line-numbers': hideLineNumbers}">
-  <div class="cb-header">
+  <div class="cb-header" *ngIf="title">
     {{title}}
+  </div>
+  <div class="cb-content">
     <button mat-icon-button class="cb-copy-button" aria-label="Copy code snippet from " (click)="copyContent()">
       <mat-icon>content_copy</mat-icon>
     </button>
-  </div>
-  <div class="cb-content">
-    <ngx-codemirror [(ngModel)]="content" [options]="{ lineNumbers: !hideLineNumbers, mode: language, readOnly: !editable }"></ngx-codemirror>
+    <ngx-codemirror [(ngModel)]="content" [preserveScrollPosition]="false" [options]="{ lineNumbers: !hideLineNumbers, mode: language, readOnly: !editable }"></ngx-codemirror>
   </div>
 </div>

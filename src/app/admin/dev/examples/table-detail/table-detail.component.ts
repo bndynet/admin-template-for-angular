@@ -3,11 +3,11 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-hero-detail',
-  templateUrl: './hero-detail.component.html',
-  styleUrls: ['./hero-detail.component.scss'],
+  selector: 'app-examples-table-detail',
+  templateUrl: './table-detail.component.html',
+  styleUrls: ['./table-detail.component.scss'],
 })
-export class HeroDetailComponent implements OnInit {
+export class TableDetailComponent implements OnInit {
   hero: any = {};
 
   constructor(private route: ActivatedRoute) {}

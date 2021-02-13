@@ -1,4 +1,4 @@
-<div class="page-container">
+<div>
   <app-page-loading [loading]="initlizating"></app-page-loading>
   <div class="row" *ngIf="!initlizating">
     <div class="fill" [uiLoading]="loading" loadingText="Fetching data...">
@@ -9,7 +9,6 @@
             <th>Name</th>
             <th></th>
             <th></th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -18,11 +17,6 @@
             <td>{{hero.name}}</td>
             <td>
               <a [routerLink]="hero.id">open in current page</a>
-            </td>
-            <td>
-              <a [routerLink]="['', hero.id]">
-                open in new page
-              </a>
             </td>
             <td class="no-padding">
               <button mat-icon-button class="btn-edit" (click)="gotoDetail(hero.id)">

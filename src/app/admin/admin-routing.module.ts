@@ -9,15 +9,14 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
-      { path: '', redirectTo: 'hi', pathMatch: 'full' },
-      { path: 'hi', component: WelcomeComponent },
       { path: 'error', component: PageErrorComponent },
       { path: '404', redirectTo: 'error?code=404' },
       {
-        path: 'heroes',
-        loadChildren: () =>
-          import('./hero/hero.module').then((m) => m.HeroModule),
+        path: 'dev',
+        loadChildren: () => import('./dev/dev.module').then((m) => m.DevModule),
       },
+      { path: 'hello', component: WelcomeComponent },
+      { path: '', redirectTo: 'dev/get-started', pathMatch: 'full' },
     ],
   },
 ];

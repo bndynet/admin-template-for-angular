@@ -4,17 +4,10 @@ import { SharedModule } from '../shared';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { HelloModule } from './hello/hello.module';
-import { HeroModule } from './hero/hero.module';
 
 @NgModule({
   declarations: [AdminComponent],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    SharedModule,
-    HelloModule,
-    HeroModule,
-  ],
+  imports: [CommonModule, AdminRoutingModule, SharedModule, HelloModule],
   bootstrap: [],
 })
 export class AdminModule {}
