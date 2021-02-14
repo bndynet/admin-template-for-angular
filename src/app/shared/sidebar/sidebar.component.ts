@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import { MenuEntity } from 'src/app/app-types';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'el-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })

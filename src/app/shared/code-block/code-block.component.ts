@@ -2,7 +2,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-code-block',
+  selector: 'el-code-block',
   templateUrl: './code-block.component.html',
   styleUrls: ['./code-block.component.scss'],
 })

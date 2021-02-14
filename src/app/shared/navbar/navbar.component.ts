@@ -6,7 +6,7 @@ import { AppService } from 'src/app/_services/app.service';
 import { convertMessages, roles, themes } from 'src/config';
 
 @Component({
-  selector: 'app-navbar',
+  selector: 'el-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })

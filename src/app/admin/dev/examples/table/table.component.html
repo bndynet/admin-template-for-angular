@@ -1,5 +1,5 @@
 <div>
-  <app-page-loading [loading]="initlizating"></app-page-loading>
+  <el-page-loading [loading]="initlizating"></el-page-loading>
   <div class="row" *ngIf="!initlizating">
     <div class="fill" [uiLoading]="loading" loadingText="Fetching data...">
       <table class="border-radius">
@@ -49,7 +49,7 @@
   </div>
 
 
-  <app-content-sidebar #contentSidebar elementsToOpen=".btn-edit"
+  <el-content-sidebar #contentSidebar elementsToOpen=".btn-edit"
     [title]="'#' + activedHero?.id + ' ' + activedHero?.name" [progressShown]="saving" [open]="activedHero"
     (closed)="onClosedContentSidebar()">
     <div class="padding">
@@ -67,6 +67,6 @@
         <button mat-raised-button color="primary" [ngClass]="{loading: saving}" [disabled]="saving" (click)="save()">Save</button>
       </div>
     </div>
-  </app-content-sidebar>
+  </el-content-sidebar>
 
 </div>

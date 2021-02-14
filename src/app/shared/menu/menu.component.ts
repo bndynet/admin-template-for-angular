@@ -4,7 +4,7 @@ import { MenuEntity } from 'src/app/app-types';
 import { AppService } from 'src/app/_services';
 
 @Component({
-  selector: 'app-menu',
+  selector: 'el-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
 })

@@ -3,7 +3,7 @@ import { Langs } from 'src/app/app-types';
 import { I18nService } from 'src/app/_services';
 
 @Component({
-  selector: 'app-lang-menu',
+  selector: 'el-lang-menu',
   templateUrl: './lang-menu.component.html',
   styleUrls: ['./lang-menu.component.scss'],
 })

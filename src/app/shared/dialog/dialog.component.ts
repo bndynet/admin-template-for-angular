@@ -7,7 +7,7 @@ import {
 import { ifUndefined } from 'src/utils';
 
 @Component({
-  selector: 'app-dialog',
+  selector: 'el-dialog',
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.scss'],
 })

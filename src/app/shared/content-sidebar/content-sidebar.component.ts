@@ -14,7 +14,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { EventsService } from 'src/app/_services';
 
 @Component({
-  selector: 'app-content-sidebar',
+  selector: 'el-content-sidebar',
   templateUrl: './content-sidebar.component.html',
   styleUrls: ['./content-sidebar.component.scss'],
 })

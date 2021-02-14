@@ -3,19 +3,16 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { httpStatusMap } from '../../app-types';
 
 @Component({
-  selector: 'app-page-error',
+  selector: 'el-page-error',
   templateUrl: './page-error.component.html',
-  styleUrls: ['./page-error.component.scss']
+  styleUrls: ['./page-error.component.scss'],
 })
 export class PageErrorComponent implements OnInit {
-
   public code: number | null;
   public title: string;
   public description: string;
 
-  constructor(
-    private route: ActivatedRoute,
-  ) { }
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params: ParamMap) => {
@@ -28,8 +25,7 @@ export class PageErrorComponent implements OnInit {
         }
       } else {
         this.code = null;
-        this.title = 'Something gone wrong',
-        this.description = '';
+        (this.title = 'Something gone wrong'), (this.description = '');
       }
 
       if (params.get('title')) {
@@ -41,5 +37,4 @@ export class PageErrorComponent implements OnInit {
       }
     });
   }
-
 }

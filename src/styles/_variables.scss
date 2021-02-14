@@ -69,8 +69,8 @@ $sidebar-width: 200px;
   }
 }
 
-@mixin app-sidebar($theme-name, $colorset) {
-  app-sidebar {
+@mixin el-sidebar($theme-name, $colorset) {
+  el-sidebar {
     a.active {
       border-left-color: map-get($map: $colorset, $key: primary) !important;
     }

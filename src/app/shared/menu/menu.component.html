@@ -5,6 +5,6 @@
       <span class="menu-text" *ngIf="item.text">{{item.text}}</span>
       <span class="icon icon-arrow" *ngIf="item.children && item.children.length > 0" [class]="{'icon-arrow-down': !item._collapsed, 'icon-arrow-up': item._collapsed}"></span>
     </a>
-    <app-menu class="submenu" [class]="{'collapsed': item._collapsed}" *ngIf="item.children && item.children.length > 0" [data]="item.children" [level]="level + 1"></app-menu>
+    <el-menu class="submenu" [class]="{'collapsed': item._collapsed}" *ngIf="item.children && item.children.length > 0" [data]="item.children" [level]="level + 1"></el-menu>
   </ng-container>
 </mat-nav-list>

@@ -144,9 +144,9 @@
     ],
     "component-selector": [
       true,
+      "el",
       "element",
       "app",
-      "ui",
       "kebab-case"
     ]
   }
