@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { finalize, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dev',
@@ -19,6 +20,7 @@ export class DevComponent implements OnInit, OnDestroy {
     code: string;
   }[] = [];
   public showCode = true;
+  public loadingCode: boolean;
 
   private fileTagLangMapping = {
     TS: 'javascript',
@@ -72,6 +74,14 @@ export class DevComponent implements OnInit, OnDestroy {
       this.subs.add(
         this.http
           .get(compFile.name, { responseType: 'text' })
+          .pipe(
+            tap(() => {
+              this.loadingCode = true;
+            }),
+            finalize(() => {
+              this.loadingCode = false;
+            })
+          )
           .subscribe((code) => {
             compFile.code = code;
           })

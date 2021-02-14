@@ -2,8 +2,8 @@
   <div class="cb-header" *ngIf="title">
     {{title}}
   </div>
-  <div class="cb-content">
-    <button mat-icon-button class="cb-copy-button" aria-label="Copy code snippet from " (click)="copyContent()">
+  <div class="cb-content" [uiLoading]="loading === true">
+    <button mat-icon-button class="cb-copy-button" aria-label="Copy" *ngIf="content" (click)="copyContent()">
       <mat-icon>content_copy</mat-icon>
     </button>
     <ngx-codemirror [(ngModel)]="content" [preserveScrollPosition]="false" [options]="{ lineNumbers: !hideLineNumbers, mode: language, readOnly: !editable }"></ngx-codemirror>

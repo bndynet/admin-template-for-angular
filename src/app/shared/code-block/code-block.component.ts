@@ -10,12 +10,15 @@ export class CodeBlockComponent implements OnInit {
   @Input() title: string;
   @Input() content: string;
   @Input() language: string;
+  @Input() loading: boolean;
   @Input() editable: boolean;
   @Input() hideLineNumbers: boolean;
 
   constructor(private clipboard: Clipboard) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.debug(this.loading);
+  }
 
   copyContent(): void {
     this.clipboard.copy(this.content);
