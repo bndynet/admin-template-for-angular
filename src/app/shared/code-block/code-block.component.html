@@ -2,7 +2,7 @@
   <div class="cb-header" *ngIf="title">
     {{title}}
   </div>
-  <div class="cb-content" [uiLoading]="loading === true">
+  <div class="cb-content" [loading]="loading === true">
     <button mat-icon-button class="cb-copy-button" aria-label="Copy" *ngIf="content" (click)="copyContent()">
       <mat-icon>content_copy</mat-icon>
     </button>

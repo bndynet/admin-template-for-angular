@@ -18,6 +18,7 @@
     opacity: 0.75;
   }
 }
+
 @include each-themes using ($name, $theme) {
   :host {
     footer {

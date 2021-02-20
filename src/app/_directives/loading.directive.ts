@@ -10,10 +10,10 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[uiLoading]',
+  selector: '[loading]',
 })
 export class LoadingDirective implements OnChanges {
-  @Input('uiLoading') loading: boolean;
+  @Input('loading') loading: boolean;
   @Input() loadingText: string;
 
   constructor(

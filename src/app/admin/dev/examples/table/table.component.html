@@ -1,7 +1,7 @@
 <div>
-  <el-page-loading [loading]="initlizating"></el-page-loading>
+  <el-page-loading [show]="initlizating"></el-page-loading>
   <div class="row" *ngIf="!initlizating">
-    <div class="fill" [uiLoading]="loading" loadingText="Fetching data...">
+    <div class="fill" [loading]="loading" loadingText="Fetching data...">
       <table class="border-radius">
         <thead>
           <tr>

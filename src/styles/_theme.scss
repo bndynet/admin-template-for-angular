@@ -38,6 +38,7 @@ $themes: (
     text: map-get(map-get($theme, foreground), text),
     secondary-text: map-get(map-get($theme, foreground), secondary-text),
     divider: map-get(map-get($theme, foreground), divider),
+    secondary-background: map-get(map-get($theme, background), card),
 
     background: map-get(map-get($theme, background), background),
     hover: map-get(map-get($theme, background), hover),
@@ -70,7 +71,7 @@ $themes: (
 @mixin each-themes($inTheme: true) {
   @each $name, $theme in $themes {
     @if $name != '' and $inTheme {
-      ::ng-deep.#{$name} {
+      .#{$name} {
         @content($name, $theme);
       }
     } @else {

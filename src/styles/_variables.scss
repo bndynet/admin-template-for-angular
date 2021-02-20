@@ -43,6 +43,8 @@ $sidebar-width: 200px;
 
 @mixin table-style($theme-name, $colorset) {
   table {
+    background-color: var(--#{$theme-name}--secondary-background);
+
     tr {
       th,
       td {

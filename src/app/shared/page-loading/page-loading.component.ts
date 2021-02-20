@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./page-loading.component.scss'],
 })
 export class PageLoadingComponent implements OnInit {
-  @Input() loading: boolean;
+  @Input() show: boolean;
   @Input() title = 'Loading...';
   @Input() description: string;
 
