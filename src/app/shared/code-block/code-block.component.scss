@@ -33,8 +33,21 @@
 }
 
 @include each-themes using ($name, $theme) {
-  .cb-header {
-    background-color: var(--#{$name}--primary);
+  :host {
+    .cb-header {
+      background-color: get($name, 'background');
+    }
+
+    .cb-content {
+      background-color: get($name, 'secondary-background');
+      border-color: get($name, 'divider');
+    }
+
+    ::ng-deep {
+      .CodeMirror {
+        background-color: transparent !important;
+      }
+    }
   }
 }
 

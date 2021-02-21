@@ -6,6 +6,6 @@
     <button mat-icon-button class="cb-copy-button" aria-label="Copy" *ngIf="content" (click)="copyContent()">
       <mat-icon>content_copy</mat-icon>
     </button>
-    <ngx-codemirror [(ngModel)]="content" [preserveScrollPosition]="false" [options]="{ lineNumbers: !hideLineNumbers, mode: language, readOnly: !editable }"></ngx-codemirror>
+    <ngx-codemirror [(ngModel)]="content" [preserveScrollPosition]="false" [options]="getOptions()"></ngx-codemirror>
   </div>
 </div>

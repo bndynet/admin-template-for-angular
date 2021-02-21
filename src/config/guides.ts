@@ -32,12 +32,12 @@ export const getGuides = (appService: AppService): IGuideItem[] => [
       {
         elementId: 'mainNav',
         description: 'Here is the main navigation bar.',
-        background: appService.getActiveThemeColor('primary'),
+        background: appService.theme.getActiveThemeColor('primary'),
       },
       {
         elementId: 'searchInput',
         description: 'Here to implement global search function.',
-        background: appService.getActiveThemeColor('primary'),
+        background: appService.theme.getActiveThemeColor('primary'),
       },
     ],
   },

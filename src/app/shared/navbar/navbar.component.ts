@@ -80,7 +80,7 @@ export class NavbarComponent implements OnInit {
   }
 
   changeTheme(themeKey: string): void {
-    this.app.setTheme(themeKey);
+    this.app.theme.changeTheme(themeKey);
   }
 
   onSearch(): void {

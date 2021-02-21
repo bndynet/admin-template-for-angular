@@ -9,7 +9,7 @@
     </div>
     <el-sidebar [menus]="subMenus"></el-sidebar>
   </mat-sidenav>
-  <mat-sidenav-content [ngClass]="{'content-sidebar-opened': contentSidebarOpened}">
+  <mat-sidenav-content class="scrollbar" [ngClass]="{'content-sidebar-opened': contentSidebarOpened}">
     <span class="sidebar-switcher" (click)="toggleSidebar();">
       <mat-icon *ngIf="sidebarOpened">keyboard_arrow_left</mat-icon>
       <mat-icon *ngIf="!sidebarOpened">keyboard_arrow_right</mat-icon>

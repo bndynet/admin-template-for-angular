@@ -3,23 +3,22 @@ import { EventEmitter, Injectable, Injector } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { stringUtils } from '@bndynet/utils';
-import { interval, Observable, of } from 'rxjs';
+import { interval, Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { themes } from 'src/config';
 import { getLocalUrl } from 'src/utils';
-import { MenuEntity, MessageEntity, ThemeEntity } from '../app-types';
+import { MenuEntity, MessageEntity } from '../app-types';
 import { AuthService } from './auth.service';
 import { DialogService } from './dialog.service';
 import { HighlightService } from './highlight.service';
 import { NotificationService } from './notification.service';
 import { StatusService } from './status.service';
+import { KEY_THEME, ThemeService } from './theme.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppService {
   private rootTitle: string;
-  private keyTheme = 'app_theme';
   public readonly clientTrackingID: string;
   public navMenuChanged = new EventEmitter<MenuEntity>();
 
@@ -29,6 +28,7 @@ export class AppService {
     private http: HttpClient,
     private titleService: Title,
     public auth: AuthService,
+    public theme: ThemeService,
     public dialog: DialogService,
     public status: StatusService,
     public notificaiton: NotificationService
@@ -36,50 +36,14 @@ export class AppService {
     this.clientTrackingID = stringUtils.getRandomId();
     this.rootTitle = this.titleService.getTitle();
 
-    const theme = localStorage.getItem(this.keyTheme);
+    const themeName = localStorage.getItem(KEY_THEME);
     if (theme) {
-      this.setTheme(theme);
+      this.theme.changeTheme(themeName);
     }
   }
 
   getHighlightService(): HighlightService {
     return this.injector.get<HighlightService>(HighlightService);
-  }
-
-  setTheme(themeKey: string): Observable<ThemeEntity> {
-    const darkClassName = 'is-dark';
-
-    document.body.classList.remove(darkClassName);
-    themes.forEach((theme: ThemeEntity) => {
-      document.body.classList.remove(theme.key);
-    });
-
-    const theme = themes.find((t) => t.key === themeKey);
-    if (theme) {
-      document.body.classList.add(theme.key);
-      localStorage.setItem(this.keyTheme, theme.key);
-      if (theme.isDark) {
-        document.body.classList.add(darkClassName);
-      }
-    }
-    return of(theme);
-  }
-
-  getThemeColor(themeKey: string, colorKey: string): string {
-    return getComputedStyle(document.querySelector(':root')).getPropertyValue(
-      `--${themeKey}--${colorKey}`
-    );
-  }
-
-  getActiveThemeColor(colorKey: string): string {
-    return (
-      document.body.classList.value
-        .split(' ')
-        .map((className) => {
-          return this.getThemeColor(className, colorKey);
-        })
-        .find((color) => !!color) || this.getThemeColor('', colorKey)
-    );
   }
 
   setTitle(title: string, overwriteOrigin?: boolean): void {

@@ -45,3 +45,15 @@ To get help on Angular CLI use `ng help` or click [here](https://angular.io/cli)
   }
 }
 ```
+
+ThemeService
+
+```typescript
+this.theme.themeChanged.subscribe((t) => {
+    if (this.theme.isDark()) {
+      // TODO:
+    } else {
+      // TODO:
+    }
+  });
+```
