@@ -17,7 +17,9 @@ $sidebar-width: 200px;
 }
 
 @mixin scrollbar-style($theme-name, $colorset) {
-  .scrollbar {
+  .scrollbar,
+  .CodeMirror-vscrollbar,
+  .CodeMirror-hscrollbar {
     overflow: auto;
 
     &::-webkit-scrollbar {
