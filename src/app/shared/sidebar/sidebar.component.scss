@@ -23,6 +23,7 @@
   :host {
     footer {
       background-color: get($name, 'background');
+      border-top: solid 1px get($name, 'divider');
     }
   }
 }
