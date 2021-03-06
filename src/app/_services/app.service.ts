@@ -20,6 +20,7 @@ import { KEY_THEME, ThemeService } from './theme.service';
 export class AppService {
   private rootTitle: string;
   public readonly clientTrackingID: string;
+  public readonly baseUrl: string;
   public navMenuChanged = new EventEmitter<MenuEntity>();
 
   constructor(
@@ -39,6 +40,12 @@ export class AppService {
     const themeName = localStorage.getItem(KEY_THEME);
     if (theme) {
       this.theme.changeTheme(themeName);
+    }
+
+    // init the base url from html tags
+    const baseElements = document.getElementsByTagName('base');
+    if (baseElements && baseElements.length > 0) {
+      this.baseUrl = baseElements[0].href;
     }
   }
 

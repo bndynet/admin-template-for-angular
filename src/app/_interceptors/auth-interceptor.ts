@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { AppService } from 'src/app/_services';
+import { getLocalUrl } from 'src/utils';
 import { KEY_AUTHORIZATION, KEY_TRACKING_ID } from '../app-types';
 import { TokenInfo } from '../_services/auth-oauth-handler';
 
@@ -33,6 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
         headers[KEY_TRACKING_ID] = this.app.clientTrackingID;
         const authReq = req.clone({
           setHeaders: headers,
+          url: getLocalUrl(req.url),
         });
         return next.handle(authReq).pipe(
           tap((evt) => {

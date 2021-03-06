@@ -20,5 +20,9 @@ export function mockErrorResponse(http: HttpClient): Observable<any> {
 }
 
 export function getLocalUrl(path: string): string {
-  return `${document.baseURI}/${path}`;
+  if (path && path.toLowerCase().startsWith('http')) {
+    return path;
+  }
+
+  return `${document.baseURI}/${path}`.replace(/(?<=[^:])\/{2,}/g, '/');
 }
