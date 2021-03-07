@@ -1,0 +1,16 @@
+{
+  "extends": "stylelint-config-sass-guidelines",
+  "rules": {
+    "selector-max-id": null,
+    "max-nesting-depth": null,
+    "selector-class-pattern": null,
+    "selector-max-compound-selectors": null,
+    "selector-no-qualifying-type": null,
+    "selector-pseudo-element-no-unknown": [true, {
+      "ignorePseudoElements": ["ng-deep"]
+    }],
+    "declaration-property-value-disallowed-list": null,
+    "scss/at-mixin-pattern": null,
+    "scss/dollar-variable-pattern": null
+  }
+}

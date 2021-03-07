@@ -16,7 +16,8 @@
     "deploy": "run-p copy:* && ng build --prod --baseHref=/admin-template-for-angular/ && ts-node ./tools/after-build.ts",
     "test": "ng test",
     "pull:i18n": "git subtree pull --prefix=src/assets/i18n https://github.com/bndynet/i18n.git master --squash",
-    "lint": "ng lint",
+    "lint:ts": "ng lint",
+    "lint:style": "stylelint **/*.scss --fix",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -73,6 +74,8 @@
     "prettier": "^2.1.2",
     "protractor": "~7.0.0",
     "shelljs": "^0.8.4",
+    "stylelint": "^13.12.0",
+    "stylelint-config-sass-guidelines": "^8.0.0",
     "ts-node": "^8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.0.2",
@@ -87,6 +90,9 @@
     "*.ts": [
       "organize-imports-cli",
       "prettier --write"
+    ],
+    "*.scss": [
+      "stylelint **/*.scss --fix"
     ]
   }
 }
