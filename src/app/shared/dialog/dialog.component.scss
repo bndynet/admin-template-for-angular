@@ -1,6 +1,6 @@
 :host {
   ::ng-deep.mat-dialog-content {
-      margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
   }
 }
 
@@ -16,32 +16,32 @@
   }
 
   .loading-wrapper {
-    text-align: center;
     margin: 1rem;
+    text-align: center;
 
     .mat-progress-spinner {
       display: inline-block;
     }
 
     .seconds {
+      font-size: 40px;
       position: absolute;
       top: calc(1rem + 25px);
       width: calc(100% - 2rem);
-      font-size: 40px;
     }
   }
 
   .mat-icon-button {
     &.corner-icon {
-      top: -10px;
       right: -10px;
+      top: -10px;
     }
   }
 
   .mat-spinner {
     &.corner-icon {
-      top: -5px;
       right: -5px;
+      top: -5px;
     }
   }
 
@@ -49,8 +49,8 @@
     margin-bottom: 0.5rem;
 
     label {
-      font-weight: bold;
       font-size: 1.25rem;
+      font-weight: bold;
     }
   }
 

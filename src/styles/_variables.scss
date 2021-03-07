@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@import '~@angular/material/theming';
 
 $navbar-height: 64px;
 $sidebar-width: 200px;
@@ -23,20 +23,24 @@ $sidebar-width: 200px;
     overflow: auto;
 
     &::-webkit-scrollbar {
-      width: 10px;
       height: 10px;
+      width: 10px;
     }
+
     &::-webkit-scrollbar-track {
       background-color: rgba(map-get($colorset, text), $alpha: 0.1);
       border-radius: 5px;
     }
+
     &::-webkit-scrollbar-thumb {
       background-color: rgba(map-get($colorset, text), $alpha: 0.4);
       border-radius: 10px;
+
       &:hover {
         background-color: rgba(map-get($colorset, text), $alpha: 0.6);
       }
     }
+
     &::-webkit-scrollbar-corner {
       background: #179a16;
     }
@@ -59,7 +63,7 @@ $sidebar-width: 200px;
         &.active {
           td {
             background-color: var(--#{$theme-name}--primary);
-            color: #ffffff;
+            color: #fff;
           }
         }
 
@@ -83,21 +87,21 @@ $sidebar-width: 200px;
 
 /* animations */
 @mixin headShake {
-  animation: .5s ease-in-out 0s infinite alternate headShake
+  animation: 0.5s ease-in-out 0s infinite alternate headShake;
 }
 @mixin heartBeat {
-  animation: 3s ease-in-out 0s infinite alternate heartBeat
+  animation: 3s ease-in-out 0s infinite alternate heartBeat;
 }
 @mixin flip {
+  animation: 2s ease-in-out 0s infinite flip;
   backface-visibility: visible;
-  animation: 2s ease-in-out 0s infinite flip
 }
 @mixin swing {
   animation: 1s ease-in-out 0s infinite alternate swing;
 }
 @mixin rotate {
-  transform-origin: center;
   animation: 1s ease-in-out 0s infinite rotate;
+  transform-origin: center;
 }
 @mixin  aggregation {
   animation: 1s ease-in-out 0s infinite alternate aggregation;

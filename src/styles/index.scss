@@ -1,6 +1,6 @@
-@import "~@angular/material/theming";
+@import '~@angular/material/theming';
 
-@import "~driver.js/dist/driver.min.css";
+@import '~driver.js/dist/driver.min.css';
 
 // codemirror
 @import '~codemirror/lib/codemirror';
@@ -29,18 +29,23 @@
 .headShake {
   @include headShake();
 }
+
 .heartBeat {
   @include heartBeat();
 }
+
 .flip {
   @include flip();
 }
+
 .swing {
   @include swing();
 }
+
 .rotate {
   @include rotate();
 }
+
 .aggretation {
   @include aggregation();
 }

@@ -6,6 +6,7 @@
       &.main {
         flex: 1;
       }
+
       &:last-child {
         button {
           margin-left: 1rem;
@@ -19,15 +20,15 @@
   }
 
   ::ng-deep .mat-badge-content {
-    top: -8px !important;
-    right: -8px !important;
     font-weight: normal;
+    right: -8px !important;
+    top: -8px !important;
   }
 
   .logo-wrapper {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: calc(#{$sidebar-width} - 16px - 8px);
 
     .logo {
@@ -37,65 +38,65 @@
 
   .spacer {
     &.vertical {
-      width: 1px;
-      height: 100%;
       background-color: rgba(0, 0, 0, 0.12);
+      height: 100%;
       margin: 0 0.5rem;
+      width: 1px;
     }
   }
 
   .btn-avatar {
     ::ng-deep .mat-button-wrapper {
+      line-height: 0 !important;
       position: relative;
       top: -1px;
-      line-height: 0 !important;
     }
   }
 }
 
 .search-container {
-  display: flex;
-  justify-content: flex-end;
   align-items: center;
+  display: flex;
   height: 100%;
-  width: 360px;
+  justify-content: flex-end;
   margin-right: 0.5rem;
+  width: 360px;
+
   input {
+    background-color: rgba($color: #fff, $alpha: 0.8);
     border: none;
     border-radius: 100px;
-    background-color: rgba($color: #ffffff, $alpha: 0.8);
-    padding: 0.5rem 1rem;
-    width: 180px;
     max-width: 240px;
     outline: none;
-    transition: width .4s ease-in-out;
+    padding: 0.5rem 1rem;
+    transition: width 0.4s ease-in-out;
+    width: 180px;
 
     &:focus {
+      background-color: #fff;
       width: 80%;
-      background-color: #ffffff;
     }
   }
 }
 
 ::ng-deep.theme-list {
-
   .mat-menu-content {
     display: flex;
     padding: 0.5rem;
 
     .mat-menu-item {
-      width: 50px;
       height: 50px;
       padding: 0.5rem;
+      width: 50px;
     }
   }
 }
 
 .avatar-wrapper {
-  width: 260px;
+  line-height: 1.5rem;
   margin: 1rem 0;
   text-align: center;
-  line-height: 1.5rem;
+  width: 260px;
 }
 
 ::ng-deep.message-list {

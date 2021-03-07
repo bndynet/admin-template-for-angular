@@ -1,15 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
 // @import "~@angular/material/prebuilt-themes/purple-green.css";
-@import "./variables";
+@import './variables';
 
 html,
 body {
   height: 100%;
 }
+
 body {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 h1,
@@ -74,8 +75,8 @@ section {
     padding-right: #{$var * 0.25}rem;
   }
   .py-#{$var} {
-    padding-top: #{$var * 0.25}rem;
     padding-bottom: #{$var * 0.25}rem;
+    padding-top: #{$var * 0.25}rem;
   }
 }
 
@@ -100,25 +101,25 @@ section {
 }
 
 .center {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   height: 100%;
+  justify-content: center;
 }
 
 .notification-success {
-  color: #ffffff !important;
   background-color: #28a745 !important;
+  color: #fff !important;
 
   .mat-button-wrapper {
-    color: #dddddd !important;
+    color: #ddd !important;
   }
 }
 
 .notification-warn {
-  color: #343a40 !important;
   background-color: #ffc107 !important;
+  color: #343a40 !important;
 
   .mat-button-wrapper {
     color: #343a40 !important;
@@ -126,11 +127,11 @@ section {
 }
 
 .notification-error {
-  color: #ffffff !important;
   background-color: #dc3545 !important;
+  color: #fff !important;
 
   .mat-button-wrapper {
-    color: #dddddd !important;
+    color: #ddd !important;
   }
 }
 
@@ -144,7 +145,7 @@ section {
 
 // text
 .text-muted {
-  color: #666666;
+  color: #666;
 }
 
 .text-block {
@@ -162,6 +163,7 @@ section {
   &.gutter {
     margin-left: -0.5rem;
     margin-right: -0.5rem;
+
     > * {
       margin: 0 0.5rem;
     }
@@ -178,28 +180,31 @@ section {
 
 .icon {
   &.icon-arrow {
-    position: relative;
-    top: 2px;
     border-style: solid;
     border-width: 2px 2px 0 0;
-    content: "";
+    content: '';
     display: inline-block;
-    padding: 3px;
-    vertical-align: middle;
-    transition: all .3s;
     opacity: 0.6;
+    padding: 3px;
+    position: relative;
+    top: 2px;
+    transition: all 0.3s;
+    vertical-align: middle;
 
     &.icon-arrow-up {
       transform: rotate(-45deg);
     }
+
     &.icon-arrow-right {
       top: 0;
       transform: rotate(45deg);
     }
+
     &.icon-arrow-down {
       top: -2px;
       transform: rotate(-225deg);
     }
+
     &.icon-arrow-left {
       top: 0;
       transform: rotate(-135deg);
@@ -213,7 +218,8 @@ section {
 }
 
 /* material */
-.mat-toolbar-row, .mat-toolbar-single-row {
+.mat-toolbar-row,
+.mat-toolbar-single-row {
   height: $navbar-height;
 }
 
@@ -233,7 +239,7 @@ section {
 .highlight-service-bordered {
   #driver-highlighted-element-stage {
     background-color: transparent !important;
-    border: solid 2px #ffffff;
+    border: solid 2px #fff;
     border-radius: 10px;
   }
 }

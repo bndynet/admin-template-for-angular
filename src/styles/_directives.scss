@@ -1,38 +1,39 @@
-@import "./theme";
+@import './theme';
 
 .overlay-parent {
   position: relative !important;
+
   .overlay {
-    position: absolute;
-    z-index: 2000;
-    background-color: #ffffff;
-    opacity: 0.8;
-    margin: 0;
-    top: 0;
-    right: 0;
+    background-color: #fff;
     bottom: 0;
     left: 0;
-    transition: opacity .3s;
+    margin: 0;
+    opacity: 0.8;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: opacity 0.3s;
+    z-index: 2000;
 
     .loading-body {
-      position: absolute;
-      top: 50%;
       margin-top: -21px;
-      width: 100%;
+      position: absolute;
       text-align: center;
+      top: 50%;
+      width: 100%;
 
       svg.loading-spinner {
+        animation: loading-rotate 2s linear infinite;
         height: 42px;
         width: 42px;
-        animation: loading-rotate 2s linear infinite;
 
         circle {
           animation: loading-dash 1.5s ease-in-out infinite;
+          stroke: #1976d2;
           stroke-dasharray: 90,150;
           stroke-dashoffset: 0;
-          stroke-width: 2;
-          stroke: #1976d2;
           stroke-linecap: round;
+          stroke-width: 2;
         }
       }
 

@@ -1,24 +1,24 @@
 :host {
-  display: flex;
   align-items: center;
-  height: 100%;
   background-image: url('https://static.bndy.net/images/bg.jpg');
+  display: flex;
+  height: 100%;
 
   el-lang-menu {
     position: absolute;
-    top: 0;
     right: 0;
+    top: 0;
   }
 
   .container {
-    width: 360px;
-    text-align: center;
     margin: 0 auto;
-    padding: 0 2rem 3rem 2rem;
+    padding: 0 2rem 3rem;
+    text-align: center;
+    width: 360px;
 
     .mat-card-content {
-      padding: 1rem 0;
       margin-bottom: 0;
+      padding: 1rem 0;
     }
 
     .mat-card-actions {
@@ -26,8 +26,8 @@
     }
 
     .mat-card-image {
-      width: 50%;
       margin-bottom: 0;
+      width: 50%;
     }
   }
 }

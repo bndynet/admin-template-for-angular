@@ -1,9 +1,10 @@
 @keyframes swing {
   0% {
-    margin-left: -30%
+    margin-left: -30%;
   }
+
   100% {
-    margin-left: 30%
+    margin-left: 30%;
   }
 }
 
@@ -11,6 +12,7 @@
   0% {
     letter-spacing: 0;
   }
+
   100% {
     letter-spacing: 5px;
   }
@@ -20,6 +22,7 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -75,52 +78,52 @@
 
 @keyframes flip {
   from {
-    transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 0) rotate3d(0, 1, 0, -360deg);
     animation-timing-function: ease-out;
+    transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 0) rotate3d(0, 1, 0, -360deg);
   }
 
   40% {
+    animation-timing-function: ease-out;
     transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 150px)
       rotate3d(0, 1, 0, -190deg);
-    animation-timing-function: ease-out;
   }
 
   50% {
+    animation-timing-function: ease-in;
     transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 150px)
       rotate3d(0, 1, 0, -170deg);
-    animation-timing-function: ease-in;
   }
 
   80% {
+    animation-timing-function: ease-in;
     transform: perspective(400px) scale3d(0.95, 0.95, 0.95) translate3d(0, 0, 0)
       rotate3d(0, 1, 0, 0deg);
-    animation-timing-function: ease-in;
   }
 
   to {
-    transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 0) rotate3d(0, 1, 0, 0deg);
     animation-timing-function: ease-in;
+    transform: perspective(400px) scale3d(1, 1, 1) translate3d(0, 0, 0) rotate3d(0, 1, 0, 0deg);
   }
 }
 
 @keyframes loading-rotate {
   to {
-      transform: rotate(1turn);
+    transform: rotate(1turn);
   }
 }
 @keyframes loading-dash {
   0% {
-      stroke-dasharray: 1,200;
-      stroke-dashoffset: 0;
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0;
   }
 
   50% {
-      stroke-dasharray: 90,150;
-      stroke-dashoffset: -40px;
+    stroke-dasharray: 90,150;
+    stroke-dashoffset: -40px;
   }
 
   to {
-      stroke-dasharray: 90,150;
-      stroke-dashoffset: -120px;
+    stroke-dasharray: 90,150;
+    stroke-dashoffset: -120px;
   }
 }

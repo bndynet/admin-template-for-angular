@@ -3,8 +3,8 @@
 
 :host {
   display: flex;
-  height: 100%;
   flex-direction: column;
+  height: 100%;
 
   .mat-progress-bar {
     position: absolute;
@@ -35,19 +35,19 @@
   }
 
   .sidebar-switcher {
-    position: fixed;
-    top: 50%;
-    margin-top: -40px;
-    cursor: pointer;
     background-color: rgba(155, 155, 155, 0.12);
     border: solid 1px rgba(155, 155, 155, 0.25);
-    border-radius: 0 0.5rem 0.5rem 0;
     border-left-width: 0;
+    border-radius: 0 0.5rem 0.5rem 0;
+    cursor: pointer;
+    margin-top: -40px;
     padding: 2rem 0;
+    position: fixed;
+    top: 50%;
 
     .mat-icon {
-      position: relative;
       margin-left: -5px;
+      position: relative;
       width: 18px;
     }
   }
@@ -56,8 +56,8 @@
 @include each-themes using ($name, $theme) {
   :host {
     .sidebar-switcher {
-      color: get($name, 'secondary-text');
       border-color: get($name, 'divider');
+      color: get($name, 'secondary-text');
 
       &:hover {
         background-color: get($name, 'hover');

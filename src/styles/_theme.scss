@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@import '~@angular/material/theming';
 @import './variables';
 
 
@@ -13,16 +13,12 @@ $color-accent: mat-color($app-accent, default);
 // Define your themes.
 $themes: (
   '': $app-theme,
-  popular: mat-light-theme(
-    mat-palette($mat-blue-grey),
-    mat-palette($mat-amber, 900),
-    mat-palette($mat-deep-orange)
-  ),
-  dark: mat-dark-theme(
-    mat-palette($mat-blue),
-    mat-palette($mat-pink, A200, A100, A400),
-    mat-palette($mat-orange)
-  )
+  popular: mat-light-theme(mat-palette($mat-blue-grey),
+  mat-palette($mat-amber, 900),
+  mat-palette($mat-deep-orange)),
+  dark: mat-dark-theme(mat-palette($mat-blue),
+  mat-palette($mat-pink, A200, A100, A400),
+  mat-palette($mat-orange))
 );
 
 @mixin register-theme($name, $theme) {

@@ -1,4 +1,4 @@
-@import "../../../styles/theme";
+@import '../../../styles/theme';
 
 ::ng-deep .menu {
   display: block;
@@ -11,6 +11,7 @@
   @for $level from 1 to 10 {
     ::ng-deep.mat-list-item.level-#{$level} {
       height: 42px;
+
       .mat-list-item-content {
         padding-left: #{16 * $level + 16}px !important;
 
@@ -22,8 +23,8 @@
   }
 
   .mat-icon {
-    display: flex;
     align-items: center;
+    display: flex;
   }
 
   .mat-list-item {
@@ -33,20 +34,21 @@
       border-left: solid 5px transparent;
       width: auto;
     }
+
     &.active {
       .mat-list-item-content {
-        border-left-color: $color-primary;
         background-color: rgba(0, 0, 0, 0.12);
+        border-left-color: $color-primary;
       }
     }
   }
 
   .submenu {
     .mat-nav-list {
-      padding-top: 0;
       max-height: 500px;
-      transition: all 0.2s;
       overflow: hidden;
+      padding-top: 0;
+      transition: all 0.2s;
     }
 
     &.collapsed {
@@ -62,7 +64,7 @@
     ::ng-deep .menu {
       .mat-list-item.active {
         .mat-list-item-content {
-          border-left-color: get($name, "primary");
+          border-left-color: get($name, 'primary');
         }
       }
     }
