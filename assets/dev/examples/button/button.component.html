@@ -1,0 +1,35 @@
+<button mat-raised-button (click)="toggleRequesting()">Global Progress</button>
+<button mat-raised-button [ngClass]="{loading: buttonLoading}" (click)="buttonLoading = !buttonLoading">Loading
+  Button</button>
+<button mat-raised-button color="primary" [ngClass]="{loading: buttonLoading}" [disabled]="buttonLoading"
+  (click)="buttonLoading = !buttonLoading">Loading</button>
+<button mat-fab color="primary" [ngClass]="{loading: buttonLoading}" (click)="buttonLoading = !buttonLoading">
+  <mat-icon>save</mat-icon>
+</button>
+<button mat-fab color="primary" [ngClass]="{loading: buttonLoading}" [disabled]="buttonLoading"
+  (click)="buttonLoading = !buttonLoading">
+  <mat-icon>save</mat-icon>
+</button>
+<button mat-mini-fab color="primary" [ngClass]="{loading: buttonLoading}" [disabled]="buttonLoading"
+  (click)="buttonLoading = !buttonLoading">
+  <mat-icon>save</mat-icon>
+</button>
+<button mat-icon-button color="primary" [ngClass]="{loading: buttonLoading}" [disabled]="buttonLoading"
+  (click)="buttonLoading = !buttonLoading">
+  <mat-icon>save</mat-icon>
+</button>
+<br />
+<br />
+<button mat-raised-button (click)="showInfo('Information')">Show Information</button>
+<button mat-raised-button (click)="showSuccess('Success')">Show Success</button>
+<button mat-raised-button (click)="showWarning('Warning')">Show Warning</button>
+<button mat-raised-button (click)="showError('Error')">Show Error</button>
+<br />
+<br />
+<button mat-raised-button (click)="alert()">Alert</button>
+<button mat-raised-button (click)="confirm()">Confirm</button>
+<button mat-raised-button (click)="delete()">Delete Confirm</button>
+<button mat-raised-button (click)="formDialog()">Form Dialog</button>
+<br />
+<br />
+<button mat-raised-button (click)="requestError()">Request with Error</button>

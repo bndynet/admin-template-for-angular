@@ -1,0 +1,72 @@
+<div>
+  <app-page-loading [loading]="initlizating"></app-page-loading>
+  <div class="row" *ngIf="!initlizating">
+    <div class="fill" [uiLoading]="loading" loadingText="Fetching data...">
+      <table class="border-radius">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let hero of heroes" [ngClass]="{active: activedHero && hero.id === activedHero.id}">
+            <td>{{hero.id}}</td>
+            <td>{{hero.name}}</td>
+            <td>
+              <a [routerLink]="hero.id">open in current page</a>
+            </td>
+            <td class="no-padding">
+              <button mat-icon-button class="btn-edit" (click)="gotoDetail(hero.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="btn-delete" (click)="remove(hero.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5">
+              <mat-paginator [length]="100"
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 25, 100]"
+                (page)="getHeroes($event)"
+                >
+              </mat-paginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="margin-left">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+
+  <app-content-sidebar #contentSidebar elementsToOpen=".btn-edit"
+    [title]="'#' + activedHero?.id + ' ' + activedHero?.name" [progressShown]="saving" [open]="activedHero"
+    (closed)="onClosedContentSidebar()">
+    <div class="padding">
+      <form *ngIf="activedHero" style="height: 2000px;">
+        <mat-form-field>
+          <input matInput name="name" placeholder="Name" [(ngModel)]="activedHero.name">
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="footer row">
+      <div class="fill text-block">
+        Here to place footer.
+      </div>
+      <div class="right">
+        <button mat-raised-button color="primary" [ngClass]="{loading: saving}" [disabled]="saving" (click)="save()">Save</button>
+      </div>
+    </div>
+  </app-content-sidebar>
+
+</div>
