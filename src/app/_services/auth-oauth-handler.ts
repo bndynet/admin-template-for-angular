@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as Cookies from 'js-cookie';
 import { environment } from 'src/environments/environment';
 import { AuthHandler, AuthType, UserInfo } from '../app-types';
 
@@ -20,6 +21,7 @@ export interface OAuthConfig {
   keyNameForRedirectUrl?: string;
   keyNameForAccessToken?: string;
   keyNameForTokenType?: string;
+  keyNameForExpiresIn?: string;
 }
 
 export interface TokenInfo {
@@ -58,6 +60,7 @@ export class AuthOAuthHandler implements AuthHandler {
         keyNameForState: 'state',
         keyNameForAccessToken: 'access_token',
         keyNameForTokenType: 'token_type',
+        keyNameForExpiresIn: 'expires_in',
       },
       ...environment.oauth,
     };
@@ -68,7 +71,7 @@ export class AuthOAuthHandler implements AuthHandler {
   }
 
   isAuthenticated(): Promise<boolean> {
-    return Promise.resolve(!!this.tokenInfo);
+    return Promise.resolve(!!Cookies.get(KEY_TOKEN) || !!this.tokenInfo);
   }
 
   checkAuth(): Promise<TokenInfo> {
@@ -94,6 +97,10 @@ export class AuthOAuthHandler implements AuthHandler {
   }
 
   getToken(): Promise<TokenInfo> {
+    if (Cookies.get(KEY_TOKEN)) {
+      this.tokenInfo.accessToken = Cookies.get(KEY_TOKEN);
+    }
+
     if (this.tokenInfo) {
       return Promise.resolve(this.tokenInfo);
     }
@@ -139,6 +146,7 @@ export class AuthOAuthHandler implements AuthHandler {
       const token: TokenInfo = {
         tokenType: responseJson[this.config.keyNameForTokenType],
         accessToken: responseJson[this.config.keyNameForAccessToken],
+        expiresIn: responseJson[this.config.keyNameForExpiresIn],
       };
       this.setToken(token);
       return token;
@@ -172,6 +180,7 @@ export class AuthOAuthHandler implements AuthHandler {
   }
 
   logout(): void {
+    Cookies.remove(KEY_TOKEN);
     sessionStorage.removeItem(KEY_TOKEN);
     this.tokenInfo = null;
     window.location.href = this.config.logoutUrl;
@@ -183,6 +192,12 @@ export class AuthOAuthHandler implements AuthHandler {
 
   setToken(token: TokenInfo): void {
     this.tokenInfo = token;
+    if (this.tokenInfo.expiresIn) {
+      const expireDate = new Date().getTime() + 1000 * this.tokenInfo.expiresIn;
+      Cookies.set(KEY_TOKEN, this.tokenInfo.accessToken, {
+        expires: expireDate,
+      });
+    }
   }
 
   private isAuthorizating(): boolean {
