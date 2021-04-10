@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
+import {
+  OAuthErrorEvent,
+  OAuthService,
+  UserInfo as OUser,
+} from 'angular-oauth2-oidc';
 import * as Cookies from 'js-cookie';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthHandler, AuthType, UserInfo } from '../app-types';
 
@@ -32,64 +39,70 @@ export interface TokenInfo {
 }
 
 const KEY_TOKEN = 'OAUTH_TOKEN';
-const KEY_HTTP_HEADER_CONTENTTYPE = 'Content-Type';
-const KEY_HTTP_HEADER_AUTHORIZATION = 'Authorization';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthOAuthHandler implements AuthHandler {
+  private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
+  public isAuthenticated$ = this.isAuthenticatedSubject$.asObservable();
+
+  private isDoneLoadingSubject$ = new ReplaySubject<boolean>();
+  public isDoneLoading$ = this.isDoneLoadingSubject$.asObservable();
+
+  private getUserInfoSubject$ = new BehaviorSubject<UserInfo>(null);
+  public getUserInfo$ = this.getUserInfoSubject$.asObservable();
+
   private tokenInfo: TokenInfo;
   private userInfo: UserInfo;
   private config: OAuthConfig;
+  private loadUserPromise: Promise<OUser>;
 
-  constructor() {
-    if (sessionStorage.getItem(KEY_TOKEN)) {
-      this.tokenInfo = JSON.parse(
-        sessionStorage.getItem(KEY_TOKEN)
-      ) as TokenInfo;
-    }
+  constructor(private oauthService: OAuthService) {}
 
-    this.config = {
-      ...{
-        keyNameForClientID: 'client_id',
-        keyNameForClientSecret: 'client_secret',
-        keyNameForRedirectUrl: 'redirect_uri',
-        keyNameForCode: 'code',
-        keyNameForScope: 'scope',
-        keyNameForState: 'state',
-        keyNameForAccessToken: 'access_token',
-        keyNameForTokenType: 'token_type',
-        keyNameForExpiresIn: 'expires_in',
-      },
-      ...environment.oauth,
-    };
+  init(): void {
+    this.oauthService.configure(environment.oauth);
+    this.oauthService.loadDiscoveryDocumentAndTryLogin();
+
+    // Print error log
+    this.oauthService.events.subscribe((event) => {
+      if (event instanceof OAuthErrorEvent) {
+        console.error('OAuthErrorEvent Object:', event);
+      } else {
+        console.warn('OAuthEvent Object:', event);
+      }
+    });
+
+    this.oauthService.events.subscribe((_) => {
+      this.isAuthenticatedSubject$.next(
+        this.oauthService.hasValidAccessToken()
+      );
+    });
+
+    // Automatically load user profile
+    this.oauthService.events
+      .pipe(filter((e) => e.type === 'token_received'))
+      .subscribe((_) => {
+        console.debug('loading user profile.......');
+        this.oauthService.loadUserProfile().then((user: OUser) => {
+          this.getUserInfoSubject$.next({
+            name: user['name'],
+          });
+        });
+      });
+
+    // this.oauthService.setupAutomaticSilentRefresh();
   }
 
   getAuthType(): AuthType {
-    return AuthType.CustomOAuth;
+    return AuthType.OAuth;
   }
 
   isAuthenticated(): Promise<boolean> {
-    return Promise.resolve(!!Cookies.get(KEY_TOKEN) || !!this.tokenInfo);
-  }
-
-  checkAuth(): Promise<TokenInfo> {
-    const error = this.getErrorFromUrl();
-    if (error) {
-      return Promise.reject(decodeURIComponent(error));
-    }
-
-    if (this.isAuthorizating()) {
-      return this.getToken();
-    }
-
-    if (!this.isAuthenticated()) {
-      window.location.href = this.getLoginUrl();
-      return Promise.reject(null);
-    }
-
-    return Promise.reject(null);
+    return Promise.resolve(
+      this.oauthService.hasValidIdToken() &&
+        this.oauthService.hasValidAccessToken()
+    );
   }
 
   setUser(user: UserInfo): void {
@@ -97,97 +110,52 @@ export class AuthOAuthHandler implements AuthHandler {
   }
 
   getToken(): Promise<TokenInfo> {
-    if (Cookies.get(KEY_TOKEN)) {
-      this.tokenInfo.accessToken = Cookies.get(KEY_TOKEN);
-    }
-
-    if (this.tokenInfo) {
-      return Promise.resolve(this.tokenInfo);
-    }
-
-    const search = this.getCurrentUrlSearch();
-
-    const accessToken = search[this.config.keyNameForAccessToken];
-    if (accessToken) {
-      this.tokenInfo = {
-        accessToken,
-        tokenType: 'bearer',
-      };
-      this.setToken(this.tokenInfo);
-      return Promise.resolve(this.tokenInfo);
-    }
-
-    const code = search[this.config.keyNameForCode];
-    const state = search[this.config.keyNameForState];
-
-    if (!code) {
-      return Promise.reject('No code response.');
-    }
-    if (state !== this.getState()) {
-      return Promise.reject('Invalid state.');
-    }
-
-    const requestBody = {};
-    requestBody[this.config.keyNameForClientID] = this.config.clientId;
-    requestBody[this.config.keyNameForClientSecret] = this.config.clientSecret;
-    requestBody[this.config.keyNameForCode] = code;
-    requestBody[this.config.keyNameForRedirectUrl] = this.config.redirectUrl;
-    requestBody[this.config.keyNameForState] = state;
-
-    if (this.config.scope) {
-      requestBody[this.config.keyNameForScope] = this.config.scope;
-    }
-
-    return fetch(this.config.accessTokenUrl, {
-      method: 'POST',
-      body: JSON.stringify(requestBody),
-    }).then((response: any) => {
-      const responseJson = response.json();
-      const token: TokenInfo = {
-        tokenType: responseJson[this.config.keyNameForTokenType],
-        accessToken: responseJson[this.config.keyNameForAccessToken],
-        expiresIn: responseJson[this.config.keyNameForExpiresIn],
-      };
-      this.setToken(token);
-      return token;
+    return Promise.resolve({
+      accessToken: this.oauthService.getAccessToken(),
     });
   }
 
   getUserInfo(): Promise<UserInfo> {
-    if (this.userInfo) {
-      return Promise.resolve(this.userInfo);
+    let user: UserInfo = null;
+    const claims = this.oauthService.getIdentityClaims();
+    if (claims) {
+      user = {
+        name: claims['name'],
+      };
+    } else {
+      if (!this.loadUserPromise && this.oauthService.hasValidAccessToken()) {
+        this.loadUserPromise = this.oauthService.loadUserProfile();
+      }
+
+      if (this.loadUserPromise) {
+        return this.loadUserPromise.then((userInfo: OUser) => {
+          debugger;
+          return {
+            name: userInfo['name'],
+          };
+        });
+      }
     }
-
-    const headers: { [key: string]: string } = {};
-
-    headers[KEY_HTTP_HEADER_CONTENTTYPE] = 'application/json';
-    headers[
-      KEY_HTTP_HEADER_AUTHORIZATION
-    ] = `${this.tokenInfo.tokenType} ${this.tokenInfo.accessToken}`;
-
-    return fetch(this.config.userProfileUrl, {
-      method: 'GET',
-      headers,
-    }).then((response) => {
-      // TODO: here to convert user info
-      const json: any = response.json();
-      return { ...json, avatar: json.avatar_url };
-    });
+    return Promise.resolve(user);
   }
 
-  login(username: string, password: string): Promise<UserInfo> {
-    return Promise.reject('TODO');
+  login(): void {
+    this.oauthService.initLoginFlow();
   }
 
   logout(): void {
-    Cookies.remove(KEY_TOKEN);
-    sessionStorage.removeItem(KEY_TOKEN);
-    this.tokenInfo = null;
-    window.location.href = this.config.logoutUrl;
+    this.oauthService.logOut();
   }
 
   getTokenInfo(): Promise<TokenInfo> {
-    return Promise.resolve(JSON.parse(sessionStorage.getItem(KEY_TOKEN)));
+    let token: TokenInfo = null;
+    if (this.oauthService.getAccessToken()) {
+      token = {
+        accessToken: this.oauthService.getAccessToken(),
+        expiresIn: this.oauthService.getAccessTokenExpiration(),
+      };
+    }
+    return Promise.resolve(token);
   }
 
   setToken(token: TokenInfo): void {
@@ -198,52 +166,5 @@ export class AuthOAuthHandler implements AuthHandler {
         expires: expireDate,
       });
     }
-  }
-
-  private isAuthorizating(): boolean {
-    return (
-      !!this.getCurrentUrlSearch()[this.config.keyNameForCode] ||
-      !!this.getCurrentUrlSearch()[this.config.keyNameForAccessToken]
-    );
-  }
-
-  private getErrorFromUrl(): string {
-    return (this.getCurrentUrlSearch() as any).error;
-  }
-
-  private getState(): string {
-    return sessionStorage.getItem(this.config.keyNameForState);
-  }
-
-  private getLoginUrl(): string {
-    const state = '12311';
-    sessionStorage.setItem(this.config.keyNameForState, state);
-    let url = `${this.config.authorizationUrl}`;
-    url += `${this.config.authorizationUrl.indexOf('?') ? '&' : '?'}${
-      this.config.keyNameForClientID
-    }=${this.config.clientId}`;
-    url += `&${this.config.keyNameForClientSecret}=${this.config.clientSecret}`;
-    url += `&${this.config.keyNameForRedirectUrl}=${this.config.redirectUrl}`;
-    url += `&${this.config.keyNameForState}=${state}`;
-
-    if (this.config.scope) {
-      url += `&${this.config.keyNameForScope}=${this.config.scope}`;
-    }
-    return url;
-  }
-
-  private getCurrentUrlSearch(): object {
-    const locationSearch = window.location.search;
-    const search = {};
-    if (locationSearch && locationSearch.startsWith('?')) {
-      locationSearch
-        .substr(1)
-        .split('&')
-        .map((kv) => {
-          const arr = kv.split('=');
-          search[arr[0]] = arr.length > 1 ? arr[1] : '';
-        });
-    }
-    return search;
   }
 }

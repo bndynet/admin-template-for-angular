@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { TokenInfo } from './_services/auth-oauth-handler';
 
 export const KEY_TRACKING_ID = 'AppTrackingID';
@@ -17,18 +18,19 @@ export interface ThemeEntity {
 }
 
 export interface AuthHandler {
+  init: () => void;
+  getUserInfo$: Observable<UserInfo>;
   getAuthType: () => AuthType;
   getUserInfo: () => Promise<UserInfo>;
   getTokenInfo: () => Promise<TokenInfo>;
   isAuthenticated: () => Promise<boolean>;
-  login: (username: string, password: string) => Promise<UserInfo>;
+  login: (username?: string, password?: string) => Promise<UserInfo> | void;
   logout: () => Promise<void> | void;
 }
 
 export enum AuthType {
   Local,
-  Keycloak,
-  CustomOAuth,
+  OAuth,
 }
 
 // TODO: define your roles

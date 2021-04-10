@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageErrorComponent } from '../shared';
+import { AuthGuard } from '../_services/auth-guard.service';
 import { AdminComponent } from './admin.component';
 import { WelcomeComponent } from './hello/welcome/welcome.component';
 
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path: 'hello', component: WelcomeComponent },
       { path: '', redirectTo: 'dev/get-started', pathMatch: 'full' },
     ],
+    canActivate: [AuthGuard],
   },
 ];
 

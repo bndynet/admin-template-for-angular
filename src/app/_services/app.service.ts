@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Injector } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { stringUtils } from '@bndynet/utils';
 import { interval, Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
@@ -25,7 +24,6 @@ export class AppService {
 
   constructor(
     private injector: Injector,
-    private router: Router,
     private http: HttpClient,
     private titleService: Title,
     public auth: AuthService,
@@ -47,6 +45,10 @@ export class AppService {
     if (baseElements && baseElements.length > 0) {
       this.baseUrl = baseElements[0].href;
     }
+  }
+
+  init(): void {
+    this.auth.init();
   }
 
   getHighlightService(): HighlightService {
@@ -78,12 +80,13 @@ export class AppService {
     const dialog = this.dialog.remain(
       3,
       'Log out',
-      'You are logging out all applications. <br /> This will take some seconds. Please wait...'
+      'You are logging out this applications. <br /> This will take some seconds. Please wait...'
     );
     setTimeout(() => {
-      dialog.close();
-      this.router.navigate(['/logout']);
       this.auth.logout();
+      setTimeout(() => {
+        dialog.close();
+      }, 500);
     }, 3000);
   }
 }

@@ -1,15 +1,36 @@
+import { AuthConfig } from 'angular-oauth2-oidc';
 import { AuthType } from 'src/app/app-types';
 
 export const environment = {
   production: false,
-  authType: AuthType.CustomOAuth,
+  authType: AuthType.OAuth,
   oauth: {
-    clientId: '188c0da703',
-    clientSecret: 'f3dd317369ae622113f0',
-    authorizationUrl:
-      'http://cloud.bndy.net/service-oauth/authorize?target=github',
-    redirectUrl: 'http://localhost:8080/auth/callback',
-    userProfileUrl: 'https://api.github.com/user',
-    logoutUrl: 'https://github.com/logout',
-  },
+    // Url of the Identity Provider
+    issuer: 'https://idsvr4.azurewebsites.net',
+
+    // URL of the SPA to redirect the user to after login
+    redirectUri: window.location.origin, // + '/index.html',
+
+    // The SPA's id. The SPA is registerd with this id at the auth-server
+    // clientId: 'server.code',
+    clientId: 'spa',
+
+    // Just needed if your auth server demands a secret. In general, this
+    // is a sign that the auth server is not configured with SPAs in mind
+    // and it might not enforce further best practices vital for security
+    // such applications.
+    // dummyClientSecret: 'secret',
+
+    responseType: 'code',
+
+    // set the scope for the permissions the client should request
+    // The first four are defined by OIDC.
+    // Important: Request offline_access to get a refresh token
+    // The api scope is a usecase specific one
+    scope: 'openid profile email offline_access api',
+
+    showDebugInformation: true,
+
+    timeoutFactor: 0.01,
+  } as AuthConfig,
 };

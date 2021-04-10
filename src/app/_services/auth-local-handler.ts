@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { getLocalUrl } from 'src/utils';
 import { AuthHandler, AuthType, UserInfo } from '../app-types';
@@ -15,12 +16,17 @@ export class AuthLocalHandler implements AuthHandler {
   private tokenInfo: TokenInfo;
   private userInfo: UserInfo;
 
+  private getUserInfoSubject$ = new BehaviorSubject<UserInfo>(null);
+  public getUserInfo$ = this.getUserInfoSubject$.asObservable();
+
   constructor(private http: HttpClient) {
     if (sessionStorage.getItem(KEY_TOKEN) && sessionStorage.getItem(KEY_USER)) {
       this.tokenInfo = JSON.parse(sessionStorage.getItem(KEY_TOKEN));
       this.userInfo = JSON.parse(sessionStorage.getItem(KEY_USER));
     }
   }
+
+  init(): void {}
 
   getAuthType(): AuthType {
     return AuthType.Local;

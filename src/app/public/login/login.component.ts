@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserInfo } from 'src/app/app-types';
+import { AuthType, UserInfo } from 'src/app/app-types';
 import { AppService } from 'src/app/_services';
 
 @Component({
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public alertMessage: string;
 
   constructor(private router: Router, private app: AppService) {
-    if (this.app.auth) {
+    if (this.app.auth && this.app.auth.getAuthType() === AuthType.Local) {
       this.app.auth.isAuthenticated().subscribe((val) => {
         if (val) {
           this.router.navigate(['/admin']);
@@ -43,21 +43,24 @@ export class LoginComponent implements OnInit, OnDestroy {
     const username = this.form.get('name').value;
     const password = this.form.get('password').value;
     const authHandler = this.app.auth.authHandler;
+    const loginResult = authHandler.login(username, password);
 
     this.logging = true;
     this.alertMessage = '';
-    authHandler
-      .login(username, password)
-      .then((u: UserInfo) => {
-        // authHandler.setToken({ accessToken: u.accessToken });
-        // authHandler.setUser(u);
-        this.router.navigate(['/admin']);
-      })
-      .catch((error) => {
-        this.alertMessage = error.message;
-      })
-      .finally(() => {
-        this.logging = false;
-      });
+
+    if (loginResult) {
+      loginResult
+        .then((u: UserInfo) => {
+          // authHandler.setToken({ accessToken: u.accessToken });
+          // authHandler.setUser(u);
+          this.router.navigate(['/admin']);
+        })
+        .catch((error) => {
+          this.alertMessage = error.message;
+        })
+        .finally(() => {
+          this.logging = false;
+        });
+    }
   }
 }

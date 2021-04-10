@@ -1,0 +1,26 @@
+<mat-card>
+  <img mat-card-image src="assets/logo.png">
+  <mat-card-content>
+    <h1 *ngIf="userInfo">
+      <span class="swing">
+        Hello {{userInfo.name}}!
+      </span>
+    </h1>
+  </mat-card-content>
+
+  <mat-card-actions align="center">
+    <div *ngIf="!userInfo">
+      <button mat-raised-button color="primary" (click)="login()" [disabled]="isLoggingIn">
+        <span>{{ 'Log in with OpenID' | translate }}</span>
+        <span></span>
+      </button>
+      <button mat-raised-button color="primary" (click)="loginWithUsername()">
+        {{ 'Log in with Account' | translate }}
+      </button>
+    </div>
+    <br />
+    <button mat-raised-button color="accent" (click)="gotoAdmin()">
+      {{ 'Go to Admin Panel' | translate }}
+    </button>
+  </mat-card-actions>
+</mat-card>

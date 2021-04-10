@@ -3,7 +3,6 @@ import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthHandler, AuthType, MenuEntity, UserInfo } from '../app-types';
-import { AuthKeycloakHandler } from './auth-keycloak-handler';
 import { AuthLocalHandler } from './auth-local-handler';
 import { AuthOAuthHandler, TokenInfo } from './auth-oauth-handler';
 
@@ -14,11 +13,14 @@ export class AuthService {
   public authHandler: AuthHandler;
 
   constructor(
-    private authKeycloak: AuthKeycloakHandler,
     private authLocal: AuthLocalHandler,
     private authOAuth: AuthOAuthHandler
   ) {
     this.setAuthType();
+  }
+
+  init(): void {
+    this.authHandler.init();
   }
 
   setAuthType(authType?: AuthType) {
@@ -31,14 +33,14 @@ export class AuthService {
         this.authHandler = this.authLocal;
         break;
 
-      case AuthType.Keycloak:
-        this.authHandler = this.authKeycloak;
-        break;
-
-      case AuthType.CustomOAuth:
+      case AuthType.OAuth:
         this.authHandler = this.authOAuth;
         break;
     }
+  }
+
+  getAuthType(): AuthType {
+    return environment.authType;
   }
 
   isAuthenticated(): Observable<boolean> {
@@ -54,7 +56,7 @@ export class AuthService {
   }
 
   getUser(): Observable<UserInfo> {
-    return from(this.authHandler.getUserInfo());
+    return this.authHandler.getUserInfo$;
   }
 
   getMenu(menu: MenuEntity[]): Observable<MenuEntity[]> {
