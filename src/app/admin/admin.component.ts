@@ -44,18 +44,13 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.menuLoading = true;
-    this.app.auth.getMenu(menus).subscribe(
-      (userMenu: MenuEntity[]) => {
-        this.menus = userMenu;
-        if (this.menus && this.menus.length > 0) {
-          this.subMenus = this.menus[0].children;
-        }
-      },
-      () => {},
-      () => {
-        this.menuLoading = false;
+    this.app.auth.getMenu(menus).subscribe((userMenu: MenuEntity[]) => {
+      this.menus = userMenu;
+      if (this.menus && this.menus.length > 0) {
+        this.subMenus = this.menus[0].children;
       }
-    );
+      this.menuLoading = false;
+    });
 
     this.events.contentSidebarToggleEvent
       .pipe(delay(100))

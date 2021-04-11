@@ -18,13 +18,17 @@ export interface ThemeEntity {
 }
 
 export interface AuthHandler {
-  init: () => void;
+  isAuthenticated$: Observable<boolean>;
+  isDoneAuth$: Observable<boolean>;
   getUserInfo$: Observable<UserInfo>;
+  init: () => void;
   getAuthType: () => AuthType;
-  getUserInfo: () => Promise<UserInfo>;
   getTokenInfo: () => Promise<TokenInfo>;
-  isAuthenticated: () => Promise<boolean>;
-  login: (username?: string, password?: string) => Promise<UserInfo> | void;
+  login: (
+    targetUrl?: string,
+    username?: string,
+    password?: string
+  ) => Promise<UserInfo> | void;
   logout: () => Promise<void> | void;
 }
 

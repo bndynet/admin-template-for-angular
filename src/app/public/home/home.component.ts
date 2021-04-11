@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Subscription } from 'rxjs';
 import { UserInfo } from 'src/app/app-types';
@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private app: AppService,
     private oauthService: OAuthService
   ) {}
@@ -27,6 +28,32 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (locationSearch.includes('code=')) {
       this.isLoggingIn = true;
     }
+
+    this.subs.add(
+      this.route.queryParamMap.subscribe((map: ParamMap) => {
+        if (map.has('code')) {
+          this.isLoggingIn = true;
+        }
+
+        // e.x. http://127.0.0.1:9000/?error=access_denied
+        if (map.has('error')) {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              title: map.get('error'),
+              description: map.keys
+                .map((key) => `${key}: ` + map.getAll(key).join(','))
+                .join('<br />'),
+            },
+          });
+        }
+      })
+    );
+
+    this.subs.add(
+      this.app.auth.isDoneAuth().subscribe((done: boolean) => {
+        this.isLoggingIn = !done;
+      })
+    );
 
     this.subs.add(
       this.app.auth.getUser().subscribe((user) => {

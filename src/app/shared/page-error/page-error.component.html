@@ -3,7 +3,5 @@
   {{code}}
   {{title || 'Error'}}
   <br />
-  <small class="text-muted">
-    {{description}}
-  </small>
+  <small class="text-muted" [innerHTML]="description"></small>
 </h1>

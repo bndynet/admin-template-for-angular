@@ -2,32 +2,47 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
-  Router,
   RouterStateSnapshot,
-  UrlTree,
 } from '@angular/router';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { Observable } from 'rxjs';
+import { filter, switchMap, tap } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router, private oauthService: OAuthService) {}
+  constructor(private authService: AuthService) {}
 
   canActivate(
-    route: ActivatedRouteSnapshot,
+    _route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ):
-    | boolean
-    | UrlTree
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree> {
-    if (this.oauthService.hasValidIdToken()) {
-      return true;
-    }
+  ): Observable<boolean> {
+    return this.authService.canActivateProtectedRoutes$.pipe(
+      tap((x) => {
+        console.log(`You tried to go to ${state.url} and this guard said ${x}`);
+      })
+    );
+  }
+}
 
-    this.router.navigate(['/']);
-    return false;
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuardWithForceLogin implements CanActivate {
+  constructor(private authService: AuthService) {}
+
+  canActivate(
+    _route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> {
+    return this.authService.isDoneAuth().pipe(
+      filter((isDone) => isDone),
+      switchMap((_) => this.authService.isAuthenticated()),
+      tap(
+        (isAuthenticated) =>
+          isAuthenticated || this.authService.login(state.url)
+      )
+    );
   }
 }

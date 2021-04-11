@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   OAuthErrorEvent,
   OAuthService,
   UserInfo as OUser,
 } from 'angular-oauth2-oidc';
-import * as Cookies from 'js-cookie';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -38,8 +38,6 @@ export interface TokenInfo {
   expiresIn?: number;
 }
 
-const KEY_TOKEN = 'OAUTH_TOKEN';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -47,22 +45,27 @@ export class AuthOAuthHandler implements AuthHandler {
   private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject$.asObservable();
 
-  private isDoneLoadingSubject$ = new ReplaySubject<boolean>();
-  public isDoneLoading$ = this.isDoneLoadingSubject$.asObservable();
+  private isDoneAuthSubject$ = new ReplaySubject<boolean>();
+  public isDoneAuth$ = this.isDoneAuthSubject$.asObservable();
 
   private getUserInfoSubject$ = new BehaviorSubject<UserInfo>(null);
   public getUserInfo$ = this.getUserInfoSubject$.asObservable();
 
-  private tokenInfo: TokenInfo;
-  private userInfo: UserInfo;
-  private config: OAuthConfig;
-  private loadUserPromise: Promise<OUser>;
-
-  constructor(private oauthService: OAuthService) {}
+  constructor(private router: Router, private oauthService: OAuthService) {}
 
   init(): void {
     this.oauthService.configure(environment.oauth);
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    this.oauthService
+      .loadDiscoveryDocument()
+      .then(() => this.oauthService.tryLogin())
+      .then(() => {
+        // https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/blob/66ae28bab9/src/app/core/auth.service.ts
+        if (this.oauthService.hasValidAccessToken()) {
+          return Promise.resolve();
+        }
+      })
+      .then(() => this.isDoneAuthSubject$.next(true))
+      .catch(() => this.isDoneAuthSubject$.next(true));
 
     // Print error log
     this.oauthService.events.subscribe((event) => {
@@ -83,8 +86,8 @@ export class AuthOAuthHandler implements AuthHandler {
     this.oauthService.events
       .pipe(filter((e) => e.type === 'token_received'))
       .subscribe((_) => {
-        console.debug('loading user profile.......');
         this.oauthService.loadUserProfile().then((user: OUser) => {
+          // TODO: convert user info
           this.getUserInfoSubject$.next({
             name: user['name'],
           });
@@ -105,42 +108,14 @@ export class AuthOAuthHandler implements AuthHandler {
     );
   }
 
-  setUser(user: UserInfo): void {
-    this.userInfo = user;
-  }
-
   getToken(): Promise<TokenInfo> {
     return Promise.resolve({
       accessToken: this.oauthService.getAccessToken(),
     });
   }
 
-  getUserInfo(): Promise<UserInfo> {
-    let user: UserInfo = null;
-    const claims = this.oauthService.getIdentityClaims();
-    if (claims) {
-      user = {
-        name: claims['name'],
-      };
-    } else {
-      if (!this.loadUserPromise && this.oauthService.hasValidAccessToken()) {
-        this.loadUserPromise = this.oauthService.loadUserProfile();
-      }
-
-      if (this.loadUserPromise) {
-        return this.loadUserPromise.then((userInfo: OUser) => {
-          debugger;
-          return {
-            name: userInfo['name'],
-          };
-        });
-      }
-    }
-    return Promise.resolve(user);
-  }
-
-  login(): void {
-    this.oauthService.initLoginFlow();
+  login(targetUrl?: string): void {
+    this.oauthService.initLoginFlow(targetUrl || this.router.url);
   }
 
   logout(): void {
@@ -156,15 +131,5 @@ export class AuthOAuthHandler implements AuthHandler {
       };
     }
     return Promise.resolve(token);
-  }
-
-  setToken(token: TokenInfo): void {
-    this.tokenInfo = token;
-    if (this.tokenInfo.expiresIn) {
-      const expireDate = new Date().getTime() + 1000 * this.tokenInfo.expiresIn;
-      Cookies.set(KEY_TOKEN, this.tokenInfo.accessToken, {
-        expires: expireDate,
-      });
-    }
   }
 }

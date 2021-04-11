@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { getLocalUrl } from 'src/utils';
 import { AuthHandler, AuthType, UserInfo } from '../app-types';
@@ -19,6 +19,12 @@ export class AuthLocalHandler implements AuthHandler {
   private getUserInfoSubject$ = new BehaviorSubject<UserInfo>(null);
   public getUserInfo$ = this.getUserInfoSubject$.asObservable();
 
+  private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
+  public isAuthenticated$ = this.isAuthenticatedSubject$.asObservable();
+
+  private isDoneAuthSubject$ = new ReplaySubject<boolean>();
+  public isDoneAuth$ = this.isDoneAuthSubject$.asObservable();
+
   constructor(private http: HttpClient) {
     if (sessionStorage.getItem(KEY_TOKEN) && sessionStorage.getItem(KEY_USER)) {
       this.tokenInfo = JSON.parse(sessionStorage.getItem(KEY_TOKEN));
@@ -32,19 +38,15 @@ export class AuthLocalHandler implements AuthHandler {
     return AuthType.Local;
   }
 
-  getUserInfo(): Promise<UserInfo> {
-    return Promise.resolve(this.userInfo);
-  }
-
   getTokenInfo(): Promise<TokenInfo> {
     return Promise.resolve(this.tokenInfo);
   }
 
-  isAuthenticated(): Promise<boolean> {
-    return Promise.resolve(!!this.tokenInfo);
-  }
-
-  login(username: string, password: string): Promise<UserInfo> {
+  login(
+    targetUrl: string,
+    username: string,
+    password: string
+  ): Promise<UserInfo> {
     // TODO: call your login url with provided username and password
     return this.http
       .get(getLocalUrl(`/assets/user.json`))
@@ -62,6 +64,9 @@ export class AuthLocalHandler implements AuthHandler {
           };
           sessionStorage.setItem(KEY_TOKEN, JSON.stringify(this.tokenInfo));
           sessionStorage.setItem(KEY_USER, JSON.stringify(this.userInfo));
+          this.isAuthenticatedSubject$.next(true);
+          this.isDoneAuthSubject$.next(true);
+          this.getUserInfoSubject$.next(this.userInfo);
           return this.userInfo;
         })
       )

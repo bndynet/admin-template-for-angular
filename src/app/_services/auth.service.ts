@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthHandler, AuthType, MenuEntity, UserInfo } from '../app-types';
@@ -11,6 +11,8 @@ import { AuthOAuthHandler, TokenInfo } from './auth-oauth-handler';
 })
 export class AuthService {
   public authHandler: AuthHandler;
+  public canActivateProtectedRoutes$: Observable<boolean>;
+  isAuthenticated$: Observable<boolean>;
 
   constructor(
     private authLocal: AuthLocalHandler,
@@ -21,6 +23,14 @@ export class AuthService {
 
   init(): void {
     this.authHandler.init();
+  }
+
+  isAuthenticated(): Observable<boolean> {
+    return this.authHandler.isAuthenticated$;
+  }
+
+  isDoneAuth(): Observable<boolean> {
+    return this.authHandler.isDoneAuth$;
   }
 
   setAuthType(authType?: AuthType) {
@@ -37,14 +47,17 @@ export class AuthService {
         this.authHandler = this.authOAuth;
         break;
     }
+
+    this.isAuthenticated$ = this.authHandler.isAuthenticated$;
+
+    this.canActivateProtectedRoutes$ = combineLatest([
+      this.authHandler.isAuthenticated$,
+      this.authHandler.isDoneAuth$,
+    ]).pipe(map((values) => values.every((b) => b)));
   }
 
   getAuthType(): AuthType {
     return environment.authType;
-  }
-
-  isAuthenticated(): Observable<boolean> {
-    return from(this.authHandler.isAuthenticated());
   }
 
   getTokenInfo(): Promise<TokenInfo> {
@@ -98,6 +111,10 @@ export class AuthService {
         })
       )
     );
+  }
+
+  login(targetUrl?: string): void {
+    this.authHandler.login(targetUrl);
   }
 
   logout(): void {
