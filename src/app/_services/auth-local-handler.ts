@@ -95,7 +95,6 @@ export class AuthLocalHandler implements AuthHandler {
   }
 
   logout(): void {
-    // TODO: use corrent url to log out
     this.userInfo = null;
     this.tokenInfo = null;
     this.storage.removeItem(KEY_TOKEN);
@@ -103,16 +102,9 @@ export class AuthLocalHandler implements AuthHandler {
     this.isAuthenticated = false;
     this.isAuthenticatedSubject$.next(this.isAuthenticated);
 
+    // TODO: use corrent url to log out
     this.http
       .get(getLocalUrl('/assets/user.json'))
-      .pipe(
-        tap(() => {
-          this.router.navigate(['/logout']);
-        }),
-        map(() => {
-          return;
-        })
-      )
-      .toPromise();
+      .pipe(tap(() => this.router.navigate(['/logout'])));
   }
 }
