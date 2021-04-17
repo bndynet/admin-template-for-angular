@@ -9,6 +9,7 @@ import { TokenInfo } from './auth-oauth-handler';
 
 const KEY_USER = 'app_user';
 const KEY_TOKEN = 'app_token';
+const KEY_BACK_URL = 'app_back_url';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ export class AuthLocalHandler implements AuthHandler {
   private tokenInfo: TokenInfo;
   private userInfo: UserInfo;
   private isAuthenticated: boolean;
+  private storage = localStorage;
 
   private getUserInfoSubject$ = new BehaviorSubject<UserInfo>(null);
   public getUserInfo$ = this.getUserInfoSubject$.asObservable();
@@ -28,10 +30,14 @@ export class AuthLocalHandler implements AuthHandler {
   public isDoneAuth$ = this.isDoneAuthSubject$.asObservable();
 
   constructor(private router: Router, private http: HttpClient) {
-    if (sessionStorage.getItem(KEY_TOKEN) && sessionStorage.getItem(KEY_USER)) {
-      this.tokenInfo = JSON.parse(sessionStorage.getItem(KEY_TOKEN));
-      this.userInfo = JSON.parse(sessionStorage.getItem(KEY_USER));
+    if (this.storage.getItem(KEY_TOKEN) && this.storage.getItem(KEY_USER)) {
+      this.tokenInfo = JSON.parse(this.storage.getItem(KEY_TOKEN));
+      this.userInfo = JSON.parse(this.storage.getItem(KEY_USER));
+      this.isAuthenticated = true;
     }
+    this.isAuthenticatedSubject$.next(this.isAuthenticated);
+    this.getUserInfoSubject$.next(this.userInfo);
+    this.isDoneAuthSubject$.next(true);
   }
 
   init(): void {}
@@ -49,6 +55,14 @@ export class AuthLocalHandler implements AuthHandler {
     username: string,
     password: string
   ): Observable<UserInfo> | void {
+    if (!username && !password) {
+      if (targetUrl) {
+        this.storage.setItem(KEY_BACK_URL, targetUrl);
+      }
+      this.router.navigate(['/login']);
+      return;
+    }
+
     return this.http.get(getLocalUrl(`/assets/user.json`)).pipe(
       map((response) => {
         // TODO: convert to UserInfo from backend response
@@ -61,14 +75,20 @@ export class AuthLocalHandler implements AuthHandler {
         this.tokenInfo = {
           accessToken: password,
         };
-        sessionStorage.setItem(KEY_TOKEN, JSON.stringify(this.tokenInfo));
-        sessionStorage.setItem(KEY_USER, JSON.stringify(this.userInfo));
+        this.storage.setItem(KEY_TOKEN, JSON.stringify(this.tokenInfo));
+        this.storage.setItem(KEY_USER, JSON.stringify(this.userInfo));
 
         this.isAuthenticated = true;
         this.isAuthenticatedSubject$.next(this.isAuthenticated);
         this.isDoneAuthSubject$.next(true);
         this.getUserInfoSubject$.next(this.userInfo);
-        this.router.navigate([targetUrl || '/admin']);
+
+        if (this.storage.getItem(KEY_BACK_URL) || targetUrl) {
+          this.router.navigateByUrl(
+            this.storage.getItem(KEY_BACK_URL) || targetUrl
+          );
+          this.storage.removeItem(KEY_BACK_URL);
+        }
         return this.userInfo;
       })
     );
@@ -78,8 +98,11 @@ export class AuthLocalHandler implements AuthHandler {
     // TODO: use corrent url to log out
     this.userInfo = null;
     this.tokenInfo = null;
+    this.storage.removeItem(KEY_TOKEN);
+    this.storage.removeItem(KEY_USER);
     this.isAuthenticated = false;
     this.isAuthenticatedSubject$.next(this.isAuthenticated);
+
     this.http
       .get(getLocalUrl('/assets/user.json'))
       .pipe(

@@ -39,10 +39,12 @@ export class AuthGuardWithForceLogin implements CanActivate {
     return this.authService.isDoneAuth().pipe(
       filter((isDone) => isDone),
       switchMap((_) => this.authService.isAuthenticated()),
-      tap(
-        (isAuthenticated) =>
-          isAuthenticated || this.authService.login(state.url)
-      )
+      tap((isAuthenticated) => {
+        console.log(
+          `You tried to go to ${state.url} and this guard said ${isAuthenticated}`
+        );
+        isAuthenticated || this.authService.login(state.url);
+      })
     );
   }
 }
