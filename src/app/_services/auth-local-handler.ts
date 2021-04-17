@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { getLocalUrl } from 'src/utils';
 import { AuthHandler, AuthType, UserInfo } from '../app-types';
 import { TokenInfo } from './auth-oauth-handler';
@@ -15,6 +16,7 @@ const KEY_TOKEN = 'app_token';
 export class AuthLocalHandler implements AuthHandler {
   private tokenInfo: TokenInfo;
   private userInfo: UserInfo;
+  private isAuthenticated: boolean;
 
   private getUserInfoSubject$ = new BehaviorSubject<UserInfo>(null);
   public getUserInfo$ = this.getUserInfoSubject$.asObservable();
@@ -25,7 +27,7 @@ export class AuthLocalHandler implements AuthHandler {
   private isDoneAuthSubject$ = new ReplaySubject<boolean>();
   public isDoneAuth$ = this.isDoneAuthSubject$.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient) {
     if (sessionStorage.getItem(KEY_TOKEN) && sessionStorage.getItem(KEY_USER)) {
       this.tokenInfo = JSON.parse(sessionStorage.getItem(KEY_TOKEN));
       this.userInfo = JSON.parse(sessionStorage.getItem(KEY_USER));
@@ -46,40 +48,44 @@ export class AuthLocalHandler implements AuthHandler {
     targetUrl: string,
     username: string,
     password: string
-  ): Promise<UserInfo> {
-    // TODO: call your login url with provided username and password
-    return this.http
-      .get(getLocalUrl(`/assets/user.json`))
-      .pipe(
-        map((response) => {
-          // TODO: convert to UserInfo from backend response
-          this.userInfo = (username
-            ? {
-                ...response,
-                ...{ name: username, accessToken: password },
-              }
-            : response) as UserInfo;
-          this.tokenInfo = {
-            accessToken: password,
-          };
-          sessionStorage.setItem(KEY_TOKEN, JSON.stringify(this.tokenInfo));
-          sessionStorage.setItem(KEY_USER, JSON.stringify(this.userInfo));
-          this.isAuthenticatedSubject$.next(true);
-          this.isDoneAuthSubject$.next(true);
-          this.getUserInfoSubject$.next(this.userInfo);
-          return this.userInfo;
-        })
-      )
-      .toPromise();
+  ): Observable<UserInfo> | void {
+    return this.http.get(getLocalUrl(`/assets/user.json`)).pipe(
+      map((response) => {
+        // TODO: convert to UserInfo from backend response
+        this.userInfo = (username
+          ? {
+              ...response,
+              ...{ name: username, accessToken: password },
+            }
+          : response) as UserInfo;
+        this.tokenInfo = {
+          accessToken: password,
+        };
+        sessionStorage.setItem(KEY_TOKEN, JSON.stringify(this.tokenInfo));
+        sessionStorage.setItem(KEY_USER, JSON.stringify(this.userInfo));
+
+        this.isAuthenticated = true;
+        this.isAuthenticatedSubject$.next(this.isAuthenticated);
+        this.isDoneAuthSubject$.next(true);
+        this.getUserInfoSubject$.next(this.userInfo);
+        this.router.navigate([targetUrl || '/admin']);
+        return this.userInfo;
+      })
+    );
   }
 
-  logout(): void | Promise<void> {
+  logout(): void {
     // TODO: use corrent url to log out
     this.userInfo = null;
     this.tokenInfo = null;
-    return this.http
+    this.isAuthenticated = false;
+    this.isAuthenticatedSubject$.next(this.isAuthenticated);
+    this.http
       .get(getLocalUrl('/assets/user.json'))
       .pipe(
+        tap(() => {
+          this.router.navigate(['/logout']);
+        }),
         map(() => {
           return;
         })

@@ -28,7 +28,7 @@ export interface AuthHandler {
     targetUrl?: string,
     username?: string,
     password?: string
-  ) => Promise<UserInfo> | void;
+  ) => Observable<UserInfo> | void;
   logout: () => Promise<void> | void;
 }
 

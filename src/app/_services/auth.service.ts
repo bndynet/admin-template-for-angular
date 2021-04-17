@@ -113,8 +113,12 @@ export class AuthService {
     );
   }
 
-  login(targetUrl?: string): void {
-    this.authHandler.login(targetUrl);
+  login(
+    targetUrl?: string,
+    username?: string,
+    password?: string
+  ): void | Observable<UserInfo> {
+    return this.authHandler.login(targetUrl, username, password);
   }
 
   logout(): void {
