@@ -59,3 +59,22 @@ this.theme.themeChanged.subscribe((t) => {
     }
   });
 ```
+
+## ELK
+
+### Logstash Configuration Example
+
+```
+input {
+  http {
+    response_headers => {
+      "Access-Control-Allow-Origin" => "*"
+      "Access-Control-Allow-Headers" => "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+      "Access-Control-Allow-Methods" => "*"
+      "Access-Control-Allow-Credentials" => "*"
+    }
+    host => "10.10.10.10"
+    port => 8080
+  }
+}
+```
