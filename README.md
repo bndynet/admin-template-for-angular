@@ -62,19 +62,40 @@ this.theme.themeChanged.subscribe((t) => {
 
 ## ELK
 
+About how to install ELK, please refer [](https://www.notion.so/bndynet/ELK-2503f149b5074c079d372ec41f8346cb)
+
+You can open [local ELK](http://127.0.0.1:5601/app/management/kibana/indexPatterns) Kibana UI, then see the index starts with **http**.
+
 ### Logstash Configuration Example
 
 ```
 input {
   http {
+    host => "0.0.0.0"
+    port => 5044
+    type => http
     response_headers => {
       "Access-Control-Allow-Origin" => "*"
-      "Access-Control-Allow-Headers" => "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
-      "Access-Control-Allow-Methods" => "*"
-      "Access-Control-Allow-Credentials" => "*"
+      "Content-Type" => "text/plain"
+      "Access-Control-Allow-Headers" => "Origin, X-Requested-With, Content-Type,
+       Accept"
     }
-    host => "10.10.10.10"
-    port => 8080
+  }
+}
+
+filter {
+  if [headers][request_method] == "OPTIONS" {
+    drop {}
+  }
+}
+
+output {
+  if [type]=="http" {
+    elasticsearch {
+      hosts => ["127.0.0.1:9200"]
+      manage_template => false
+      index => "http-%{+YYYY.MM.dd}"
+    }
   }
 }
 ```
