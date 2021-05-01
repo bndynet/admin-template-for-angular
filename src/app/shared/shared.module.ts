@@ -13,6 +13,8 @@ import { ContentSidebarComponent } from './content-sidebar/content-sidebar.compo
 import { DialogComponent } from './dialog/dialog.component';
 import { IconCardComponent } from './icon-card/icon-card.component';
 import { LangMenuComponent } from './lang-menu/lang-menu.component';
+import { LayoutItemComponent } from './layout/layout-item.component';
+import { LayoutComponent } from './layout/layout.component';
 import { MenuComponent } from './menu/menu.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PageErrorComponent } from './page-error/page-error.component';
@@ -38,6 +40,8 @@ import { ThemeImgComponent } from './theme-img/theme-img.component';
     AvatarComponent,
     LangMenuComponent,
     CodeBlockComponent,
+    LayoutComponent,
+    LayoutItemComponent,
   ],
   imports: [
     CommonModule,
@@ -66,6 +70,8 @@ import { ThemeImgComponent } from './theme-img/theme-img.component';
     AvatarComponent,
     LangMenuComponent,
     CodeBlockComponent,
+    LayoutComponent,
+    LayoutItemComponent,
   ],
 })
 export class SharedModule {}

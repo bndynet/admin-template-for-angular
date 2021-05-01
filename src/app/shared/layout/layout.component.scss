@@ -1,0 +1,32 @@
+:host {
+  &.layout-row {
+    display: flex;
+
+    ::ng-deep {
+      > * {
+        display: block;
+      }
+    }
+  }
+
+  &.layout-column {
+    display: flex;
+    flex-direction: column;
+
+    ::ng-deep {
+      // > * {
+      //   flex: 1;
+      // }
+    }
+  }
+}
+
+
+
+.layout-float {
+  ::ng-deep {
+    > * {
+      float: left;
+    }
+  }
+}

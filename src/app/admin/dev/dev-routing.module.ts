@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DevComponent } from './dev.component';
 import { ButtonComponent } from './examples/button/button.component';
 import { CardComponent } from './examples/card/card.component';
+import { LayoutComponent } from './examples/layout/layout.component';
 import { TableDetailComponent } from './examples/table-detail/table-detail.component';
 import { TableComponent } from './examples/table/table.component';
 import { GetStartedComponent } from './get-started/get-started.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: 'get-started', component: GetStartedComponent },
       { path: 'examples/button', component: ButtonComponent },
       { path: 'examples/card', component: CardComponent },
+      { path: 'examples/layout', component: LayoutComponent },
       {
         path: 'examples/table',
         component: TableComponent,
