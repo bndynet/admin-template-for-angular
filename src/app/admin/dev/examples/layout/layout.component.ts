@@ -1,6 +1,4 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
-import { LayoutMode } from 'src/app/shared/layout/layout.types';
 
 @Component({
   selector: 'app-examples-layout',
@@ -8,10 +6,11 @@ import { LayoutMode } from 'src/app/shared/layout/layout.types';
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
+  draggable = true;
   layoutData = {
-    mode: LayoutMode.Row,
-    gutter: '10px',
-    items: [
+    mode: 'row',
+    gutter: '1rem',
+    data: [
       {
         id: 1,
         width: 1,
@@ -29,25 +28,21 @@ export class LayoutComponent implements OnInit {
       },
       {
         id: 4,
-        width: 1,
-        text: `#4 This defines the default behavior for how flex items...`,
+        width: '100px',
+        text: `#4  100px This defines the default behavior for how flex items...`,
       },
     ],
   };
-
-  sortDirection = 'horizontal';
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  drop(dataItems: any[], event: CdkDragDrop<any[]>) {
-    moveItemInArray(dataItems, event.previousIndex, event.currentIndex);
+  changeLayout(layout: string): void {
+    this.layoutData.mode = layout;
   }
 
-  changeLayout(layout: string): void {
-    this.layoutData.mode =
-      layout === 'column' ? LayoutMode.Column : LayoutMode.Row;
-    this.sortDirection = layout === 'column' ? 'vertical' : 'horizontal';
+  sort(arr: any[]) {
+    console.log(arr);
   }
 }

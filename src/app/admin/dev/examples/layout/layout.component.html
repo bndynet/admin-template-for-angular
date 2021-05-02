@@ -1,18 +1,15 @@
 <button mat-raised-button (click)="changeLayout('column')">Column Layout</button>
-
 <button mat-raised-button (click)="changeLayout('row')">Row Layout</button>
-<br />
-<br />
-<div style="border: dotted 1px #000;">
-  <el-layout [options]="layoutData" cdkDropList [cdkDropListOrientation]="sortDirection" (cdkDropListDropped)="drop(layoutData.items, $event)">
-    <el-layout-item [data]="item" *ngFor="let item of layoutData.items" cdkDrag>
-      <div class="block block-1">{{item.text}}</div>
-    </el-layout-item>
-  </el-layout>
-</div>
+<button mat-raised-button (click)="draggable = true" [disabled]="draggable">Enable Sorting</button>
+<button mat-raised-button (click)="draggable = false" [disabled]="!draggable">Disable Sorting</button>
 
-<div>
-  <div *ngFor="let item of layoutData.items">
-    {{ item | json }}
-  </div>
+<br /><br />
+<div class="layout-container">
+  <el-layout [mode]="layoutData.mode" [gutter]="layoutData.gutter" [dragEnabled]="draggable" [items]="layoutData.data"
+    [itemTemplate]="layoutItemTemplate"
+    (itemSorted)="sort($event)"
+    ></el-layout>
 </div>
+<ng-template #layoutItemTemplate let-item let-index="index">
+  <div class="block block-1">{{item.text}} #{{index}}</div>
+</ng-template>
