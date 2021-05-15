@@ -6,6 +6,7 @@ import { CardComponent } from './examples/card/card.component';
 import { LayoutComponent } from './examples/layout/layout.component';
 import { TableDetailComponent } from './examples/table-detail/table-detail.component';
 import { TableComponent } from './examples/table/table.component';
+import { TerminalComponent } from './examples/terminal/terminal.component';
 import { GetStartedComponent } from './get-started/get-started.component';
 
 const routes: Routes = [
@@ -21,6 +22,10 @@ const routes: Routes = [
         path: 'examples/table',
         component: TableComponent,
         children: [{ path: ':id', component: TableDetailComponent }],
+      },
+      {
+        path: 'examples/terminal',
+        component: TerminalComponent,
       },
     ],
   },

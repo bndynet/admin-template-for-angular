@@ -11,6 +11,7 @@ import { DialogFormComponent } from './examples/dialog-form/dialog-form.componen
 import { LayoutComponent } from './examples/layout/layout.component';
 import { TableDetailComponent } from './examples/table-detail/table-detail.component';
 import { TableComponent } from './examples/table/table.component';
+import { TerminalComponent } from './examples/terminal/terminal.component';
 import { GetStartedComponent } from './get-started/get-started.component';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { GetStartedComponent } from './get-started/get-started.component';
     TableDetailComponent,
     GetStartedComponent,
     LayoutComponent,
+    TerminalComponent,
   ],
   imports: [
     CommonModule,
