@@ -1,6 +1,6 @@
 <el-dialog title="Form" [showCloseIcon]="true" [loading]="pending">
   <ng-container body>
-    <form style="width: 600px;">
+    <form style="width: 600px;" [vLoading]="pending">
       <mat-form-field class="full-width">
         <mat-label>Name</mat-label>
         <input name="name" matInput placeholder="Your name..." [(ngModel)]="name">
