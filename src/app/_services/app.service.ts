@@ -71,7 +71,7 @@ export class AppService {
   getMessages(): Observable<MessageEntity[]> {
     return interval(10000).pipe(
       mergeMap(() =>
-        this.http.get<MessageEntity[]>(getLocalUrl(`assets/messages1.json`))
+        this.http.get<MessageEntity[]>(getLocalUrl(`assets/messages.json`))
       )
     );
   }
