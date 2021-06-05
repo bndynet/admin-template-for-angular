@@ -87,4 +87,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   loginWithUsername(): void {
     this.router.navigate(['/login']);
   }
+
+  gotoAdmin(): void {
+    this.router.navigate(['/admin']);
+  }
 }

@@ -22,5 +22,8 @@
       </button>
     </div>
     <br />
+    <button mat-raised-button color="accent" (click)="gotoAdmin()" *ngIf="userInfo">
+      {{ 'Go to Admin Panel' | translate }}
+    </button>
   </mat-card-actions>
 </mat-card>
