@@ -28,6 +28,8 @@ Use `@ngx-translate` library to translate your language that defined in **src/as
 
 To get help on Angular CLI use `ng help` or click [here](https://angular.io/cli) to official site.
 
+`npm start` and open [local site](http://localhost:9000/)
+
 ## Theming your components
 
 ```scss
