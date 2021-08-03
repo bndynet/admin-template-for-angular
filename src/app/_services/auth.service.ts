@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthHandler, AuthType, MenuEntity, UserInfo } from '../app-types';
-import { AuthKeycloakHandler } from './auth-keycloak-handler';
 import { AuthLocalHandler } from './auth-local-handler';
 import { AuthOAuthHandler, TokenInfo } from './auth-oauth-handler';
 
@@ -12,13 +11,26 @@ import { AuthOAuthHandler, TokenInfo } from './auth-oauth-handler';
 })
 export class AuthService {
   public authHandler: AuthHandler;
+  public canActivateProtectedRoutes$: Observable<boolean>;
+  isAuthenticated$: Observable<boolean>;
 
   constructor(
-    private authKeycloak: AuthKeycloakHandler,
     private authLocal: AuthLocalHandler,
     private authOAuth: AuthOAuthHandler
   ) {
     this.setAuthType();
+  }
+
+  init(): void {
+    this.authHandler.init();
+  }
+
+  isAuthenticated(): Observable<boolean> {
+    return this.authHandler.isAuthenticated$;
+  }
+
+  isDoneAuth(): Observable<boolean> {
+    return this.authHandler.isDoneAuth$;
   }
 
   setAuthType(authType?: AuthType) {
@@ -31,18 +43,21 @@ export class AuthService {
         this.authHandler = this.authLocal;
         break;
 
-      case AuthType.Keycloak:
-        this.authHandler = this.authKeycloak;
-        break;
-
-      case AuthType.CustomOAuth:
+      case AuthType.OAuth:
         this.authHandler = this.authOAuth;
         break;
     }
+
+    this.isAuthenticated$ = this.authHandler.isAuthenticated$;
+
+    this.canActivateProtectedRoutes$ = combineLatest([
+      this.authHandler.isAuthenticated$,
+      this.authHandler.isDoneAuth$,
+    ]).pipe(map((values) => values.every((b) => b)));
   }
 
-  isAuthenticated(): Observable<boolean> {
-    return from(this.authHandler.isAuthenticated());
+  getAuthType(): AuthType {
+    return environment.authType;
   }
 
   getTokenInfo(): Promise<TokenInfo> {
@@ -54,7 +69,7 @@ export class AuthService {
   }
 
   getUser(): Observable<UserInfo> {
-    return from(this.authHandler.getUserInfo());
+    return this.authHandler.getUserInfo$;
   }
 
   getMenu(menu: MenuEntity[]): Observable<MenuEntity[]> {
@@ -96,6 +111,14 @@ export class AuthService {
         })
       )
     );
+  }
+
+  login(
+    targetUrl?: string,
+    username?: string,
+    password?: string
+  ): void | Observable<UserInfo> {
+    return this.authHandler.login(targetUrl, username, password);
   }
 
   logout(): void {

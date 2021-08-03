@@ -6,6 +6,7 @@ import {
   Router,
   RouterEvent,
 } from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { protectedUrlPrefixes } from 'src/config';
 import { onRouteChanged, onRouteChanging } from './_interceptors';
 import { AppService, I18nService } from './_services';
@@ -19,8 +20,10 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private app: AppService,
-    private i18n: I18nService
+    private i18n: I18nService,
+    private oauthService: OAuthService
   ) {
+    this.app.init();
     this.i18n.init();
 
     this.router.events.subscribe((event: RouterEvent) => {
@@ -37,11 +40,11 @@ export class AppComponent implements OnInit {
         if (
           protectedUrlPrefixes.find((prefix) => event.url.startsWith(prefix))
         ) {
-          this.app.auth.isAuthenticated().subscribe((val) => {
-            if (!val) {
-              this.router.navigate(['/logout']);
-            }
-          });
+          // this.app.auth.isAuthenticated().subscribe((val) => {
+          //   if (!val) {
+          //     this.router.navigate(['/logout']);
+          //   }
+          // });
         }
       }
     });

@@ -25,16 +25,12 @@ export class PageErrorComponent implements OnInit {
         }
       } else {
         this.code = null;
-        (this.title = 'Something gone wrong'), (this.description = '');
+        this.title = this.description = '';
       }
 
-      if (params.get('title')) {
-        this.title = params.get('title');
-      }
-
-      if (params.get('des')) {
-        this.description = params.get('des');
-      }
+      this.title = params.get('title') || this.title || 'Something gone wrong';
+      this.description =
+        params.get('des') || params.get('description') || this.description;
     });
   }
 }

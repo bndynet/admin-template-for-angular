@@ -8,11 +8,12 @@ const routes: Routes = [
   { path: '403', redirectTo: '/error?code=403' },
   { path: '404', redirectTo: '/error?code=404' },
   { path: '500', redirectTo: '/error?code=500' },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
   // { path: 'admin',  component: AdminComponent },
   {
     path: 'admin',
-    loadChildren: './admin/admin.module#AdminModule', // () => import('./admin/admin.module').then( m => m.AdminModule),
+    loadChildren: './admin/admin.module#AdminModule',
+    // Note: below way of module loading requires this in your tsconfig.json: "module": "esnext"
+    // () => import('./admin/admin.module').then( m => m.AdminModule),
   },
 ];
 

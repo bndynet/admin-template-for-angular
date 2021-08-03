@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit {
     this.auth.getUser().subscribe((res) => {
       this.userInfo = res;
       if (this.userInfo) {
-        this.userRoles = res.roles.map((r) => roles[r] || r);
+        this.userRoles = (res.roles || []).map((r) => roles[r] || r);
       } else {
         this.app.logout();
       }
