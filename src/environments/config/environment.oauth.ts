@@ -1,8 +1,8 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
 import { AuthType } from 'src/app/app-types';
+import { IEnvironment } from '../environment.types';
 
-export const environment = {
-  production: false,
+export const environment: IEnvironment = {
   authType: AuthType.OAuth,
   oauth: {
     // Url of the Identity Provider
