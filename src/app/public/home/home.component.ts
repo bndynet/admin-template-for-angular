@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Subscription } from 'rxjs';
-import { UserInfo } from 'src/app/app-types';
+import { AuthType, UserInfo } from 'src/app/app-types';
 import { AppService } from 'src/app/_services';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ import { AppService } from 'src/app/_services';
 export class HomeComponent implements OnInit, OnDestroy {
   userInfo: UserInfo;
   isLoggingIn: boolean;
+  isOAuth2: boolean;
 
   private subs = new Subscription();
 
@@ -21,7 +23,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private app: AppService,
     private oauthService: OAuthService
-  ) {}
+  ) {
+    this.isOAuth2 = environment.authType === AuthType.OAuth;
+  }
 
   ngOnInit(): void {
     const locationSearch = window.location.search;

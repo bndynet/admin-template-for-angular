@@ -105,6 +105,7 @@ export class AuthLocalHandler implements AuthHandler {
     // TODO: use corrent url to log out
     this.http
       .get(getLocalUrl('/assets/user.json'))
-      .pipe(tap(() => this.router.navigate(['/logout'])));
+      .pipe(tap(() => this.router.navigate(['/logout'])))
+      .subscribe();
   }
 }
