@@ -1,4 +1,5 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -13,6 +14,7 @@ import { ContentSidebarComponent } from './content-sidebar/content-sidebar.compo
 import { DialogComponent } from './dialog/dialog.component';
 import { IconCardComponent } from './icon-card/icon-card.component';
 import { LangMenuComponent } from './lang-menu/lang-menu.component';
+import { LayoutComponent } from './layout/layout.component';
 import { MenuComponent } from './menu/menu.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PageErrorComponent } from './page-error/page-error.component';
@@ -38,11 +40,13 @@ import { ThemeImgComponent } from './theme-img/theme-img.component';
     AvatarComponent,
     LangMenuComponent,
     CodeBlockComponent,
+    LayoutComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     AppUiModule,
+    DragDropModule,
     TranslateModule,
     ClipboardModule,
     CodemirrorModule,
@@ -66,6 +70,7 @@ import { ThemeImgComponent } from './theme-img/theme-img.component';
     AvatarComponent,
     LangMenuComponent,
     CodeBlockComponent,
+    LayoutComponent,
   ],
 })
 export class SharedModule {}

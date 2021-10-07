@@ -1,3 +1,4 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AppUiModule } from 'src/app/app-ui.module';
@@ -7,6 +8,7 @@ import { DevComponent } from './dev.component';
 import { ButtonComponent } from './examples/button/button.component';
 import { CardComponent } from './examples/card/card.component';
 import { DialogFormComponent } from './examples/dialog-form/dialog-form.component';
+import { LayoutComponent } from './examples/layout/layout.component';
 import { TableDetailComponent } from './examples/table-detail/table-detail.component';
 import { TableComponent } from './examples/table/table.component';
 import { GetStartedComponent } from './get-started/get-started.component';
@@ -20,7 +22,14 @@ import { GetStartedComponent } from './get-started/get-started.component';
     TableComponent,
     TableDetailComponent,
     GetStartedComponent,
+    LayoutComponent,
   ],
-  imports: [CommonModule, DevRoutingModule, AppUiModule, SharedModule],
+  imports: [
+    CommonModule,
+    DragDropModule,
+    DevRoutingModule,
+    AppUiModule,
+    SharedModule,
+  ],
 })
 export class DevModule {}

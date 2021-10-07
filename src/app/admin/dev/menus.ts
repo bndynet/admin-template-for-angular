@@ -26,6 +26,10 @@ export const menus: MenuEntity[] = [
             text: 'Table',
             link: '/admin/dev/examples/table',
           },
+          {
+            text: 'Layout',
+            link: '/admin/dev/examples/layout',
+          },
         ],
       },
     ],
