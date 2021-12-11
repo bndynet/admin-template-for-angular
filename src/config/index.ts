@@ -2,6 +2,7 @@ import { ThemeEntity } from 'src/app/app-types';
 
 export * from './converters';
 export * from './guides';
+export * from './urls';
 
 // TODO: define your protected page
 export const protectedUrlPrefixes = []; // ['/admin'];

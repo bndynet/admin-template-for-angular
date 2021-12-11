@@ -1,0 +1,10 @@
+
+<div id="terminalConntainer">
+  <div #terminalBox></div>
+</div>
+<div style="margin-top: 2rem;">
+  <mat-button-toggle-group name="server" [value]="serverType" (change)="changeServer($event)">
+    <mat-button-toggle value="web-socket">Web Socket</mat-button-toggle>
+    <mat-button-toggle value="rest-api">RESTful API</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>

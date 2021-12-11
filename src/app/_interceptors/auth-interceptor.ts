@@ -7,9 +7,11 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { isMatch } from 'matcher';
 import { from, Observable, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { AppService } from 'src/app/_services';
+import { urlsToIgnoreResponseError } from 'src/config';
 import { getLocalUrl } from 'src/utils';
 import { KEY_AUTHORIZATION, KEY_TRACKING_ID } from '../app-types';
 import { TokenInfo } from '../_services/auth-oauth-handler';
@@ -44,13 +46,16 @@ export class AuthInterceptor implements HttpInterceptor {
           }),
           catchError((err) => {
             if (err instanceof HttpErrorResponse) {
-              this.app.notificaiton.error(`${err.message}`);
-              switch (err.status) {
-                case 404:
-                  break;
+              const isIgnored = isMatch(req.url, urlsToIgnoreResponseError);
+              if (!isIgnored) {
+                this.app.notificaiton.error(`${err.message}`);
+                switch (err.status) {
+                  case 404:
+                    break;
 
-                default:
-                  break;
+                  default:
+                    break;
+                }
               }
             }
             return throwError(err);
