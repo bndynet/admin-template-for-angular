@@ -9,6 +9,7 @@ import {
   SimpleChanges,
   TemplateRef,
 } from '@angular/core';
+import { LayoutMode } from './layout.types';
 
 @Component({
   selector: 'el-layout',
@@ -38,7 +39,7 @@ import {
   },
 })
 export class LayoutComponent<TItem> implements OnInit, OnChanges {
-  @Input() mode: 'row' | 'column' | 'free' = 'row';
+  @Input() mode: LayoutMode = LayoutMode.Row;
   @Input() items: TItem[] = [];
   @Input() gutter: number | string;
   @Input() itemTemplate: TemplateRef<TItem>;
@@ -75,11 +76,12 @@ export class LayoutComponent<TItem> implements OnInit, OnChanges {
     this.itemSorted.emit(this.items);
   }
 
-  changeLayout(layout: string): void {
-    this.sortDirection = layout === 'column' ? 'vertical' : 'horizontal';
+  changeLayout(layout: LayoutMode): void {
+    this.sortDirection =
+      layout === LayoutMode.Column ? 'vertical' : 'horizontal';
 
     switch (this.mode) {
-      case 'row':
+      case LayoutMode.Row:
         this.styleMap['margin-top'] = '0';
         this.styleMap['margin-right'] = '-' + this.halfOfGutter;
         this.styleMap['margin-bottom'] = '0';
@@ -91,7 +93,7 @@ export class LayoutComponent<TItem> implements OnInit, OnChanges {
         this.itemGlobalStyleMap['margin-left'] = this.halfOfGutter;
         break;
 
-      case 'column':
+      case LayoutMode.Column:
         this.styleMap['margin-top'] = '-' + this.halfOfGutter;
         this.styleMap['margin-right'] = '0';
         this.styleMap['margin-bottom'] = '-' + this.halfOfGutter;
@@ -108,7 +110,7 @@ export class LayoutComponent<TItem> implements OnInit, OnChanges {
   getItemStyle(item: any): object {
     const style = {};
     switch (this.mode) {
-      case 'row':
+      case LayoutMode.Row:
         const width = item.__width || item._width || item.width;
         if (width) {
           if (typeof width === 'number') {
@@ -124,10 +126,14 @@ export class LayoutComponent<TItem> implements OnInit, OnChanges {
   }
 
   private halfOf(space: number | string): string {
-    return typeof space === 'number'
-      ? `${space / 2}rem`
-      : `${
-          parseInt(space.replace(/(px)(pt)(rem)(em)(%)/g, '')) / 2
-        }${space.replace(/\d+/gi, '')}`;
+    if (space) {
+      return typeof space === 'number'
+        ? `${space / 2}rem`
+        : `${
+            parseInt(space.replace(/(px)(pt)(rem)(em)(%)/g, '')) / 2
+          }${space.replace(/\d+/gi, '')}`;
+    }
+
+    return '';
   }
 }
