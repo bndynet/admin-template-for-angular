@@ -11,7 +11,8 @@ const routes: Routes = [
   // { path: 'admin',  component: AdminComponent },
   {
     path: 'admin',
-    loadChildren: './admin/admin.module#AdminModule',
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
     // Note: below way of module loading requires this in your tsconfig.json: "module": "esnext"
     // () => import('./admin/admin.module').then( m => m.AdminModule),
   },
