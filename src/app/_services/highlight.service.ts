@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as Driver from 'driver.js';
+import Driver from 'driver.js';
 import { forkJoin, Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { I18nService } from './i18n.service';

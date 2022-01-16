@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import * as moment from 'moment';
+import moment from 'moment';
 import { MenuEntity } from 'src/app/app-types';
 
 @Component({
