@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 @import '~driver.js/dist/driver.min.css';
 
@@ -16,10 +16,10 @@
 @import './directives';
 
 // Required for custom themes.
-@include mat-core();
+@include mat.core();
 
 // Include the default theme styles.
-@include angular-material-theme($app-theme);
+@include mat.all-component-themes($app-theme);
 
 // Register all themes.
 @each $name, $theme in $themes {
