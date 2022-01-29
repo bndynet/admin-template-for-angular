@@ -1,5 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
@@ -13,9 +17,9 @@ import { AppService } from 'src/app/_services';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public logging: boolean;
-  public form: FormGroup = new FormGroup({
-    name: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+  public form: UntypedFormGroup = new UntypedFormGroup({
+    name: new UntypedFormControl('', Validators.required),
+    password: new UntypedFormControl('', Validators.required),
   });
   public alertMessage: string;
 

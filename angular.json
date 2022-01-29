@@ -124,6 +124,5 @@
         }
       }
     }
-  },
-  "defaultProject": "admin-template-for-angular"
+  }
 }
