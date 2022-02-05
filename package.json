@@ -41,7 +41,7 @@
     "driver.js": "^0.9.8",
     "js-cookie": "^2.2.1",
     "keycloak-angular": "^12.1.0",
-    "keycloak-js": "^18.0.1",
+    "keycloak-js": "^19.0.1",
     "lodash-es": "^4.17.15",
     "matcher": "^5.0.0",
     "moment": "^2.29.1",
