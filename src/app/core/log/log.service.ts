@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Logger, LogType, RequestLogFields } from './logger';
+import { LogFields, Logger, LogType, RequestLogFields } from './logger';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +11,24 @@ export class LogService {
   constructor() {
     this.logger = new Logger(environment.elkEndpoint);
     console.log(environment);
+  }
+
+  public logJsError(error: any) {
+    const fields: LogFields = {
+      environment: environment.name,
+      isProduction: environment.production,
+      appName: environment.appName,
+      appVersion: environment.version,
+      userId: '',
+      currentUrl: location.href,
+    };
+
+    const message =
+      typeof error === 'string'
+        ? error
+        : JSON.stringify(error, Object.getOwnPropertyNames(error));
+
+    this.logger.log(LogType.Error, message, fields);
   }
 
   public logApiRequest(

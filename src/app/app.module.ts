@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -9,6 +9,7 @@ import { AdminModule } from './admin/admin.module';
 import { AppRoutingModule } from './app-routing.module';
 import { Langs } from './app-types';
 import { AppComponent } from './app.component';
+import { GlobalErrorHandler } from './core/global-error-handler';
 import { PublicModule } from './public/public.module';
 import { httpInterceptorProviders } from './_interceptors';
 
@@ -38,6 +39,7 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     httpInterceptorProviders,
     { provide: OAuthStorage, useValue: localStorage },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
   ],
   bootstrap: [AppComponent],
 })
