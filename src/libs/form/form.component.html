@@ -1,0 +1,77 @@
+<div [formGroup]="formGroup">
+  <div
+    class="field-item {{ formGroup.controls[field.name]?.status | lowercase }}"
+    *ngFor="let field of fields"
+    [ngClass]="{ required: field.required }"
+  >
+    <label [attr.for]="field.name" [attr.style]="field.labelStyle">
+      <span class="label">
+        {{ field.label }}
+      </span>
+      <span class="required" *ngIf="field.required">*</span>
+    </label>
+
+    <!-- input or textarea -->
+    <ng-container *ngIf="!field.options">
+      <input
+        *ngIf="!field.isMultiline"
+        [id]="field.name"
+        [name]="field.name"
+        [formControlName]="field.name"
+        (change)="changeValue(field, $event)"
+        [attr.disabled]="field.disabled"
+        [attr.placeholder]="field.placeholder"
+        [attr.style]="field.style"
+      />
+      <textarea
+        *ngIf="field.isMultiline"
+        [id]="field.name"
+        [name]="field.name"
+        [formControlName]="field.name"
+        (change)="changeValue(field, $event)"
+        [attr.disabled]="field.disabled"
+        [attr.placeholder]="field.placeholder"
+        [attr.style]="field.style"
+      >
+      </textarea>
+    </ng-container>
+
+    <!-- select -->
+    <ng-container *ngIf="field.options">
+      <select
+        [id]="field.name"
+        [name]="field.name"
+        [formControlName]="field.name"
+        (change)="changeValue(field, $event)"
+        [attr.disabled]="field.disabled"
+      >
+        <option value="" *ngIf="!field.required">
+          {{ field.placeholder }}
+        </option>
+        <ng-container *ngIf="fieldOptionGroups[field.name] as groups">
+          <ng-container *ngIf="groups.length > 1">
+            <optgroup [label]="group.name" *ngFor="let group of groups">
+              <option
+                [value]="option.value"
+                *ngFor="let option of group.options"
+              >
+                {{ option.label }}
+              </option>
+            </optgroup>
+          </ng-container>
+          <ng-container *ngIf="groups.length === 1">
+            <option [value]="option.value" *ngFor="let option of field.options">
+              {{ option.label }}
+            </option>
+          </ng-container>
+        </ng-container>
+      </select>
+    </ng-container>
+
+    <!-- message -->
+    <div class="hint" *ngIf="!formGroup.controls[field.name]?.valid">
+      {{ field.requiredMessage }}
+    </div>
+
+  </div>
+</div>

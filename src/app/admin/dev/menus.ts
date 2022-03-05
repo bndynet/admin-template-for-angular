@@ -34,6 +34,10 @@ export const menus: MenuEntity[] = [
             text: 'Terminal',
             link: '/admin/dev/examples/terminal',
           },
+          {
+            text: 'Dynamic Form',
+            link: '/admin/dev/examples/dynamic-form',
+          },
         ],
       },
     ],

@@ -1,0 +1,48 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.field-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+
+  input,
+  textarea,
+  select {
+    border: solid #aaa 1px;
+    border-radius: 4px;
+    min-height: 1.5rem;
+    padding: 0.25rem 0.75rem;
+  }
+
+  textarea {
+    min-height: 3rem;
+  }
+
+  select {
+    height: 2rem;
+  }
+
+  label {
+    margin-bottom: 0.25rem;
+
+    .required {
+      color: #f00;
+    }
+  }
+
+  .hint {
+    font-style: italic;
+    margin-top: 0.25rem;
+  }
+
+  &.invalid {
+    input,
+    textarea,
+    select {
+      border-color: #f00;
+    }
+  }
+}
