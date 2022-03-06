@@ -13,7 +13,7 @@
     "local": "ng serve --port=9000",
     "start": "run-p copy:examples watch:examples copy:readme local",
     "build": "run-p copy:* && ng build --configuration production && ts-node ./tools/after-build.ts",
-    "deploy": "run-p copy:* && ng build --configuration production --baseHref=/admin-template-for-angular/ && ts-node ./tools/after-build.ts",
+    "deploy": "run-p copy:* && ng build --configuration production && ts-node ./tools/after-build.ts",
     "test": "ng test",
     "pull:i18n": "git subtree pull --prefix=src/assets/i18n https://github.com/bndynet/i18n.git master --squash",
     "lint:ts": "ng lint",

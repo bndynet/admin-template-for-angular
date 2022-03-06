@@ -23,6 +23,7 @@
               "@ctrl/ngx-codemirror"
             ],
             "outputPath": "dist/admin-template-for-angular",
+            "baseHref": "/admin-template-for-angular/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
