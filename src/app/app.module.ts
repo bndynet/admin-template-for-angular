@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TitleStrategy } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
@@ -13,6 +14,7 @@ import { AppComponent } from './app.component';
 import { GlobalErrorHandler } from './core/global-error-handler';
 import { PublicModule } from './public/public.module';
 import { httpInterceptorProviders } from './_interceptors';
+import { TitleService } from './_services/title.service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/json/', '.json');
@@ -42,6 +44,7 @@ export function createTranslateLoader(http: HttpClient) {
     httpInterceptorProviders,
     { provide: OAuthStorage, useValue: localStorage },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    { provide: TitleStrategy, useClass: TitleService },
   ],
   bootstrap: [AppComponent],
 })

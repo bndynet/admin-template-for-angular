@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Injector } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { stringUtils } from '@bndynet/utils';
 import { interval, Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+import { app } from 'src/config';
 import { getLocalUrl } from 'src/utils';
 import { MenuEntity, MessageEntity } from '../app-types';
 import { AuthService } from './auth.service';
@@ -12,12 +12,12 @@ import { HighlightService } from './highlight.service';
 import { NotificationService } from './notification.service';
 import { StatusService } from './status.service';
 import { KEY_THEME, ThemeService } from './theme.service';
+import { TitleService } from './title.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppService {
-  private rootTitle: string;
   public readonly clientTrackingID: string;
   public readonly baseUrl: string;
   public navMenuChanged = new EventEmitter<MenuEntity>();
@@ -25,7 +25,7 @@ export class AppService {
   constructor(
     private injector: Injector,
     private http: HttpClient,
-    private titleService: Title,
+    private titleService: TitleService,
     public auth: AuthService,
     public theme: ThemeService,
     public dialog: DialogService,
@@ -33,7 +33,7 @@ export class AppService {
     public notificaiton: NotificationService
   ) {
     this.clientTrackingID = stringUtils.getRandomId();
-    this.rootTitle = this.titleService.getTitle();
+    this.titleService.setTitle(app.title);
 
     const themeName = localStorage.getItem(KEY_THEME);
     if (theme) {
@@ -55,17 +55,12 @@ export class AppService {
     return this.injector.get<HighlightService>(HighlightService);
   }
 
-  setTitle(title: string, overwriteOrigin?: boolean): void {
-    if (overwriteOrigin) {
-      this.rootTitle = title;
-    } else {
-      title = this.rootTitle ? `${title} - ${this.rootTitle}` : title;
-    }
-    this.titleService.setTitle(title);
+  setTitle(title: string, overwrite?: boolean): void {
+    this.titleService.setTitle(title, overwrite);
   }
 
   resetTitle(): void {
-    this.titleService.setTitle(this.rootTitle);
+    this.titleService.setTitle(app.title);
   }
 
   getMessages(): Observable<MessageEntity[]> {

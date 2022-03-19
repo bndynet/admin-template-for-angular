@@ -16,7 +16,7 @@ const routes: Routes = [
         path: 'dev',
         loadChildren: () => import('./dev/dev.module').then((m) => m.DevModule),
       },
-      { path: 'hello', component: WelcomeComponent },
+      { path: 'hello', component: WelcomeComponent, title: 'Hi' },
       { path: '', redirectTo: 'dev/get-started', pathMatch: 'full' },
     ],
     canActivate: [AuthGuardWithForceLogin], // redirect to login, if you donot require this, pls use AuthGuard
