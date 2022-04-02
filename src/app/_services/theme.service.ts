@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { themes } from 'src/config';
+import { app } from 'src/config';
 import { ThemeEntity } from '../app-types';
 
 export const KEY_THEME = 'app_theme';
@@ -19,11 +19,11 @@ export class ThemeService {
     const darkClassName = 'is-dark';
 
     document.body.classList.remove(darkClassName);
-    themes.forEach((theme: ThemeEntity) => {
+    app.themes.forEach((theme: ThemeEntity) => {
       document.body.classList.remove(theme.key);
     });
 
-    const theme = themes.find((t) => t.key === themeKey);
+    const theme = app.themes.find((t) => t.key === themeKey);
     if (theme) {
       document.body.classList.add(theme.key);
       localStorage.setItem(KEY_THEME, theme.key);

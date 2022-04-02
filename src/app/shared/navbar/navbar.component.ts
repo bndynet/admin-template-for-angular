@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MenuEntity, MessageEntity, UserInfo } from 'src/app/app-types';
 import { AuthService, EventsService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
-import { convertMessages, roles, themes } from 'src/config';
+import { app, convertMessages } from 'src/config';
 
 @Component({
   selector: 'el-navbar',
@@ -21,14 +21,16 @@ export class NavbarComponent implements OnInit {
   public newMessageCount = 0;
   public searchKeywords: string;
   public searchEnabled: boolean;
-  public themes = themes;
+  public themes;
 
   constructor(
     private router: Router,
-    private app: AppService,
     private auth: AuthService,
-    private events: EventsService
-  ) {}
+    private events: EventsService,
+    private appService: AppService
+  ) {
+    this.themes = app.themes;
+  }
 
   ngOnInit(): void {
     this.searchEnabled = this.search.observers.length > 0;
@@ -36,14 +38,14 @@ export class NavbarComponent implements OnInit {
     this.auth.getUser().subscribe((res) => {
       this.userInfo = res;
       if (this.userInfo) {
-        this.userRoles = (res.roles || []).map((r) => roles[r] || r);
+        this.userRoles = (res.roles || []).map((r) => app.roles[r] || r);
       } else {
-        this.app.logout();
+        this.appService.logout();
       }
     });
 
     this.messages = [];
-    this.app.getMessages().subscribe((res) => {
+    this.appService.getMessages().subscribe((res) => {
       this.messages = convertMessages(res, this.messages);
       this.newMessageCount = this.messages.filter(
         (message) => !message.read
@@ -56,14 +58,14 @@ export class NavbarComponent implements OnInit {
   }
 
   viewMessage(message: any): void {
-    this.app.dialog.alert(
+    this.appService.dialog.alert(
       `#${message.id} ` + message.title,
       message.content,
       () => {
         // TODO: handle read message
         message.read = true;
         this.newMessageCount -= 1;
-        this.app.notificaiton.info('You have read this message.');
+        this.appService.notificaiton.info('You have read this message.');
       },
       {
         contentAlign: 'start',
@@ -80,7 +82,7 @@ export class NavbarComponent implements OnInit {
   }
 
   changeTheme(themeKey: string): void {
-    this.app.theme.changeTheme(themeKey);
+    this.appService.theme.changeTheme(themeKey);
   }
 
   onSearch(): void {
@@ -92,12 +94,12 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(): void {
-    this.app.logout();
+    this.appService.logout();
   }
 
   private gotoMenu(menu: MenuEntity): void {
     if (menu.link) {
-      this.app.navMenuChanged.emit(menu);
+      this.appService.navMenuChanged.emit(menu);
       this.router.navigate([menu.link]);
     } else if (menu.children && menu.children.length > 0) {
       this.gotoMenu(menu.children[0]);
