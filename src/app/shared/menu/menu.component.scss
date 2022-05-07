@@ -3,6 +3,10 @@
 ::ng-deep .menu {
   display: block;
 
+  &.mat-list-base .mat-list-item {
+    font-size: 0.875rem;
+  }
+
   .menu-text {
     flex: 1;
     padding-left: 4px;

@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageErrorComponent } from '../shared';
 import { AuthGuardWithForceLogin } from '../_services/auth-guard.service';
 import { AdminComponent } from './admin.component';
-import { WelcomeComponent } from './hello/welcome/welcome.component';
 
 const routes: Routes = [
   {
@@ -16,7 +15,12 @@ const routes: Routes = [
         path: 'dev',
         loadChildren: () => import('./dev/dev.module').then((m) => m.DevModule),
       },
-      { path: 'hello', component: WelcomeComponent, title: 'Hi' },
+      {
+        path: 'hello',
+        title: 'Hi',
+        loadChildren: () =>
+          import('./hello/hello.module').then((m) => m.HelloModule),
+      },
       { path: '', redirectTo: 'dev/get-started', pathMatch: 'full' },
     ],
     canActivate: [AuthGuardWithForceLogin], // redirect to login, if you donot require this, pls use AuthGuard

@@ -6,6 +6,10 @@
   flex-direction: column;
   height: 100%;
 
+  .main-body {
+    height: 100%;
+  }
+
   .mat-progress-bar {
     position: absolute;
   }
