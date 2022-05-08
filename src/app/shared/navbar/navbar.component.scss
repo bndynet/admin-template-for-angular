@@ -5,6 +5,10 @@
     nav {
       &.main {
         flex: 1;
+
+        button {
+          font-size: 1rem !important;
+        }
       }
 
       &:last-child {
