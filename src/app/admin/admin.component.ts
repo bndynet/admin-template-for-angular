@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
@@ -39,7 +45,8 @@ export class AdminComponent implements OnInit, AfterViewInit {
     private router: Router,
     private status: StatusService,
     private snackBar: MatSnackBar,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -80,6 +87,8 @@ export class AdminComponent implements OnInit, AfterViewInit {
           break;
       }
     });
+
+    this.changeDetectorRef.detectChanges();
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
