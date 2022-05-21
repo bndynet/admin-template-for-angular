@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable, Injector } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { stringUtils } from '@bndynet/utils';
-import { interval, Observable } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { BehaviorSubject, interval, Observable } from 'rxjs';
+import { filter, mergeMap } from 'rxjs/operators';
 import { app } from 'src/config';
 import { getLocalUrl } from 'src/utils';
 import { MenuEntity, MessageEntity } from '../app-types';
@@ -18,9 +18,13 @@ import { TitleService } from './title.service';
   providedIn: 'root',
 })
 export class AppService {
+  private navMenuChanged = new BehaviorSubject<MenuEntity | null>(null);
+
   public readonly clientTrackingID: string;
   public readonly baseUrl: string;
-  public navMenuChanged = new EventEmitter<MenuEntity>();
+  public navMenuChanged$ = this.navMenuChanged
+    .asObservable()
+    .pipe(filter((m) => !!m));
 
   constructor(
     private injector: Injector,
@@ -61,6 +65,27 @@ export class AppService {
 
   resetTitle(): void {
     this.titleService.setTitle(app.title);
+  }
+
+  activeMenu(menu: MenuEntity): void {
+    this.navMenuChanged.next(menu);
+  }
+
+  flatMenus(menus: MenuEntity[]): MenuEntity[] {
+    const result: MenuEntity[] = [];
+    const flatChildren = (menu: MenuEntity) => {
+      menu.children?.forEach((submenu) => {
+        result.push(submenu);
+        flatChildren(submenu);
+      });
+    };
+
+    menus.forEach((rootMenu) => {
+      result.push(rootMenu);
+      flatChildren(rootMenu);
+    });
+
+    return result;
   }
 
   getMessages(): Observable<MessageEntity[]> {

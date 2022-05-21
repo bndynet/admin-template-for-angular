@@ -66,6 +66,7 @@ export interface MenuEntity {
   roles?: string[];
   children?: MenuEntity[];
   _collapsed?: boolean;
+  _parent?: MenuEntity;
 }
 
 export interface UserInfo {

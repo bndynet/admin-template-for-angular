@@ -50,12 +50,31 @@ export class AdminComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    const currentUrl = location.href;
     this.menuLoading = true;
+
     this.app.auth.getMenu(menus).subscribe((userMenu: MenuEntity[]) => {
+      const flattedMenus = this.app.flatMenus(userMenu);
+      const matchedMenu = flattedMenus.find(
+        (fm) =>
+          fm.link &&
+          currentUrl.startsWith(
+            this.removeDuplicatedSlashesForUrl(`${this.app.baseUrl}${fm.link}`)
+          )
+      );
+
       this.menus = userMenu;
-      if (this.menus && this.menus.length > 0) {
+      if (matchedMenu) {
+        let rootOfMatchedMenu = matchedMenu;
+        while (rootOfMatchedMenu._parent) {
+          rootOfMatchedMenu = rootOfMatchedMenu._parent;
+        }
+        this.subMenus = rootOfMatchedMenu.children;
+        this.app.activeMenu(matchedMenu);
+      } else {
         this.subMenus = this.menus[0].children;
       }
+
       this.menuLoading = false;
     });
 
@@ -117,5 +136,9 @@ export class AdminComponent implements OnInit, AfterViewInit {
   toggleSidebar(): void {
     this.sidebarOpened = !this.sidebarOpened;
     this.sidebarRef.toggle();
+  }
+
+  private removeDuplicatedSlashesForUrl(url: string): string {
+    return url.replace(/(?<!:)\/{2,}/g, '/');
   }
 }

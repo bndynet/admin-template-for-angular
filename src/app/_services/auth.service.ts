@@ -85,6 +85,7 @@ export class AuthService {
             !userRoles ||
             submenu.roles.filter((role) => userRoles.includes(role)).length > 0
           ) {
+            submenu._parent = menuItem;
             filterSubmenu(submenu, userRoles);
             result.push(submenu);
           }

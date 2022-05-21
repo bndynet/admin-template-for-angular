@@ -15,18 +15,18 @@ export class MenuComponent implements OnInit {
   public collapsed = true;
   public activeMenu: MenuEntity;
 
-  constructor(private app: AppService, private router: Router) {
-    this.app.navMenuChanged.subscribe((menu: MenuEntity) => {
+  constructor(private app: AppService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.app.navMenuChanged$.subscribe((menu: MenuEntity) => {
       this.activeMenu = menu;
     });
   }
 
-  ngOnInit(): void {}
-
   onClickMenu(menu: MenuEntity, event: Event): void {
     event.preventDefault();
     menu._collapsed = !menu._collapsed;
-    this.app.navMenuChanged.emit(menu);
+    this.app.activeMenu(menu);
     if (menu.link) {
       this.router.navigate([menu.link]);
     }

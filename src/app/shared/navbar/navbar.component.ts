@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
   public newMessageCount = 0;
   public searchKeywords: string;
   public searchEnabled: boolean;
+  public activeMenu?: MenuEntity;
   public themes;
 
   constructor(
@@ -41,6 +42,14 @@ export class NavbarComponent implements OnInit {
         this.userRoles = (res.roles || []).map((r) => app.roles[r] || r);
       } else {
         this.appService.logout();
+      }
+    });
+
+    this.appService.navMenuChanged$.subscribe((m) => {
+      let parent = m._parent;
+      while (parent) {
+        this.activeMenu = this.menus.find((m) => m === parent);
+        parent = parent._parent;
       }
     });
 
@@ -65,7 +74,7 @@ export class NavbarComponent implements OnInit {
         // TODO: handle read message
         message.read = true;
         this.newMessageCount -= 1;
-        this.appService.notificaiton.info('You have read this message.');
+        this.appService.notification.info('You have read this message.');
       },
       {
         contentAlign: 'start',
@@ -97,9 +106,13 @@ export class NavbarComponent implements OnInit {
     this.appService.logout();
   }
 
+  trackMenusByIndex(index: number, _menu: MenuEntity): number {
+    return index;
+  }
+
   private gotoMenu(menu: MenuEntity): void {
     if (menu.link) {
-      this.appService.navMenuChanged.emit(menu);
+      this.appService.activeMenu(menu);
       this.router.navigate([menu.link]);
     } else if (menu.children && menu.children.length > 0) {
       this.gotoMenu(menu.children[0]);
