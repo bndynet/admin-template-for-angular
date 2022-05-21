@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
 
     this.router.events.subscribe((event: RouterEvent) => {
       if (event instanceof NavigationError) {
-        this.appService.notificaiton.error((event as NavigationError).error);
+        this.appService.notification.error((event as NavigationError).error);
       }
 
       if (event instanceof NavigationStart) {

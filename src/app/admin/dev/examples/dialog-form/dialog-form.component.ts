@@ -29,7 +29,7 @@ export class DialogFormComponent implements OnInit {
       this.close();
       this.pending = false;
       this.app.status.requested();
-      this.app.notificaiton.info(`Saving ${name} ...`);
+      this.app.notification.info(`Saving ${name} ...`);
     }, 3000);
   }
 }

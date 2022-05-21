@@ -105,7 +105,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   search(keywords: string): void {
     // TODO:
-    this.app.notificaiton.info(`TODO: search ${keywords}`);
+    this.app.notification.info(`TODO: search ${keywords}`);
   }
 
   getAnimationData(outlet: RouterOutlet): any {

@@ -22,7 +22,7 @@ export class DialogService {
   constructor(
     private dialog: MatDialog,
     public status: StatusService,
-    public notificaiton: NotificationService
+    public notification: NotificationService
   ) {}
 
   open<TDialog, TDialogConfig>(

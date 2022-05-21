@@ -38,7 +38,7 @@ export const menus: MenuEntity[] = [
             text: 'Components',
             children: [
               {
-                text: 'Form Compoents',
+                text: 'Form Components',
                 children: [
                   {
                     text: 'Reactive Forms',

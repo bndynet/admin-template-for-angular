@@ -41,14 +41,14 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(authReq).pipe(
           tap((evt) => {
             if (evt instanceof HttpResponse) {
-              // here to handle common repsonse
+              // here to handle common response
             }
           }),
           catchError((err) => {
             if (err instanceof HttpErrorResponse) {
               const isIgnored = isMatch(req.url, urlsToIgnoreResponseError);
               if (!isIgnored) {
-                this.app.notificaiton.error(`${err.message}`);
+                this.app.notification.error(`${err.message}`);
                 switch (err.status) {
                   case 404:
                     break;

@@ -30,7 +30,7 @@ export class AppService {
     public theme: ThemeService,
     public dialog: DialogService,
     public status: StatusService,
-    public notificaiton: NotificationService
+    public notification: NotificationService
   ) {
     this.clientTrackingID = stringUtils.getRandomId();
     this.titleService.setTitle(app.title);
