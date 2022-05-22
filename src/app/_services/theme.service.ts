@@ -15,6 +15,10 @@ export class ThemeService {
     return document.body.classList.contains('is-dark');
   }
 
+  getCurrentTheme(): string | null {
+    return localStorage.getItem(KEY_THEME);
+  }
+
   changeTheme(themeKey: string): Observable<ThemeEntity> {
     const darkClassName = 'is-dark';
 
