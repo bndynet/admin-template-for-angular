@@ -1,6 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuEntity, MessageEntity, UserInfo } from 'src/app/app-types';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Menu, MessageEntity, UserInfo } from 'src/app/app-types';
 import { AuthService, EventsService } from 'src/app/_services';
 import { AppService } from 'src/app/_services/app.service';
 import { app, convertMessages } from 'src/config';
@@ -10,9 +20,9 @@ import { app, convertMessages } from 'src/config';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit {
-  @Input() menus: MenuEntity[];
-  @Output() menuClick = new EventEmitter<MenuEntity>();
+export class NavbarComponent implements OnInit, OnChanges, OnDestroy {
+  @Input() menus: Menu[];
+  @Output() menuClick = new EventEmitter<Menu>();
   @Output() search = new EventEmitter<string>();
 
   public messages: MessageEntity[];
@@ -21,11 +31,13 @@ export class NavbarComponent implements OnInit {
   public newMessageCount = 0;
   public searchKeywords: string;
   public searchEnabled: boolean;
-  public activeMenu?: MenuEntity;
+  public activeMenu?: Menu;
   public themes;
 
+  private menusActiveSub: Subscription;
+  private destroyed$ = new Subject();
+
   constructor(
-    private router: Router,
     private auth: AuthService,
     private events: EventsService,
     private appService: AppService
@@ -39,17 +51,9 @@ export class NavbarComponent implements OnInit {
     this.auth.getUser().subscribe((res) => {
       this.userInfo = res;
       if (this.userInfo) {
-        this.userRoles = (res.roles || []).map((r) => app.roles[r] || r);
+        this.userRoles = res.roles || [];
       } else {
         this.appService.logout();
-      }
-    });
-
-    this.appService.navMenuChanged$.subscribe((m) => {
-      let parent = m._parent;
-      while (parent) {
-        this.activeMenu = this.menus.find((m) => m === parent);
-        parent = parent._parent;
       }
     });
 
@@ -60,6 +64,24 @@ export class NavbarComponent implements OnInit {
         (message) => !message.read
       ).length;
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.menus && changes.menus.currentValue) {
+      if (this.menusActiveSub) {
+        return;
+      }
+      this.menusActiveSub = this.appService.menusActive$
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe((menus): void => {
+          this.activeMenu = this.menus?.find((m) => m === menus[0]);
+        });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   toggleSidebar(): void {
@@ -85,9 +107,12 @@ export class NavbarComponent implements OnInit {
     );
   }
 
-  goto(menu: MenuEntity): void {
-    this.menuClick.emit(menu);
-    this.gotoMenu(menu);
+  goto(menu: Menu): void {
+    if (this.activeMenu !== menu) {
+      this.activeMenu = menu;
+      this.menuClick.emit(menu);
+      this.appService.activeMenu(menu);
+    }
   }
 
   changeTheme(themeKey: string): void {
@@ -106,16 +131,7 @@ export class NavbarComponent implements OnInit {
     this.appService.logout();
   }
 
-  trackMenusByIndex(index: number, _menu: MenuEntity): number {
+  trackMenusByIndex(index: number, _menu: Menu): number {
     return index;
-  }
-
-  private gotoMenu(menu: MenuEntity): void {
-    if (menu.link) {
-      this.appService.activeMenu(menu);
-      this.router.navigate([menu.link]);
-    } else if (menu.children && menu.children.length > 0) {
-      this.gotoMenu(menu.children[0]);
-    }
   }
 }

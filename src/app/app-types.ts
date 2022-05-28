@@ -38,10 +38,10 @@ export enum AuthType {
 }
 
 // TODO: define your roles
-export const roles = {
-  docs: 'role_docs',
-  admin: 'role_admin',
-};
+export enum Role {
+  Admin = 'role_admin',
+  Doc = 'role_doc',
+}
 
 // you can find all country flags in http://hjnilsson.github.io/country-flags/
 export const Langs = [
@@ -60,20 +60,30 @@ export const Langs = [
 ];
 
 export interface MenuEntity {
+  text: string;
   icon?: string;
-  text?: string;
   link?: string;
   roles?: string[];
   children?: MenuEntity[];
+  enable?:
+    | ((userRoles: Role[], thisMenu: MenuEntity) => Observable<boolean>)
+    | Observable<boolean>;
+}
+
+export interface Menu extends Omit<MenuEntity, 'children'> {
+  _id?: string;
+  _level?: number;
   _collapsed?: boolean;
-  _parent?: MenuEntity;
+  _parent?: Menu;
+  _children?: Menu[];
+  _children$?: Observable<Menu[]>;
 }
 
 export interface UserInfo {
   name: string;
   title?: string;
   avatar?: string;
-  roles?: string[];
+  roles?: Role[];
   accessToken?: string;
 }
 

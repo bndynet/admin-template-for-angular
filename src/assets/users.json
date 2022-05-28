@@ -1,0 +1,20 @@
+[
+  {
+    "username": "admin",
+    "name": "Bendy Zhang",
+    "title": "Software Engineer & Web Developer",
+    "avatar": "assets/images/my-logo.png",
+    "roles": ["role_admin", "role_doc"]
+  },
+  {
+    "username": "doc",
+    "title": "Documenter",
+    "avatar": "assets/images/my-logo.png",
+    "roles": ["role_doc"]
+  },
+  {
+    "title": "Anonymous User",
+    "avatar": "assets/images/my-logo.png",
+    "roles": []
+  }
+]

@@ -40,9 +40,10 @@
     }
 
     &.active {
-      .mat-list-item-content {
-        background-color: rgba(0, 0, 0, 0.12);
-        border-left-color: $color-primary;
+      &.is-leaf {
+        .mat-list-item-content { 
+          background-color: rgba(0, 0, 0, 0.12);
+        }
       }
     }
   }

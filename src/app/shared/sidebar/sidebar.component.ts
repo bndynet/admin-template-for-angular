@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import moment from 'moment';
-import { MenuEntity } from 'src/app/app-types';
+import { Menu } from 'src/app/app-types';
 
 @Component({
   selector: 'el-sidebar',
@@ -8,7 +8,7 @@ import { MenuEntity } from 'src/app/app-types';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SideBarComponent implements OnInit {
-  @Input() menus: MenuEntity[];
+  @Input() menus: Menu[];
 
   tooltip: string;
 

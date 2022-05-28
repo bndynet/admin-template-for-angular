@@ -20,8 +20,7 @@ export class AuthLocalHandler implements AuthHandler {
   private isAuthenticated: boolean;
   private storage = localStorage;
 
-  private getUserInfoSubject$ = new BehaviorSubject<UserInfo>(null);
-  public getUserInfo$ = this.getUserInfoSubject$.asObservable();
+  public getUserInfo$ = new ReplaySubject<UserInfo>(1);
 
   private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject$.asObservable();
@@ -36,7 +35,7 @@ export class AuthLocalHandler implements AuthHandler {
       this.isAuthenticated = true;
     }
     this.isAuthenticatedSubject$.next(this.isAuthenticated);
-    this.getUserInfoSubject$.next(this.userInfo);
+    this.getUserInfo$.next(this.userInfo);
     this.isDoneAuthSubject$.next(true);
   }
 
@@ -63,15 +62,17 @@ export class AuthLocalHandler implements AuthHandler {
       return;
     }
 
-    return this.http.get(getLocalUrl(`/assets/user.json`)).pipe(
-      map((response) => {
+    return this.http.get(getLocalUrl(`/assets/users.json`)).pipe(
+      map((users: any[]) => {
         // TODO: convert to UserInfo from backend response
-        this.userInfo = (username
-          ? {
-              ...response,
-              ...{ name: username, accessToken: password },
-            }
-          : response) as UserInfo;
+        this.userInfo = users.find((u) => u.username === username);
+        if (!this.userInfo) {
+          this.userInfo = { ...users[users.length - 1], name: username };
+        }
+        if (!this.userInfo.name) {
+          this.userInfo.name = username;
+        }
+
         this.tokenInfo = {
           accessToken: password,
         };
@@ -81,7 +82,7 @@ export class AuthLocalHandler implements AuthHandler {
         this.isAuthenticated = true;
         this.isAuthenticatedSubject$.next(this.isAuthenticated);
         this.isDoneAuthSubject$.next(true);
-        this.getUserInfoSubject$.next(this.userInfo);
+        this.getUserInfo$.next(this.userInfo);
 
         if (this.storage.getItem(KEY_BACK_URL) || targetUrl) {
           this.router.navigateByUrl(
@@ -102,9 +103,9 @@ export class AuthLocalHandler implements AuthHandler {
     this.isAuthenticated = false;
     this.isAuthenticatedSubject$.next(this.isAuthenticated);
 
-    // TODO: use corrent url to log out
+    // TODO: use correct url to log out
     this.http
-      .get(getLocalUrl('/assets/user.json'))
+      .get(getLocalUrl('/assets/users.json'))
       .pipe(tap(() => this.router.navigate(['/logout'])))
       .subscribe();
   }

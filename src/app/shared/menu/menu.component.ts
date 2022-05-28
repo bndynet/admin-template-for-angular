@@ -1,6 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuEntity } from 'src/app/app-types';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+} from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
+import { finalize, takeUntil } from 'rxjs/operators';
+import { Menu } from 'src/app/app-types';
 import { AppService } from 'src/app/_services';
 
 @Component({
@@ -8,27 +16,55 @@ import { AppService } from 'src/app/_services';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
 })
-export class MenuComponent implements OnInit {
-  @Input() data: MenuEntity[];
+export class MenuComponent implements OnChanges, OnDestroy {
   @Input() level = 0;
+  @Input() data: Menu[];
 
   public collapsed = true;
-  public activeMenu: MenuEntity;
+  public activeMenu: Menu;
 
-  constructor(private app: AppService, private router: Router) {}
+  private destroyed$ = new Subject();
+  private menusActiveSub: Subscription;
 
-  ngOnInit(): void {
-    this.app.navMenuChanged$.subscribe((menu: MenuEntity) => {
-      this.activeMenu = menu;
-    });
+  constructor(
+    private appService: AppService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.data && changes.data.currentValue) {
+      changes.data.currentValue.forEach((menu: Menu) => {
+        menu._children$ = this.appService.auth.getSubMenus(menu).pipe(
+          finalize(() => {
+            this.changeDetectorRef.detectChanges();
+          })
+        );
+      });
+
+      if (this.menusActiveSub) {
+        this.menusActiveSub.unsubscribe();
+      }
+      this.menusActiveSub = this.appService.menusActive$
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe((menus: Menu[]) => {
+          this.activeMenu = this.data?.find((item) => menus.includes(item));
+        });
+    }
   }
 
-  onClickMenu(menu: MenuEntity, event: Event): void {
-    event.preventDefault();
-    menu._collapsed = !menu._collapsed;
-    this.app.activeMenu(menu);
-    if (menu.link) {
-      this.router.navigate([menu.link]);
-    }
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
+
+  onClickMenu(menu: Menu, event: Event): void {
+    this.appService.auth.getSubMenus(menu).subscribe((children) => {
+      if (children && children.length > 0) {
+        menu._collapsed = !menu._collapsed;
+      } else {
+        this.activeMenu = menu;
+        this.appService.activeMenu(menu);
+      }
+    });
   }
 }

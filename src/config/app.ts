@@ -3,12 +3,6 @@ import { ThemeEntity } from 'src/app/app-types';
 export const app = {
   title: 'Angular Starter Project by Bendy',
 
-  // TODO: use localization instead
-  roles: {
-    role_admin: 'Administrator',
-    role_doc: 'Document Owner',
-  },
-
   // TODO: define your protected page
   protectedUrlPrefixes: [], // ['/admin'];
 

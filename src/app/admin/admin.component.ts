@@ -1,25 +1,20 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { delay } from 'rxjs/operators';
 import { slideInAnimation } from '../animations';
-import { MenuEntity } from '../app-types';
+import { Menu } from '../app-types';
 import {
   AppService,
+  AuthService,
   EventsService,
+  MenuService,
   NotificationOptions,
   NotificationService,
   Status,
   StatusService,
 } from '../_services';
-import { menus } from './menus';
 
 @Component({
   selector: 'app-admin',
@@ -27,7 +22,7 @@ import { menus } from './menus';
   styleUrls: ['./admin.component.scss'],
   animations: [slideInAnimation],
 })
-export class AdminComponent implements OnInit, AfterViewInit {
+export class AdminComponent implements OnInit {
   @ViewChild('sidebar') sidebarRef: MatSidenav;
 
   sidebarHasBackdrop = false;
@@ -35,46 +30,44 @@ export class AdminComponent implements OnInit, AfterViewInit {
   sidebarOpened = true;
   contentSidebarOpened = false;
   showProgressbar = false;
-  menus: MenuEntity[];
-  subMenus: MenuEntity[];
+  menus: Menu[];
+  activeRootMenu?: Menu;
+  subMenus: Menu[];
   menuLoading = false;
 
   constructor(
     private app: AppService,
+    private auth: AuthService,
     private events: EventsService,
     private router: Router,
     private status: StatusService,
     private snackBar: MatSnackBar,
     private notification: NotificationService,
+    private menuService: MenuService,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    const currentUrl = location.href;
     this.menuLoading = true;
 
-    this.app.auth.getMenu(menus).subscribe((userMenu: MenuEntity[]) => {
-      const flattedMenus = this.app.flatMenus(userMenu);
-      const matchedMenu = flattedMenus.find(
-        (fm) =>
-          fm.link &&
-          currentUrl.startsWith(
-            this.removeDuplicatedSlashesForUrl(`${this.app.baseUrl}${fm.link}`)
-          )
-      );
+    this.app.auth.getRootMenus().subscribe((userMenus: Menu[]) => {
+      this.menus = userMenus;
 
-      this.menus = userMenu;
-      if (matchedMenu) {
-        let rootOfMatchedMenu = matchedMenu;
-        while (rootOfMatchedMenu._parent) {
-          rootOfMatchedMenu = rootOfMatchedMenu._parent;
+      let rootMenu = this.menus[0];
+
+      const activeMenu = this.menuService.getCurrentMenuByUrl(this.app.baseUrl);
+      if (activeMenu) {
+        const parentMenus = this.menuService.getParentMenus(activeMenu);
+        if (parentMenus.length > 0) {
+          rootMenu = parentMenus[0];
         }
-        this.subMenus = rootOfMatchedMenu.children;
-        this.app.activeMenu(matchedMenu);
-      } else {
-        this.subMenus = this.menus[0].children;
+        this.app.activeMenu(activeMenu);
       }
+      this.app.auth.getSubMenus(rootMenu).subscribe((submenus) => {
+        this.subMenus = submenus;
+      });
 
+      this.activeRootMenu = rootMenu;
       this.menuLoading = false;
     });
 
@@ -116,10 +109,16 @@ export class AdminComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {}
-
-  clickNavMenu(menu: MenuEntity): void {
-    this.subMenus = menu.children;
+  clickNavMenu(menu: Menu): void {
+    if (this.activeRootMenu !== menu) {
+      this.menuLoading = true;
+      this.activeRootMenu = menu;
+      this.subMenus = [];
+      this.auth.getSubMenus(menu).subscribe((menus) => {
+        this.subMenus = menus;
+        this.menuLoading = false;
+      });
+    }
   }
 
   search(keywords: string): void {

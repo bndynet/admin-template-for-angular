@@ -1,21 +1,40 @@
-import { MenuEntity, roles } from '../app-types';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
+import { MenuEntity, Role } from '../app-types';
 import { menus as devMenus } from './dev/menus';
 
 export const menus: MenuEntity[] = [
   ...devMenus,
   {
+    icon: 'info',
     text: 'HELLO',
     children: [
       {
-        text: 'World',
+        text: 'hi',
         link: '/admin/hello',
+      },
+      {
+        text: 'enable: (Role[]) => if admin',
+        enable: (userRoles: Role[]) => {
+          return of(userRoles.includes(Role.Admin));
+        },
+      },
+      {
+        text: 'enable: () => Observable<boolean>',
+        enable: () => {
+          return of(true).pipe(delay(2000));
+        },
+      },
+      {
+        text: 'enable: Observable<boolean>',
+        enable: of(true).pipe(delay(3000)),
       },
     ],
   },
   {
-    text: 'DOCS',
-    link: '',
-    roles: [roles.docs],
+    icon: 'menu_book',
+    text: 'DOC',
+    roles: [Role.Doc],
     children: [
       {
         text: 'Introduction',
@@ -65,18 +84,7 @@ export const menus: MenuEntity[] = [
   },
   {
     text: 'ADMIN',
-    link: '',
-    roles: [roles.admin],
-    children: [
-      {
-        icon: 'tag',
-        text: 'MENU',
-      },
-    ],
-  },
-  {
-    text: 'EVENTS',
-    link: '',
+    roles: [Role.Admin],
     children: [
       {
         icon: 'tag',

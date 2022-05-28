@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { combineLatest, forkJoin, Observable, of } from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { AuthHandler, AuthType, MenuEntity, UserInfo } from '../app-types';
+import {
+  AuthHandler,
+  AuthType,
+  Menu,
+  MenuEntity,
+  UserInfo,
+} from '../app-types';
 import { AuthLocalHandler } from './auth-local-handler';
 import { AuthOAuthHandler, TokenInfo } from './auth-oauth-handler';
+import { MenuService } from './menu.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +23,8 @@ export class AuthService {
 
   constructor(
     private authLocal: AuthLocalHandler,
-    private authOAuth: AuthOAuthHandler
+    private authOAuth: AuthOAuthHandler,
+    private menuService: MenuService
   ) {
     this.setAuthType();
   }
@@ -69,48 +77,53 @@ export class AuthService {
   }
 
   getUser(): Observable<UserInfo> {
-    return this.authHandler.getUserInfo$;
+    return this.authHandler.getUserInfo$.pipe(take(1));
   }
 
-  getMenu(menu: MenuEntity[]): Observable<MenuEntity[]> {
-    const filterSubmenu = (
-      menuItem: MenuEntity,
-      userRoles: string[]
-    ): MenuEntity[] => {
-      const result: MenuEntity[] = [];
-      if (menuItem.children) {
-        menuItem.children.forEach((submenu) => {
-          if (
-            !submenu.roles ||
-            !userRoles ||
-            submenu.roles.filter((role) => userRoles.includes(role)).length > 0
-          ) {
-            submenu._parent = menuItem;
-            filterSubmenu(submenu, userRoles);
-            result.push(submenu);
-          }
-        });
-      }
-      menuItem.children = result;
-      return result;
-    };
+  getRootMenus(): Observable<Menu[]> {
+    return this.filterMenus(this.menuService.getAll());
+  }
 
+  public hasMenu(menu?: Menu): Observable<boolean> {
+    if (!menu) {
+      return of(false);
+    }
     return this.getUser().pipe(
-      map((user) =>
-        menu.filter((m) => {
-          const hasRole =
-            !m.roles ||
-            (m.roles &&
-              user.roles &&
-              m.roles.filter((role) => user.roles.includes(role)).length > 0);
+      switchMap((user) => {
+        const hasRoleForThisMenu = !!(
+          !menu.roles ||
+          user.roles?.some((userRole) => menu.roles.includes(userRole))
+        );
+        if (hasRoleForThisMenu && menu.enable) {
+          return typeof menu.enable === 'function'
+            ? menu.enable(user.roles, menu)
+            : menu.enable;
+        }
+        return of(hasRoleForThisMenu);
+      })
+    );
+  }
 
-          if (hasRole) {
-            filterSubmenu(m, user.roles);
-            return true;
-          }
-          return hasRole;
-        })
-      )
+  public getSubMenus(menu: Menu): Observable<Menu[]> {
+    if (menu._children) {
+      return of(menu._children);
+    }
+
+    return this.filterMenus((<MenuEntity>menu).children || []).pipe(
+      tap((submenus) => {
+        menu._children = submenus;
+      })
+    );
+  }
+
+  private filterMenus(menus: Menu[]): Observable<Menu[]> {
+    if (menus.length === 0) {
+      return of([]);
+    }
+    return forkJoin(menus.map((m) => this.hasMenu(m))).pipe(
+      map((enables) => {
+        return menus.filter((_, index) => enables[index]);
+      })
     );
   }
 
@@ -123,6 +136,7 @@ export class AuthService {
   }
 
   logout(): void {
+    this.menuService.reset();
     if (this.authHandler) {
       this.authHandler.logout();
     }

@@ -1,10 +1,33 @@
 <mat-nav-list class="menu">
   <ng-container *ngFor="let item of data">
-    <a mat-list-item class="level-{{level}}" [class.active]="item === activeMenu" [class.submenu-collapsed]="item._collapsed" (click)="onClickMenu(item, $event)">
-      <mat-icon *ngIf="item.icon" inline>{{item.icon}}</mat-icon>
-      <span class="menu-text" *ngIf="item.text">{{item.text}}</span>
-      <span class="icon icon-arrow" *ngIf="item.children && item.children.length > 0" [class]="{'icon-arrow-down': !item._collapsed, 'icon-arrow-up': item._collapsed}"></span>
+    <a
+      mat-list-item
+      class="level-{{ level }}"
+      [attr.id]="item._id"
+      [class.active]="item === activeMenu"
+      [class.is-leaf]="!item._children || item._children.length === 0"
+      [class.submenu-collapsed]="item._collapsed"
+      (click)="onClickMenu(item, $event)"
+    >
+      <mat-icon *ngIf="item.icon" inline>{{ item.icon }}</mat-icon>
+      <span class="menu-text" *ngIf="item.text">{{ item.text }}</span>
+      <span
+        class="icon icon-arrow"
+        *ngIf="item._children && item._children.length > 0"
+        [class]="{
+          'icon-arrow-down': !item._collapsed,
+          'icon-arrow-up': item._collapsed
+        }"
+      ></span>
     </a>
-    <el-menu class="submenu" [class]="{'collapsed': item._collapsed}" *ngIf="item.children && item.children.length > 0" [data]="item.children" [level]="level + 1"></el-menu>
+    <ng-container *ngIf="item._children$ | async as submenus">
+      <el-menu
+        class="submenu"
+        *ngIf="submenus?.length > 0"
+        [class]="{ collapsed: item._collapsed }"
+        [data]="submenus"
+        [level]="level + 1"
+      ></el-menu>
+    </ng-container>
   </ng-container>
 </mat-nav-list>
