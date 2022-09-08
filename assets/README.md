@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/bndynet/admin-template-for-angular/workflows/CI/badge.svg)
 
-An angular starter project with material design. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.3.
+An angular starter project with material design.
 
 <img src="https://static.bndy.net/images/projects/admin-template-for-angular.gif">
 
