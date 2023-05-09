@@ -30,6 +30,10 @@ To get help on Angular CLI use `ng help` or click [here](https://angular.io/cli)
 
 `npm start` and open [local site](http://localhost:9000/)
 
+`ng generate module admin/logs --routing` to create a new module in admin folder, do not forget to import it in **admin.module.ts** and add routing in **admin-routing.module.ts** file.
+
+`ng generate component admin/logs/my-log --skip-tests --module=logs` to add new component in **logs** module
+
 ## Theming your components
 
 ```scss
