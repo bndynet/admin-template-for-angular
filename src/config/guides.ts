@@ -21,7 +21,7 @@ export const getGuides = (appService: AppService): IGuideItem[] => [
         </ul>
         `,
         bordered: true,
-        position: 'right',
+        side: 'right',
       },
     ],
   },

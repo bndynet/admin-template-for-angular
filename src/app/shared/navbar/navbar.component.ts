@@ -35,7 +35,7 @@ export class NavbarComponent implements OnInit, OnChanges, OnDestroy {
   public themes;
 
   private menusActiveSub: Subscription;
-  private destroyed$ = new Subject();
+  private destroyed$ = new Subject<void>();
 
   constructor(
     private auth: AuthService,

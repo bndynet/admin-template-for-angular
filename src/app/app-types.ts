@@ -49,13 +49,13 @@ export const Langs = [
     label: '简体中文',
     value: 'zh-CN',
     icon:
-      'https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/cn.svg',
+      'https://flagcdn.com/h20/cn.png',
   },
   {
     label: 'English (United States)',
     value: 'en-US',
     icon:
-      'https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/us.svg',
+      'https://flagcdn.com/h20/us.png',
   },
 ];
 

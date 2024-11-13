@@ -13,20 +13,10 @@
 
       &:last-child {
         button {
-          margin-left: 1rem;
+          // margin-left: 1rem;
         }
       }
     }
-  }
-
-  ::ng-deep el-lang-menu + mat-menu + button {
-    margin-left: 0 !important;
-  }
-
-  ::ng-deep .mat-badge-content {
-    font-weight: normal;
-    right: -8px !important;
-    top: -8px !important;
   }
 
   .logo-wrapper {
@@ -50,12 +40,13 @@
   }
 
   .btn-avatar {
-    ::ng-deep .mat-button-wrapper {
-      line-height: 0 !important;
-      position: relative;
-      top: -1px;
-    }
+    padding: 8px !important;
   }
+}
+
+nav {
+  display: inline-flex;
+  align-items: center;
 }
 
 .search-container {
@@ -84,11 +75,11 @@
 }
 
 ::ng-deep.theme-list {
-  .mat-menu-content {
+  .mat-mdc-menu-content {
     display: flex;
     padding: 0.5rem;
 
-    .mat-menu-item {
+    .mat-mdc-menu-item {
       height: 50px;
       padding: 0.5rem;
       width: 50px;

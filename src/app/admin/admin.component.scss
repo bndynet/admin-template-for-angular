@@ -10,7 +10,7 @@
     height: 100%;
   }
 
-  .mat-progress-bar {
+  .mat-mdc-progress-bar {
     position: absolute;
   }
 
@@ -31,7 +31,7 @@
         overflow-x: hidden;
       }
 
-      ::ng-deep .mat-drawer {
+      ::ng-deep .mat-mdc-drawer {
         position: fixed;
         top: $navbar-height;
       }

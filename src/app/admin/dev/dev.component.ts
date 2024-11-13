@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { NavigationEnd, Router, Event } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 
@@ -29,14 +29,17 @@ export class DevComponent implements OnInit, OnDestroy {
   };
   private subs = new Subscription();
 
-  constructor(private router: Router, private http: HttpClient) {
-    this.router.events.subscribe((event: RouterEvent) => {
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+  ) {
+    this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         const url = event.urlAfterRedirects;
         const compName = url.split('/')[url.split('/').length - 1];
         const compPath = `${url.replace(
           '/admin/',
-          'assets/'
+          'assets/',
         )}/${compName}.component`;
 
         this.title = compName.toUpperCase().replace('-', ' ');
@@ -80,11 +83,11 @@ export class DevComponent implements OnInit, OnDestroy {
             }),
             finalize(() => {
               this.loadingCode = false;
-            })
+            }),
           )
           .subscribe((code) => {
             compFile.code = code;
-          })
+          }),
       );
     }
   }

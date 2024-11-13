@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  Event,
   NavigationEnd,
   NavigationError,
   NavigationStart,
   Router,
-  RouterEvent,
 } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { app } from 'src/config';
@@ -21,12 +21,12 @@ export class AppComponent implements OnInit {
     private router: Router,
     private i18n: I18nService,
     private appService: AppService,
-    private oauthService: OAuthService
+    private oauthService: OAuthService,
   ) {
     this.appService.init();
     this.i18n.init();
 
-    this.router.events.subscribe((event: RouterEvent) => {
+    this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationError) {
         this.appService.notification.error((event as NavigationError).error);
       }
@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
         onRouteChanged(event, this.appService);
         if (
           app.protectedUrlPrefixes.find((prefix) =>
-            event.url.startsWith(prefix)
+            event.url.startsWith(prefix),
           )
         ) {
           // this.appService.auth.isAuthenticated().subscribe((val) => {

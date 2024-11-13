@@ -1,11 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
-import { stringUtils } from '@bndynet/utils';
-import { BehaviorSubject, interval, Observable, of } from 'rxjs';
-import { mergeMap, switchMap } from 'rxjs/operators';
-import { app } from 'src/config';
-import { getLocalUrl } from 'src/utils';
+import { BehaviorSubject, interval, mergeMap, Observable, of, switchMap } from 'rxjs';
 import { Menu, MessageEntity } from '../app-types';
 import { AuthService } from './auth.service';
 import { DialogService } from './dialog.service';
@@ -15,6 +11,9 @@ import { NotificationService } from './notification.service';
 import { StatusService } from './status.service';
 import { KEY_THEME, ThemeService } from './theme.service';
 import { TitleService } from './title.service';
+import * as utils from '@bndynet/utils';
+import { getLocalUrl } from 'src/utils';
+import { app } from 'src/config';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +35,7 @@ export class AppService {
     public status: StatusService,
     public notification: NotificationService
   ) {
-    this.clientTrackingID = stringUtils.getRandomId();
+    this.clientTrackingID = utils.string.getRandomId();
     this.titleService.setTitle(app.title);
 
     const themeName = localStorage.getItem(KEY_THEME);

@@ -1,4 +1,4 @@
-<button type="button" mat-button [matMenuTriggerFor]="menu">
+<button type="button" mat-icon-button [matMenuTriggerFor]="menu">
   <img [src]="currentLang.icon" *ngIf="!viewTemplate">
   <ng-container *ngTemplateOutlet="viewTemplate; context: { $implicit: currentLang}"></ng-container>
 </button>

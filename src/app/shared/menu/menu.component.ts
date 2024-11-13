@@ -23,7 +23,7 @@ export class MenuComponent implements OnChanges, OnDestroy {
   public collapsed = true;
   public activeMenu: Menu;
 
-  private destroyed$ = new Subject();
+  private destroyed$ = new Subject<void>();
   private menusActiveSub: Subscription;
 
   constructor(

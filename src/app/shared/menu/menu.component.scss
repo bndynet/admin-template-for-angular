@@ -1,9 +1,14 @@
 @import '../../../styles/theme';
 
+a {
+  display: flex;
+  align-items: center;
+}
+
 ::ng-deep .menu {
   display: block;
 
-  &.mat-list-base .mat-list-item {
+  &.mat-mdc-list-base .mat-mdc-list-item {
     font-size: 0.875rem;
   }
 
@@ -13,10 +18,10 @@
   }
 
   @for $level from 1 to 10 {
-    ::ng-deep.mat-list-item.level-#{$level} {
+    ::ng-deep.mat-mdc-list-item.level-#{$level} {
       height: 42px;
 
-      .mat-list-item-content {
+      .mat-mdc-list-item-content {
         padding-left: #{16 * $level + 16}px !important;
 
         .menu-text {
@@ -28,20 +33,20 @@
 
   .mat-icon {
     align-items: center;
-    display: flex;
+    display: inline-flex;
   }
 
-  .mat-list-item {
+  .mat-mdc-list-item {
     height: 42px !important;
 
-    .mat-list-item-content {
+    .mat-mdc-list-item-content {
       border-left: solid 5px transparent;
       width: auto;
     }
 
     &.active {
       &.is-leaf {
-        .mat-list-item-content { 
+        .mat-mdc-list-item-content { 
           background-color: rgba(0, 0, 0, 0.12);
         }
       }
@@ -67,8 +72,8 @@
 @include each-themes using ($name, $theme) {
   :host {
     ::ng-deep .menu {
-      .mat-list-item.active {
-        .mat-list-item-content {
+      .mat-mdc-list-item.active {
+        .mat-mdc-list-item-content {
           border-left-color: get($name, 'primary');
         }
       }

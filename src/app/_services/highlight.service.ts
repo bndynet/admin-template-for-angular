@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import Driver from 'driver.js';
+import { Alignment, driver, Driver, DriveStep, Side } from 'driver.js';
 import { forkJoin, Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { I18nService } from './i18n.service';
+import { Config } from 'protractor';
 
 const BORDERED_CLASS_NAME_FOR_BODY = 'highlight-service-bordered';
 
@@ -17,7 +18,7 @@ export class HighlightService {
   public destory(): void {
     this.clearTemporarySettings();
     this.drivers.forEach((d) => {
-      d.reset();
+      d.destroy();
     });
   }
 
@@ -32,7 +33,7 @@ export class HighlightService {
     })
       .pipe(delay(100))
       .subscribe((driver) => {
-        const driverOptions: Driver.Step = this.convertToDriverOption(option);
+        const driverOptions: DriveStep = this.convertToDriverStep(option);
         driver.highlight(driverOptions);
         if (option.bordered) {
           document.body.classList.add(BORDERED_CLASS_NAME_FOR_BODY);
@@ -47,11 +48,11 @@ export class HighlightService {
     }
 
     this.getDriver().subscribe((driver) => {
-      const finalOptions: Driver.Step[] = options.map(
-        this.convertToDriverOption
+      const finalOptions: DriveStep[] = options.map(
+        this.convertToDriverStep
       );
-      driver.defineSteps(finalOptions);
-      driver.start();
+      driver.setSteps(finalOptions);
+      driver.drive();
     });
   }
 
@@ -59,57 +60,46 @@ export class HighlightService {
     document.body.classList.remove(BORDERED_CLASS_NAME_FOR_BODY);
   }
 
-  private convertToDriverOption(option: IHighlightOption): any {
-    const driverOption: Driver.Step = {
+  private convertToDriverStep(option: IHighlightOption): any {
+    const driverOption: DriveStep = {
       element: `#${option.elementId}`,
       popover: {
-        className: `${option.className ?? ''} ${
+        popoverClass: `${option.className ?? ''} ${
           !option.title ? 'no-title' : ''
         }`,
         title: !option.title && option.description ? 'No Title' : option.title,
         description: option.description,
-        position: option.position,
+        side: option.side,
+        align: option.align,
       },
     };
-    if (typeof option.background !== 'undefined') {
-      driverOption.stageBackground = option.background;
-    }
-    if (typeof option.popoverOffset !== 'undefined') {
-      driverOption.popover.offset = option.popoverOffset;
-    }
+
     return driverOption;
   }
 
-  private getDriver(options?: Driver.DriverOptions): Observable<Driver> {
+  private getDriver(config?: Config): Observable<Driver> {
     const doneText$ = this.i18n.translate('done');
     const closeText$ = this.i18n.translate('close');
     const nextText$ = this.i18n.translate('next');
     const previousText$ = this.i18n.translate('previous');
     return forkJoin([doneText$, closeText$, nextText$, previousText$]).pipe(
       map((res: string[]) => {
-        const d = new Driver({
+        const d = driver({
           // className: '', // wrap driver.js popover
           animate: true, // Whether to animate or not
-          opacity: 0.75, // Background opacity (0 means only popovers and without overlay)
-          padding: 10, // Distance of element from around the edges
+          overlayOpacity: 0.75, // Background opacity (0 means only popovers and without overlay)
+          stagePadding: 10, // Distance of element from around the edges
           allowClose: true, // Whether the click on overlay should close or not
-          overlayClickNext: true, // Whether the click on overlay should move next
           doneBtnText: res[0], // Text on the final button
-          closeBtnText: res[1], // Text on the close button for this step
-          stageBackground: '#ffffff', // Background color for the staged behind highlighted element
           nextBtnText: res[2], // Next button text for this step
           prevBtnText: res[3], // Previous button text for this step
-          showButtons: true, // Do not show control buttons in footer
-          keyboardControl: true, // Allow controlling through keyboard (escape to close, arrow keys to move)
-          scrollIntoViewOptions: {}, // We use `scrollIntoView()` when possible, pass here the options for it if you want any
+          showButtons: ['next', 'previous', 'close'], // Do not show control buttons in footer
+          allowKeyboardControl: true, // Allow controlling through keyboard (escape to close, arrow keys to move)
           onHighlightStarted: (element) => {}, // Called when element is about to be highlighted
           onHighlighted: (element) => {}, // Called when element is fully highlighted
           onDeselected: (element) => {}, // Called when element has been deselected
-          onReset: (element) => {}, // Called when overlay is about to be cleared
-          onNext: (element) => {}, // Called when moving to next step on any step
-          onPrevious: (element) => {}, // Called when moving to previous step on any step
 
-          ...(options ?? {}),
+          ...(config ?? {}),
         });
         this.drivers.push(d);
         return d;
@@ -125,6 +115,7 @@ export interface IHighlightOption {
   bordered?: boolean;
   title?: string;
   description?: string;
-  position?: string;
+  side?: Side;
+  align?: Alignment;
   popoverOffset?: number;
 }

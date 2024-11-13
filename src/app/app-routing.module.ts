@@ -22,7 +22,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       enableTracing: true,
-      relativeLinkResolution: 'legacy',
     }),
   ],
   exports: [RouterModule],

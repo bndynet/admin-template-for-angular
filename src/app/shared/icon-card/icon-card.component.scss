@@ -20,23 +20,23 @@
       color: rgba(#fff, 0.7);
     }
 
-    .mat-card-subtitle {
+    .mat-mdc-card-subtitle {
       color: rgba(#fff, 0.7);
     }
 
     &:hover {
-      .mat-card {
+      .mat-mdc-card {
         color: rgba(#fff, 1);
       }
 
-      .mat-card-subtitle {
+      .mat-mdc-card-subtitle {
         color: rgba(#fff, 1);
       }
     }
   }
 
-  ::ng-deep .mat-card-title:not(:first-child),
-  .mat-card-subtitle:not(:first-child) {
+  ::ng-deep .mat-mdc-card-title:not(:first-child),
+  .mat-mdc-card-subtitle:not(:first-child) {
     margin-top: 0;
   }
 }
@@ -56,11 +56,11 @@ a {
   width: inherit;
 }
 
-.mat-card-title {
+.mat-mdc-card-title {
   margin-top: 0;
 }
 
-.mat-card-footer {
+.mat-mdc-card-footer {
   display: flex;
   font-size: 0.85rem;
   text-align: center;

@@ -23,7 +23,6 @@ export const defaultXtermOptions: XtermOptions = {
   cursorStyle: 'block',
   fontSize: 14,
   lineHeight: 1.2,
-  rendererType: 'canvas',
   theme: {
     background: 'black',
   },

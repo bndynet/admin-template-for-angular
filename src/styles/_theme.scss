@@ -3,22 +3,22 @@
 
 
 // Define the default theme (same as the example above).
-$app-primary: mat.define-palette(mat.$blue-palette, 700);
-$app-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$app-theme: mat.define-light-theme($app-primary, $app-accent);
+$app-primary: mat.m2-define-palette(mat.$m2-blue-palette, 700);
+$app-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
+$app-theme: mat.m2-define-light-theme($app-primary, $app-accent);
 
-$color-primary: mat.get-color-from-palette($app-primary, default);
-$color-accent: mat.get-color-from-palette($app-accent, default);
+$color-primary: mat.m2-get-color-from-palette($app-primary, default);
+$color-accent: mat.m2-get-color-from-palette($app-accent, default);
 
 // Define your themes.
 $themes: (
   '': $app-theme,
-  popular: mat.define-light-theme(mat.define-palette(mat.$blue-grey-palette),
-  mat.define-palette(mat.$amber-palette, 900),
-  mat.define-palette(mat.$deep-orange-palette)),
-  dark: mat.define-dark-theme(mat.define-palette(mat.$blue-palette),
-  mat.define-palette(mat.$pink-palette, A200, A100, A400),
-  mat.define-palette(mat.$orange-palette))
+  popular: mat.m2-define-light-theme(mat.m2-define-palette(mat.$m2-blue-grey-palette),
+  mat.m2-define-palette(mat.$m2-amber-palette, 900),
+  mat.m2-define-palette(mat.$m2-deep-orange-palette)),
+  dark: mat.m2-define-dark-theme(mat.m2-define-palette(mat.$m2-blue-palette),
+  mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400),
+  mat.m2-define-palette(mat.$m2-orange-palette))
 );
 
 @mixin register-theme($name, $theme) {

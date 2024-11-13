@@ -35,15 +35,18 @@
     <nav>
       <button
         mat-icon-button
-        [matBadge]="newMessageCount"
-        [matBadgeHidden]="newMessageCount <= 0"
-        matBadgeColor="accent"
         [matMenuTriggerFor]="menuMessage"
         *ngIf="newMessageCount"
       >
-        <mat-icon>message</mat-icon>
+        <mat-icon
+          matBadgeColor="accent"
+          [matBadge]="newMessageCount"
+          [matBadgeHidden]="newMessageCount <= 0"
+          >message</mat-icon
+        >
       </button>
       <mat-menu
+        xPosition="before"
         #menuMessage="matMenu"
         class="message-list scrollbar"
         [hidden]="!newMessageCount"
