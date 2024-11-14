@@ -18,7 +18,8 @@
     "pull:i18n": "git subtree pull --prefix=src/assets/i18n https://github.com/bndynet/i18n.git master --squash",
     "lint:ts": "ng lint",
     "lint:style": "stylelint **/*.scss --fix",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -88,11 +89,6 @@
     "tslint": "~6.1.3",
     "typescript": "~5.4.0",
     "watch": "^1.0.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "*.ts": [
