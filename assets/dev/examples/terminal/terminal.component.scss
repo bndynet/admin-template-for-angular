@@ -1,5 +1,15 @@
-@import '~xterm/css/xterm.css';
+@import '~@xterm/xterm/css/xterm.css';
 
 #terminalConntainer {
   margin: -1rem -2rem;
+}
+
+.xterm {
+  padding: 0.5rem;
+  font-family: 'Source Code Pro', 'Courier New', 'Courier';
+
+  .xterm-cursor {
+    height: 18px !important;
+    transform: translateY(2px);
+  }
 }

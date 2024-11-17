@@ -14,17 +14,17 @@ import { ContentSidebarComponent } from '../../../../shared';
 })
 export class TableComponent implements OnInit {
   public heroes: any[] = [];
-  public activedHero: any;
+  public currentHero: any;
   public saving = false;
   public loading = false;
-  public initlizating = false;
+  public initializing = false;
 
   @ViewChild('contentSidebar') contentSidebarRef: ContentSidebarComponent;
 
   constructor(
     private http: HttpClient,
     private app: AppService,
-    private notification: NotificationService
+    private notification: NotificationService,
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +35,7 @@ export class TableComponent implements OnInit {
     if (event) {
       this.loading = true;
     } else {
-      this.initlizating = true;
+      this.initializing = true;
     }
     this.http
       .get(getLocalUrl(`/assets/heroes.json?p=${event ? event.pageIndex : 0}`))
@@ -45,15 +45,15 @@ export class TableComponent implements OnInit {
         if (event) {
           this.loading = false;
         } else {
-          this.initlizating = false;
+          this.initializing = false;
         }
       });
   }
 
   gotoDetail(id: number): void {
-    this.activedHero = Object.assign(
+    this.currentHero = Object.assign(
       {},
-      this.heroes.find((h) => h.id === id)
+      this.heroes.find((h) => h.id === id),
     );
   }
 
@@ -62,9 +62,9 @@ export class TableComponent implements OnInit {
     mockRequest().subscribe(() => {
       this.saving = false;
 
-      const index = this.heroes.findIndex((h) => h.id === this.activedHero.id);
-      this.heroes[index] = Object.assign({}, this.activedHero);
-      this.activedHero = null;
+      const index = this.heroes.findIndex((h) => h.id === this.currentHero.id);
+      this.heroes[index] = Object.assign({}, this.currentHero);
+      this.currentHero = null;
       this.notification.success('Save Successfully.');
     });
   }
@@ -76,6 +76,6 @@ export class TableComponent implements OnInit {
   }
 
   onClosedContentSidebar(): void {
-    this.activedHero = null;
+    this.currentHero = null;
   }
 }

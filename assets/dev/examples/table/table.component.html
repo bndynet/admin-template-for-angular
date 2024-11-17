@@ -1,6 +1,6 @@
 <div>
-  <el-page-loading [show]="initlizating"></el-page-loading>
-  <div class="row" *ngIf="!initlizating">
+  <el-page-loading [show]="initializing"></el-page-loading>
+  <div class="row" *ngIf="!initializing">
     <div class="fill" [vLoading]="loading" vLoadingText="Fetching data...">
       <table class="border-radius">
         <thead>
@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let hero of heroes" [ngClass]="{active: activedHero && hero.id === activedHero.id}">
+          <tr *ngFor="let hero of heroes" [ngClass]="{active: currentHero && hero.id === currentHero.id}">
             <td>{{hero.id}}</td>
             <td>{{hero.name}}</td>
             <td>
@@ -48,14 +48,13 @@
     </div>
   </div>
 
-
   <el-content-sidebar #contentSidebar elementsToOpen=".btn-edit"
-    [title]="'#' + activedHero?.id + ' ' + activedHero?.name" [progressShown]="saving" [open]="activedHero"
+    [title]="'#' + currentHero?.id + ' ' + currentHero?.name" [progressShown]="saving" [open]="currentHero"
     (closed)="onClosedContentSidebar()">
     <div class="padding">
-      <form *ngIf="activedHero" style="height: 2000px;">
+      <form *ngIf="currentHero" style="height: 2000px;">
         <mat-form-field>
-          <input matInput name="name" placeholder="Name" [(ngModel)]="activedHero.name">
+          <input matInput name="name" placeholder="Name" [(ngModel)]="currentHero.name">
         </mat-form-field>
       </form>
     </div>
