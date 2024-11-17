@@ -1,4 +1,6 @@
 :host {
+  --mdc-filled-text-field-container-color: transparent;
+
   align-items: center;
   background-color: #000;
   background-image: url('https://static.bndy.net/images/bg.jpg');
@@ -19,12 +21,12 @@
     text-align: center;
     width: 360px;
 
-    .mat-card-content {
+    .mat-mdc-card-content {
       margin-bottom: 0;
       padding: 1rem 0;
     }
 
-    .mat-card-actions {
+    .mat-mdc-card-actions {
       margin-bottom: 0.5rem;
     }
 

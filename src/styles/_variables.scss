@@ -1,16 +1,18 @@
+@use 'sass:map';
+
 $navbar-height: 64px;
 $sidebar-width: 200px;
 
 @mixin base-style($theme-name, $colorset) {
-  background-color: map-get($map: $colorset, $key: background);
-  color: map-get($map: $colorset, $key: text);
+  background-color: map.get($map: $colorset, $key: background);
+  color: map.get($map: $colorset, $key: text);
 
   a {
-    color: map-get($colorset, text);
+    color: map.get($colorset, text);
   }
 
   .text-muted {
-    color: map-get($map: $colorset, $key: secondary-text);
+    color: map.get($map: $colorset, $key: secondary-text);
   }
 }
 
@@ -26,16 +28,16 @@ $sidebar-width: 200px;
     }
 
     &::-webkit-scrollbar-track {
-      background-color: rgba(map-get($colorset, text), $alpha: 0.1);
+      background-color: rgba(map.get($colorset, text), $alpha: 0.1);
       border-radius: 5px;
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: rgba(map-get($colorset, text), $alpha: 0.4);
+      background-color: rgba(map.get($colorset, text), $alpha: 0.4);
       border-radius: 10px;
 
       &:hover {
-        background-color: rgba(map-get($colorset, text), $alpha: 0.6);
+        background-color: rgba(map.get($colorset, text), $alpha: 0.6);
       }
     }
 
@@ -52,7 +54,7 @@ $sidebar-width: 200px;
     tr {
       th,
       td {
-        border-bottom-color: map-get($map: $colorset, $key: divider) !important;
+        border-bottom-color: map.get($map: $colorset, $key: divider) !important;
       }
     }
 
@@ -67,7 +69,7 @@ $sidebar-width: 200px;
 
         &:not(.active):hover {
           td {
-            background-color: map-get($colorset, divider);
+            background-color: map.get($colorset, divider);
           }
         }
       }
@@ -78,7 +80,7 @@ $sidebar-width: 200px;
 @mixin el-sidebar($theme-name, $colorset) {
   el-sidebar {
     a.active {
-      border-left-color: map-get($map: $colorset, $key: primary) !important;
+      border-left-color: map.get($map: $colorset, $key: primary) !important;
     }
   }
 }
@@ -101,7 +103,7 @@ $sidebar-width: 200px;
   animation: 1s ease-in-out 0s infinite rotate;
   transform-origin: center;
 }
-@mixin  aggregation {
+@mixin aggregation {
   animation: 1s ease-in-out 0s infinite alternate aggregation;
 }
 
@@ -111,4 +113,3 @@ $sidebar-width: 200px;
     @content();
   }
 }
-

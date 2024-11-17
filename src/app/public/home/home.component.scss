@@ -5,7 +5,8 @@
   text-align: center;
   width: 400px;
 
-  .mat-card-actions {
+  .mat-mdc-card-actions {
+    display: block;
     padding-bottom: 2rem !important;
   }
 }

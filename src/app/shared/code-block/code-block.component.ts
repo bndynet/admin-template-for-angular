@@ -1,5 +1,6 @@
 import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, Input, OnInit } from '@angular/core';
+import { AppService } from 'src/app/_services';
 import { ThemeService } from 'src/app/_services/theme.service';
 
 @Component({
@@ -17,7 +18,11 @@ export class CodeBlockComponent implements OnInit {
 
   private themeName;
 
-  constructor(private theme: ThemeService, private clipboard: Clipboard) {
+  constructor(
+    private theme: ThemeService,
+    private clipboard: Clipboard,
+    private appService: AppService,
+  ) {
     this.theme.themeChanged.subscribe((t) => {
       if (this.theme.isDark()) {
         this.themeName = 'material';
@@ -35,6 +40,7 @@ export class CodeBlockComponent implements OnInit {
 
   copyContent(): void {
     this.clipboard.copy(this.content);
+    this.appService.notification.success('Copied Successfully');
   }
 
   getOptions(): any {

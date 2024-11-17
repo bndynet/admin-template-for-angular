@@ -31,7 +31,7 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.terminal.dispose();
+    this.terminal?.dispose();
   }
 
   changeServer(event: MatButtonToggleChange): void {

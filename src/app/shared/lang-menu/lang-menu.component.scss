@@ -1,0 +1,11 @@
+:host {
+  ::ng-deep {
+    .mdc-button {
+      min-width: 48px;
+    }
+
+    .mdc-button__label {
+      display: flex;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="login()" class="container">
-  <mat-card id="loginCard">
+  <mat-card appearance="outlined" id="loginCard">
     <el-lang-menu [viewTemplate]="langView"></el-lang-menu>
     <ng-template #langView let-lang>
       {{lang.label}}

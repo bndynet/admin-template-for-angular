@@ -5,6 +5,14 @@ a {
   align-items: center;
 }
 
+::ng-deep {
+  .mdc-list-item__content > span {
+    display: flex;
+    align-items: center;
+    padding-right: 0.25rem;
+  }
+}
+
 ::ng-deep .menu {
   display: block;
 
@@ -21,8 +29,8 @@ a {
     ::ng-deep.mat-mdc-list-item.level-#{$level} {
       height: 42px;
 
-      .mat-mdc-list-item-content {
-        padding-left: #{16 * $level + 16}px !important;
+      .mdc-list-item__content {
+        padding-left: #{16 * $level}px !important;
 
         .menu-text {
           padding-right: #{16 * $level}px !important;
@@ -46,7 +54,7 @@ a {
 
     &.active {
       &.is-leaf {
-        .mat-mdc-list-item-content { 
+        .mat-mdc-list-item-content {
           background-color: rgba(0, 0, 0, 0.12);
         }
       }
@@ -54,7 +62,7 @@ a {
   }
 
   .submenu {
-    .mat-nav-list {
+    .mat-mdc-nav-list {
       max-height: 500px;
       overflow: hidden;
       padding-top: 0;
@@ -62,7 +70,7 @@ a {
     }
 
     &.collapsed {
-      .mat-nav-list {
+      .mat-mdc-nav-list {
         max-height: 0;
       }
     }

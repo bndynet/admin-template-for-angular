@@ -8,7 +8,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { isMatch } from 'matcher';
-import { from, Observable, throwError } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { AppService } from 'src/app/_services';
 import { urlsToIgnoreResponseError } from 'src/config';
@@ -22,7 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(
     req: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<any>> {
     return from(this.app.auth.getTokenInfo()).pipe(
       switchMap((token: TokenInfo) => {
@@ -58,10 +58,10 @@ export class AuthInterceptor implements HttpInterceptor {
                 }
               }
             }
-            return throwError(err);
-          })
+            throw err;
+          }),
         );
-      })
+      }),
     );
   }
 }

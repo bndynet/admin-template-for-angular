@@ -2,15 +2,19 @@
 
 button {
   &.loading {
-    &.mat-button,
-    &.mat-flat-button,
-    &.mat-raised-button,
-    &.mat-stroked-button {
-      .mat-button-wrapper {
+    &.mat-mdc-button,
+    &.mat-mdc-unelevated-button,
+    &.mat-mdc-raised-button,
+    &.mat-mdc-outlined-button {
+      .mdc-button__label {
         color: transparent;
       }
 
       .mat-ripple {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         &::before {
           @include swing();
           content: '● ● ●';
@@ -20,9 +24,9 @@ button {
     }
 
 
-    &.mat-fab,
-    &.mat-mini-fab,
-    &.mat-icon-button {
+    &.mat-mdc-fab,
+    &.mat-mdc-mini-fab,
+    &.mat-mdc-icon-button {
       .mat-ripple {
         @include rotate();
         border: solid 1px;
@@ -41,10 +45,10 @@ button {
 @include each-themes using ($name, $theme) {
   button {
     &.loading {
-      &.mat-button-disabled {
-        &.mat-fab,
-        &.mat-mini-fab,
-        &.mat-icon-button {
+      &.mat-mdc-button-disabled {
+        &.mat-mdc-fab,
+        &.mat-mdc-mini-fab,
+        &.mat-mdc-icon-button {
           .mat-ripple {
             border-top-color: var(--#{$name}--primary);
           }

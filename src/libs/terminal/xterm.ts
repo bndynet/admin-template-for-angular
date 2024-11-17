@@ -1,10 +1,10 @@
-import { Terminal } from 'xterm';
-import { FitAddon } from 'xterm-addon-fit';
-import { Unicode11Addon } from 'xterm-addon-unicode11';
-import { WebLinksAddon } from 'xterm-addon-web-links';
+import { FitAddon } from '@xterm/addon-fit';
+import { Unicode11Addon } from '@xterm/addon-unicode11';
+import { WebLinksAddon } from '@xterm/addon-web-links';
+import { Terminal } from '@xterm/xterm';
 import { HttpConnection, SocketConnection } from './connections';
 import { Connection, ConnectionEvent } from './connections/connection';
-import { boldText, Color, colorText } from './utils';
+import { Color, colorText } from './utils';
 import { defaultXtermOptions, XtermOptions } from './xterm-options';
 
 export default class Xterm {
@@ -27,7 +27,7 @@ export default class Xterm {
   constructor(
     htmlElement: HTMLElement,
     socketUrlOrPromise: string | ((cmd: string) => Promise<string>),
-    options?: XtermOptions
+    options?: XtermOptions,
   ) {
     this.options = { ...this.options, ...options };
     this.connection =
@@ -65,15 +65,17 @@ export default class Xterm {
   }
 
   public async clear() {
+    await this.newLine();
     await this.printLineIntro();
     this.terminal.clear();
+    this.terminal.focus();
   }
 
   public async commandReset() {
     this.terminal.reset();
     this.terminal.focus();
     this.typingBlocked = true;
-    await this.printFancyText(this.options.welcomeMessage, false);
+    await this.printFancyText(this.options.welcomeMessage, true);
     await this.printLineIntro();
   }
 
@@ -148,9 +150,9 @@ export default class Xterm {
       await this.printText(
         colorText(
           typeof error !== 'string' ? JSON.stringify(error) : error,
-          Color.Red
+          Color.Red,
         ),
-        true
+        true,
       );
       await this.printLineIntro();
     });
@@ -177,7 +179,7 @@ export default class Xterm {
       if (response.fancyTyping) {
         await this.printFancyText(
           textMessage,
-          textMessage.split('\n').length > 0 ? true : false
+          textMessage.split('\n').length > 0 ? true : false,
         );
       } else {
         await this.printText(textMessage, true);
@@ -202,9 +204,8 @@ export default class Xterm {
     ) {
       this.commandsBuffer.pointer++;
     }
-    const currentCommand = this.commandsBuffer.commands[
-      this.commandsBuffer.pointer
-    ];
+    const currentCommand =
+      this.commandsBuffer.commands[this.commandsBuffer.pointer];
 
     while (this.currentLine.length > 0) {
       await this.backspace();
@@ -222,21 +223,17 @@ export default class Xterm {
     });
   }
 
-  // async prompt(process) {
-  //   console.log('prompt');
-  //   await this.write('\r\n');
-  //   if (process) {
-  //     await this.processCurrentLine();
-  //   }
-  //   // await this.printLineIntro();
-  // }
+  private async writeln(text) {
+    return new Promise((resolve, reject) => {
+      this.terminal.writeln(text, () => {
+        return resolve(text);
+      });
+    });
+  }
 
   private async printLineIntro() {
     this.currentLine = '';
-    const startText = `>>> ${colorText(
-      new Date().toLocaleTimeString(),
-      Color.Yellow
-    )} ${boldText(this.options.commandPrefix)}`;
+    const startText = this.options.commandPrefix; // `${boldText(this.options.commandPrefix)}`;
     await this.printText(startText, false);
     this.terminal.focus();
   }
@@ -285,10 +282,24 @@ export default class Xterm {
     });
   }
 
-  private async printText(text: string, finishedWithNewLine: boolean) {
+  private async printText(text: string, isBlock: boolean) {
     this.typingBlocked = true;
-    await this.write('\r\n' + (text || '').replace('\n', '\r\n'));
-    if (finishedWithNewLine) {
+    if (isBlock) {
+      this.newLine();
+    }
+
+    if (text === this.options.commandPrefix) {
+      await this.write(text);
+      this.typingBlocked = false;
+      return;
+    }
+
+    const rows = text.split('\n').filter((item) => !!item.trim());
+    rows.forEach((item, idx) => {
+      this.writeln(item);
+    });
+
+    if (isBlock) {
       await this.newLine();
     }
     this.typingBlocked = false;
@@ -300,7 +311,7 @@ export default class Xterm {
   }
 
   private async newLine() {
-    await this.write('\r\n');
+    await this.writeln('');
   }
 
   private async processCurrentLine() {
@@ -311,7 +322,8 @@ export default class Xterm {
     }
 
     if (command === '') {
-      this.printLineIntro();
+      await this.newLine();
+      await this.printLineIntro();
       return Promise.resolve();
     } else if (command === 'clear') {
       await this.clear();
@@ -336,11 +348,11 @@ export default class Xterm {
         }
         return history;
       },
-      ''
+      '',
     );
     await this.printFancyText(
       history,
-      history.split('\n').length === 1 ? true : false
+      history.split('\n').length === 1 ? true : false,
     );
     await this.printLineIntro();
   }

@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card appearance="outlined">
   <img mat-card-image src="assets/images/my-logo.png">
   <mat-card-content>
     <h1 *ngIf="!isLoggingIn && userInfo">
@@ -11,7 +11,7 @@
     </h1>
   </mat-card-content>
 
-  <mat-card-actions align="center" *ngIf="!isLoggingIn">
+  <mat-card-actions *ngIf="!isLoggingIn">
     <div *ngIf="!userInfo">
       <button mat-raised-button color="primary" (click)="login()" *ngIf="isOAuth2">
         <span>{{ 'Log in with OpenID' | translate }}</span>

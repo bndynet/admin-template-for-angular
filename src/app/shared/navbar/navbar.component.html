@@ -56,10 +56,11 @@
           *ngFor="let message of messages"
           [ngClass]="{ new: !message.read }"
           [matTooltip]="message.title"
+          matTooltipPosition="left"
           (click)="viewMessage(message)"
         >
           <mat-icon>email</mat-icon>
-          <span>{{ message.title }}</span>
+          <span class="message-title">{{ message.title }}</span>
         </button>
       </mat-menu>
 

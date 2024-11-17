@@ -26,7 +26,10 @@ export class ContentSidebarComponent implements OnInit, OnChanges {
   @Output() closed = new EventEmitter();
   @ViewChild('root') rootElement: MatDrawer;
 
-  constructor(private events: EventsService, private element: ElementRef) {}
+  constructor(
+    private events: EventsService,
+    private element: ElementRef,
+  ) {}
 
   ngOnInit(): void {}
 
@@ -56,37 +59,22 @@ export class ContentSidebarComponent implements OnInit, OnChanges {
 
   @HostListener('document: click', ['$event'])
   closeClickOutside(event: Event): void {
-    if (
-      this.elementsToOpen &&
-      !this.element.nativeElement.contains(event.target)
-    ) {
-      let fromElementOpen = false;
-      const elements = document.querySelectorAll(this.elementsToOpen);
-      for (let index = 0; index < elements.length; index++) {
-        if (!fromElementOpen) {
-          fromElementOpen = this.inElement(
-            event.target as Node,
-            elements.item(index)
-          );
+    const clickInside = this.element.nativeElement.contains(event.target);
+    let isOpenedByElement = false;
+    if (this.elementsToOpen) {
+      const fromElements =
+        this.element.nativeElement.parentElement.querySelectorAll(
+          this.elementsToOpen,
+        );
+      for (let index = 0; index < fromElements.length; index++) {
+        if (fromElements[index].contains(event.target)) {
+          isOpenedByElement = true;
+          break;
         }
       }
-      if (!fromElementOpen) {
-        this.close();
-      }
     }
-  }
-
-  private inElement(source: Node, target: Node): boolean {
-    if (source === target) {
-      return true;
-    }
-
-    for (let index = 0; index < target.childNodes.length; index++) {
-      if (source === target.childNodes.item(index)) {
-        return true;
-      } else {
-        return this.inElement(source, target.childNodes.item(index));
-      }
+    if (!clickInside && !isOpenedByElement) {
+      this.close();
     }
   }
 }

@@ -16,7 +16,7 @@
       color: #dedede;
     }
 
-    .mat-card {
+    .mat-mdc-card {
       color: rgba(#fff, 0.7);
     }
 
@@ -35,9 +35,11 @@
     }
   }
 
-  ::ng-deep .mat-mdc-card-title:not(:first-child),
-  .mat-mdc-card-subtitle:not(:first-child) {
-    margin-top: 0;
+  ::ng-deep {
+    .mat-mdc-card-title,
+    .mat-mdc-card-subtitle {
+      padding: 0.5rem 1rem;
+    }
   }
 }
 
@@ -54,10 +56,6 @@ a {
   top: 10px;
   transition: all 0.5s ease-in-out;
   width: inherit;
-}
-
-.mat-mdc-card-title {
-  margin-top: 0;
 }
 
 .mat-mdc-card-footer {
@@ -82,7 +80,7 @@ a {
     @include each-colors using($key) {
       &[color=#{$key}] {
         ::ng-deep {
-          .mat-card {
+          .mat-mdc-card {
             background-color: var(--#{$name}--#{$key});
           }
         }

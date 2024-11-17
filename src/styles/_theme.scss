@@ -1,6 +1,7 @@
+@use 'sass:map';
+@use 'sass:list';
 @use '@angular/material' as mat;
 @import './variables';
-
 
 // Define the default theme (same as the example above).
 $app-primary: mat.m2-define-palette(mat.$m2-blue-palette, 700);
@@ -13,31 +14,31 @@ $color-accent: mat.m2-get-color-from-palette($app-accent, default);
 // Define your themes.
 $themes: (
   '': $app-theme,
-  popular: mat.m2-define-light-theme(mat.m2-define-palette(mat.$m2-blue-grey-palette),
+  popular:
+  mat.m2-define-light-theme(mat.m2-define-palette(mat.$m2-blue-grey-palette),
   mat.m2-define-palette(mat.$m2-amber-palette, 900),
   mat.m2-define-palette(mat.$m2-deep-orange-palette)),
-  dark: mat.m2-define-dark-theme(mat.m2-define-palette(mat.$m2-blue-palette),
+  dark:
+  mat.m2-define-dark-theme(mat.m2-define-palette(mat.$m2-blue-palette),
   mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400),
-  mat.m2-define-palette(mat.$m2-orange-palette))
+  mat.m2-define-palette(mat.$m2-orange-palette)),
 );
 
 @mixin register-theme($name, $theme) {
   $colorset: (
-    primary: map-get(map-get($theme, primary), default),
-    primary-text: map-get(map-get($theme, primary), default-contrast),
-    accent: map-get(map-get($theme, accent), default),
-    accent-text: map-get(map-get($theme, accent), default-contrast),
-    warn: map-get(map-get($theme, warn), default),
-    warn-text: map-get(map-get($theme, warn), default-contrast),
-
-    foreground: map-get(map-get($theme, foreground), base),
-    text: map-get(map-get($theme, foreground), text),
-    secondary-text: map-get(map-get($theme, foreground), secondary-text),
-    divider: map-get(map-get($theme, foreground), divider),
-    secondary-background: map-get(map-get($theme, background), card),
-
-    background: map-get(map-get($theme, background), background),
-    hover: map-get(map-get($theme, background), hover),
+    primary: map.get(map.get($theme, primary), default),
+    primary-text: map.get(map.get($theme, primary), default-contrast),
+    accent: map.get(map.get($theme, accent), default),
+    accent-text: map.get(map.get($theme, accent), default-contrast),
+    warn: map.get(map.get($theme, warn), default),
+    warn-text: map.get(map.get($theme, warn), default-contrast),
+    foreground: map.get(map.get($theme, foreground), base),
+    text: map.get(map.get($theme, foreground), text),
+    secondary-text: map.get(map.get($theme, foreground), secondary-text),
+    divider: map.get(map.get($theme, foreground), divider),
+    secondary-background: map.get(map.get($theme, background), card),
+    background: map.get(map.get($theme, background), background),
+    hover: map.get(map.get($theme, background), hover),
   );
 
   :root {
@@ -68,10 +69,10 @@ $themes: (
   @each $name, $theme in $themes {
     @if $name != '' and $inTheme {
       .#{$name} {
-        @content($name, $theme);
+        @content ($name, $theme);
       }
     } @else {
-      @content($name, $theme);
+      @content ($name, $theme);
     }
   }
 }
@@ -80,8 +81,7 @@ $themes: (
 $colorKeys: 'primary', 'accent', 'warn';
 
 @mixin each-colors {
-  @for $i from 1 through length($colorKeys) {
-    @content(nth($colorKeys, $i));
+  @for $i from 1 through list.length($colorKeys) {
+    @content (list.nth($colorKeys, $i));
   }
 }
-

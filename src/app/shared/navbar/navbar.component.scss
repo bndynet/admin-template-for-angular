@@ -10,12 +10,6 @@
           font-size: 1rem !important;
         }
       }
-
-      &:last-child {
-        button {
-          // margin-left: 1rem;
-        }
-      }
     }
   }
 
@@ -42,6 +36,12 @@
   .btn-avatar {
     padding: 8px !important;
   }
+}
+
+.message-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 nav {
@@ -74,19 +74,6 @@ nav {
   }
 }
 
-::ng-deep.theme-list {
-  .mat-mdc-menu-content {
-    display: flex;
-    padding: 0.5rem;
-
-    .mat-mdc-menu-item {
-      height: 50px;
-      padding: 0.5rem;
-      width: 50px;
-    }
-  }
-}
-
 .avatar-wrapper {
   line-height: 1.5rem;
   margin: 1rem 0;
@@ -94,14 +81,36 @@ nav {
   width: 260px;
 }
 
-::ng-deep.message-list {
-  max-height: 380px !important;
+::ng-deep {
+  .message-list {
+    max-height: 380px !important;
 
-  button {
-    &.new {
-      font-weight: bold;
+    button {
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+
+      &.new {
+        font-weight: bold;
+      }
+
+      .mat-mdc-menu-item-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .theme-list {
+    .mat-mdc-menu-content {
+      display: flex;
+      padding: 0.5rem;
+  
+      .mat-mdc-menu-item {
+        height: 50px;
+        padding: 0.5rem;
+        width: 50px;
+      }
     }
   }
 }
-
-
